@@ -22,6 +22,7 @@ load_dotenv()
 
 api_paths = [
     path("core/", include("core.urls")),
+    path("docs/", include("api_docs.urls")),
 ]
 
 # Admin link for prod

@@ -1,3 +1,4 @@
+from .base import *
 import os
 from dotenv import load_dotenv
 
