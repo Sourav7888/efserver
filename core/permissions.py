@@ -1,6 +1,20 @@
-from .models import Division, Facility, FacilityAccessControl
+from .models import Division, Facility, FacilityAccessControl, UserInfo
 from rest_framework.permissions import BasePermission
 from django.contrib.auth.models import User
+
+
+def get_or_create_user_info(request) -> UserInfo:
+    """
+    Check if this user has user info yet, if not create one
+    When using remote user with auth 0 will only
+    Create the user with a username (unique) in the database
+    """
+    user_info = UserInfo.objects.filter(user=request.user)
+
+    if not user_info.exists():
+        return UserInfo.objects.create(user=request.user)
+
+    return user_info.first()
 
 
 class CheckRequestBody(BasePermission):
@@ -16,11 +30,17 @@ class CheckRequestBody(BasePermission):
         types = ["POST", "HEAD", "DELETE", "GET", "PUT", "PATCH"]
         data = [getattr(request, x) for x in types if getattr(request, x, None)]
 
+        # Check that the user has UserInfo already created if not create
+        if not hasattr(request.user, "user_info"):
+            get_or_create_user_info(request)
+
         # Check the request body
         if data:
             if "division_name" in data[0]:
                 try:
-                    _division = Division.objects.get(division_name=data[0]["division_name"])
+                    _division = Division.objects.get(
+                        division_name=data[0]["division_name"]
+                    )
                 except Division.DoesNotExist:
                     return False
 

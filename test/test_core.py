@@ -6,7 +6,7 @@ from django.contrib import auth
 from core.models import Division, Facility, FacilityAccessControl, Customer, UserInfo
 
 
-class CoreTestCase(APITestCase):
+class PermissionTestCase(APITestCase):
     """
     Test the core permission as user usually has to request facility_name or division_name
     """
@@ -23,7 +23,6 @@ class CoreTestCase(APITestCase):
 
         # User by default acces_level="RESTRICTED" and customer will be null
         user = User.objects.create_user(**self.data["user"])
-        user_info = UserInfo.objects.create(user=user)
 
         # Division is associated with a customer
         division = Division.objects.create(**self.data["division"], customer=customer)
@@ -48,12 +47,20 @@ class CoreTestCase(APITestCase):
 
             return response
 
+        # Checking that a user_info is automatically created
+        # When auth0 calls it only creates a user in django User
+        user = User.objects.get(username="CoreTestUser")
+        # First we ensure this is false
+        self.assertEqual(hasattr(user, "user_info"), False)
+
+        # Test that the request is denied but the user info is created regardless
         self.assertEqual(request().status_code, status.HTTP_403_FORBIDDEN)
+        user = User.objects.get(username="CoreTestUser")
+        self.assertEqual(hasattr(user, "user_info"), True)
 
         # Change the user to the same customer and give all access because of the
         # Facility blocking
         customer = Customer.objects.get(customer_name="CoreCustomerName")
-        user = User.objects.get(username="CoreTestUser")
         user_info = UserInfo.objects.get(user=user)
         user_info.customer = customer
         user_info.access_level = "ALL"

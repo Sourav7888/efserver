@@ -2,9 +2,6 @@ from django.contrib.auth import authenticate
 import json
 import jwt
 import requests
-from core.models import UserInfo
-
-
 from server.settings.prod import AUTH0_AUDIENCE, AUTH0_DOMAIN
 
 if not AUTH0_AUDIENCE or not AUTH0_DOMAIN:
@@ -19,11 +16,6 @@ def jwt_get_username_from_payload_handler(payload):
 
     # Creates a user if the user does not exist
     user = authenticate(remote_user=username)
-
-    user_info = UserInfo.objects.filter(user=user)
-    if not user_info.exists():
-        user_info.create(user=user)
-
     return username
 
 
