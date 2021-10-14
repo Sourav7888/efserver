@@ -111,13 +111,13 @@ class Facility(models.Model):
         related_name="facility_to_division",
         db_column="division",
     )
-    # An identifier is used for the system as well non modifiable foreign key
-    facility_identifier = models.CharField(
-        max_length=50, null=False, blank=False, unique=True
-    )
-    # The facility name is used for display
+    # The facility name is used for the system as well non modifiable foreign key
     facility_name = models.CharField(
         max_length=50, null=False, blank=False, unique=True
+    )
+    # An identifier is simply a name given to the facility and can be null
+    facility_identifier = models.CharField(
+        max_length=50, null=True, blank=True, unique=True
     )
     address = models.CharField(max_length=255, null=True, blank=True)
     closed = models.BooleanField(default=False)
@@ -126,7 +126,7 @@ class Facility(models.Model):
         verbose_name_plural = "Facilities"
 
     def __str__(self):
-        return f"{self.facility_identifier}"
+        return f"{self.facility_name}"
 
 
 class FacilityAccessControl(models.Model):
@@ -144,7 +144,7 @@ class FacilityAccessControl(models.Model):
         db_column="facility",
         null=True,
         blank=True,
-        to_field="facility_identifier",
+        to_field="facility_name",
     )
 
     class Meta:
