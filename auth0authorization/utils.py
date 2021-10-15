@@ -2,14 +2,20 @@ from django.contrib.auth import authenticate
 import json
 import jwt
 import requests
-from server.settings.base import AUTH0_AUDIENCE, AUTH0_DOMAIN
+from server.settings.prod import AUTH0_AUDIENCE, AUTH0_DOMAIN
+
+if not AUTH0_AUDIENCE or not AUTH0_DOMAIN:
+    from server.settings.dev import AUTH0_AUDIENCE, AUTH0_DOMAIN
+
+    if not AUTH0_AUDIENCE or not AUTH0_DOMAIN:
+        raise Exception("Unable to locate AUTH0 -- Config")
 
 
 def jwt_get_username_from_payload_handler(payload):
     username = payload.get("sub").replace("|", ".")
-    
+
     # Creates a user if the user does not exist
-    authenticate(remote_user=username)
+    user = authenticate(remote_user=username)
     return username
 
 

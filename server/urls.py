@@ -15,8 +15,42 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+import os
+from dotenv import load_dotenv
 
+load_dotenv()
+
+api_paths = [
+    path("core/", include("core.urls")),
+    path("docs/", include("api_docs.urls")),
+]
+
+# Admin link for prod
+prod_admin_link = "04a314d8-1d20-406a-af37-d43a97a0f5a9/"
+
+# Only add these when we are in dev
+if (
+    os.getenv("ENV_TYPE") == "DEVELOPMENT"
+    or os.environ.get("ENV_TYPE") == "DEVELOPMENT"
+):
+    import debug_toolbar
+
+    prod_admin_link = "admin/"
+
+    # Debug toolbar
+    api_paths.append(path("__debug__", include(debug_toolbar.urls)))
+
+    # Sentry error test
+    def trigger_error(request):
+        division_by_zero = 1 / 0
+
+    api_paths.append(path("test-sentry", trigger_error))
+
+# Url patterns
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('', include('test_app.urls'))
+    path(prod_admin_link, admin.site.urls),
+    path(
+        "api/",
+        include(api_paths),
+    ),
 ]
