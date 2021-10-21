@@ -14,6 +14,7 @@ click-plugins==1.1.1
 click-repl==0.2.0
 coreapi==2.3.3
 coreschema==0.0.4
+coverage==6.0.2
 cryptography==2.9.2
 Django==3.2.8
 django-debug-toolbar==3.2.2
