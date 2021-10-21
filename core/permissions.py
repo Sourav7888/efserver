@@ -1,9 +1,10 @@
 from .models import Division, Facility, FacilityAccessControl, UserInfo
 from rest_framework.permissions import BasePermission
 from django.contrib.auth.models import User
+from django.http import HttpRequest
 
 
-def get_or_create_user_info(request) -> UserInfo:
+def get_or_create_user_info(request: HttpRequest) -> UserInfo:
     """
     Check if this user has user info yet, if not create one
     When using remote user with auth 0 will only
@@ -15,6 +16,42 @@ def get_or_create_user_info(request) -> UserInfo:
         return UserInfo.objects.create(user=request.user)
 
     return user_info.first()
+
+
+def validate_facility_access(request: HttpRequest) -> Facility:
+    """
+    Will validate the request and always only return what facility the user is allowed to access
+    """
+
+    user_info = request.user.user_info
+    customer = user_info.customer
+    access_level = user_info.access_level
+    facilities = Facility.objects.filter(division__customer=customer).select_related(
+        "division"
+    )
+
+    if access_level == "RESTRICTED":
+        access_control = (
+            FacilityAccessControl.objects.filter(user=request.user)
+            .select_related("user")
+            .select_related("facility")
+        )
+
+        if access_control.exists():
+            try:
+                allowed_access = [x.facility.facility_name for x in access_control]
+                return Facility.objects.filter(
+                    facility_name__in=allowed_access
+                ).select_related("division")
+            except TypeError:
+                pass
+
+        return Facility.objects.none()
+
+    else:
+        return Facility.objects.filter(division__customer=customer).select_related(
+            "division"
+        )
 
 
 class CheckRequestBody(BasePermission):
