@@ -22,6 +22,9 @@ def validate_facility_access(request: HttpRequest) -> Facility:
     """
     Will validate the request and always only return what facility the user is allowed to access
     """
+    # Check that the user has UserInfo already created if not create
+    if not hasattr(request.user, "user_info"):
+        get_or_create_user_info(request)
 
     user_info = request.user.user_info
     customer = user_info.customer
