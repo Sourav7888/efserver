@@ -4,6 +4,7 @@ from django.core.validators import MinValueValidator
 from .storages_backends import Logos
 
 ACCESS_CHOICES = [("ALL", "ALL"), ("RESTRICTED", "RESTRICTED")]
+CATEGORY_CHOICES = [("Retail", "Retail"), ("Warehouse", "Warehouse")]
 
 
 class Customer(models.Model):
@@ -119,7 +120,24 @@ class Facility(models.Model):
     facility_identifier = models.CharField(
         max_length=50, null=True, blank=True, unique=True
     )
+    postal_code = models.CharField(max_length=10, null=True, blank=True)
+    latitude = models.DecimalField(
+        max_digits=20, decimal_places=7, null=False, blank=False, default=0.0
+    )
+    longitude = models.DecimalField(
+        max_digits=20, decimal_places=7, null=False, blank=False, default=0.0
+    )
+    area = models.IntegerField(
+        null=True, blank=True, default=1, validators=[MinValueValidator(1)]
+    )
     address = models.CharField(max_length=255, null=True, blank=True)
+    category_type = models.CharField(
+        max_length=15,
+        choices=CATEGORY_CHOICES,
+        default="Retail",
+        null=False,
+        blank=False,
+    )
     closed = models.BooleanField(default=False)
 
     class Meta:
