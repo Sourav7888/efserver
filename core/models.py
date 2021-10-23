@@ -70,6 +70,18 @@ class UserInfo(models.Model):
         default=False, null=False, blank=False
     )
 
+    # Access to investigations
+    access_investigation = models.BooleanField(default=False, null=False, blank=False)
+
+    # Allow to address investigations
+    is_investigator = models.BooleanField(default=True, null=False, blank=False)
+
+    # Allow to approve and create investigations
+    is_investigation_manager = models.BooleanField(
+        default=False,
+        blank=False,
+    )
+
     # User are only confirmed once manually validated
     confirmed_user = models.BooleanField(default=False, null=False, blank=False)
 
