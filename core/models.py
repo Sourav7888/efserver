@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.core.validators import MinValueValidator
 from .storages_backends import Logos
+from uuid import uuid4
 
 ACCESS_CHOICES = [("ALL", "ALL"), ("RESTRICTED", "RESTRICTED")]
 CATEGORY_CHOICES = [("Retail", "Retail"), ("Warehouse", "Warehouse")]
@@ -32,6 +33,9 @@ class UserInfo(models.Model):
         to_field="username",
         related_name="user_info",
     )
+
+    # Storing a user name here
+    user_name = models.CharField(max_length=255, unique=True, null=False, blank=False)
 
     access_level = models.CharField(
         max_length=10,
@@ -65,6 +69,9 @@ class UserInfo(models.Model):
     access_facility_project = models.BooleanField(
         default=False, null=False, blank=False
     )
+
+    # User are only confirmed once manually validated
+    confirmed_user = models.BooleanField(default=False, null=False, blank=False)
 
     class Meta:
         verbose_name_plural = "User Info"

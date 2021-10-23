@@ -2,6 +2,7 @@ from .models import Division, Facility, FacilityAccessControl, UserInfo
 from rest_framework.permissions import BasePermission
 from django.contrib.auth.models import User
 from django.http import HttpRequest
+from uuid import uuid4
 
 
 def get_or_create_user_info(request: HttpRequest) -> UserInfo:
@@ -10,10 +11,12 @@ def get_or_create_user_info(request: HttpRequest) -> UserInfo:
     When using remote user with auth 0 will only
     Create the user with a username (unique) in the database
     """
+    temp = str(uuid4())
+
     user_info = UserInfo.objects.filter(user=request.user)
 
     if not user_info.exists():
-        return UserInfo.objects.create(user=request.user)
+        return UserInfo.objects.create(user=request.user, user_name=temp)
 
     return user_info.first()
 
