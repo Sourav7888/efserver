@@ -78,6 +78,7 @@ class UpdateInvestigationSr(serializers.ModelSerializer):
     class Meta:
         model = Investigation
         fields = [
+            "investigation_description",
             "investigation_result",
             "in_approval",
             "closed",
