@@ -47,5 +47,13 @@ class Investigation(models.Model):
     in_approval = models.BooleanField(default=False, null=False, blank=False)
     closed = models.BooleanField(default=False, null=False, blank=False)
 
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=["facility", "investigation_type", "investigation_date"],
+                name="no_duplicate_investigations",
+            )
+        ]
+
     def __str__(self):
         return f"Investigation for: {self.facility} | Type: {self.investigation_type} | {self.investigation_date}"
