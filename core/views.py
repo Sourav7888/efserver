@@ -47,7 +47,6 @@ class DivisionList(ListAPIView):
     Returns a list of all available divisions if not filtered by division_name
     """
 
-    permission_classes = [IsAuthenticated]
     serializer_class = DivisionSr
     filterset_fields = ["division_name"]
     pagination_class = DivisionPg

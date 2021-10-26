@@ -73,10 +73,11 @@ class UserInfo(models.Model):
     # Access to investigations
     access_investigation = models.BooleanField(default=False, null=False, blank=False)
 
-    # Allow to address investigations
+    # Allow to address investigations -> Can grab Investigations and investigate
+    # And submit for approval to the manager
     is_investigator = models.BooleanField(default=True, null=False, blank=False)
 
-    # Allow to approve and create investigations
+    # Allow to approve and create investigations -> Can Create|Delete|Approve Investigations
     is_investigation_manager = models.BooleanField(
         default=False,
         blank=False,
@@ -89,7 +90,7 @@ class UserInfo(models.Model):
         verbose_name_plural = "User Info"
 
     def __str__(self):
-        return f"Status for: {self.user}"
+        return f"Name: {self.user_name}"
 
 
 class Division(models.Model):

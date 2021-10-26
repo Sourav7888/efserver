@@ -20,8 +20,13 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+# Declare your apis here
 api_paths = [
+    # Where all of the permissions and foreign keys are
     path("core/", include("core.urls")),
+    # Investigations ie: High Consumptions etc...
+    path("investigations/", include("apps.investigations.urls")),
+    # Path to api documentation
     path("docs/", include("api_docs.urls")),
 ]
 

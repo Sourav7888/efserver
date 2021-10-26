@@ -32,6 +32,7 @@ INSTALLED_APPS = [
     "storages",
     "drf_yasg",
     "core",
+    "apps.investigations",
 ]
 
 MIDDLEWARE = [

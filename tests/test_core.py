@@ -1,43 +1,15 @@
 from rest_framework import status
-from rest_framework.test import APITestCase
 from django.urls import reverse
 from django.contrib.auth.models import User
 from django.contrib import auth
 from core.models import Division, Facility, FacilityAccessControl, Customer, UserInfo
+from tests.utils import BaseTest
 
 
-class CoreTestCase(APITestCase):
+class CoreTestCase(BaseTest):
     """
     Test the core permission as user usually has to request facility_name or division_name
     """
-
-    # << ONLY USE self.data to access in setup ! Elsewhere must be hard coded >>
-    data = {
-        "user": {"username": "CoreTestUser", "password": "123"},
-        "division": [
-            {"division_name": "CoreDivisionName"},
-            {"division_name": "CoreDivisionName2"},
-        ],
-        "facility": {"facility_name": "CoreFacilityName"},
-        "customer": {"customer_name": "CoreCustomerName"},
-    }
-
-    def setUp(self):
-        customer = Customer.objects.create(**self.data["customer"])
-
-        # User by default acces_level="RESTRICTED" and customer will be null
-        user = User.objects.create_user(**self.data["user"])
-
-        # Division is associated with a customer
-        division = Division.objects.create(
-            **self.data["division"][0], customer=customer
-        )
-        facility = Facility.objects.create(**self.data["facility"], division=division)
-
-        # Division not associated with a customer
-        division2 = Division.objects.create(**self.data["division"][1])
-
-        self.client.login(**self.data["user"])
 
     def test_permissions(self):
         # Testing that a user cannot access a division information unless
