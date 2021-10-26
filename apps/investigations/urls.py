@@ -4,6 +4,11 @@ from . import views
 
 patterns = [
     path(
+        "",
+        views.GetInvestigations.as_view(),
+        name="get_investigations",
+    ),
+    path(
         "create/",
         views.CreateInvestigation.as_view(),
         name="create_investigation",
@@ -15,4 +20,4 @@ patterns = [
     ),
 ]
 
-urlpatterns = [path("investigations/", include(patterns))]
+urlpatterns = [path("", include(patterns))]

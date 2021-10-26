@@ -2,6 +2,12 @@ from rest_framework import serializers
 from .models import Investigation
 
 
+class GetInvestigationsSr(serializers.ModelSerializer):
+    class Meta:
+        model = Investigation
+        fields = "__all__"
+
+
 class CreateInvestigationSr(serializers.ModelSerializer):
     def create(self, validated_data):
         investigation = Investigation.objects.create(**validated_data)
@@ -72,8 +78,7 @@ class UpdateInvestigationSr(serializers.ModelSerializer):
     class Meta:
         model = Investigation
         fields = [
-            "investigation_investigator",
-            "investigation_description",
+            "investigation_result",
             "in_approval",
             "closed",
         ]
