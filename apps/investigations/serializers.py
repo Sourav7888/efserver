@@ -69,7 +69,7 @@ class UpdateInvestigationSr(serializers.ModelSerializer):
         # can only update if the current user is the investigator of
         # the investigation
         if self.check_context(instance, self.context):
-            return super().update(instance, validated_data)
+            return super().partial_update(instance, validated_data)
 
         raise serializers.ValidationError(
             {"message": "You are not allowed to perform this action!"}
@@ -78,7 +78,6 @@ class UpdateInvestigationSr(serializers.ModelSerializer):
     class Meta:
         model = Investigation
         fields = [
-            "investigation_description",
             "investigation_result",
             "in_approval",
             "closed",

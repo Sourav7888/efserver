@@ -68,11 +68,11 @@ class InvestigationsTestCase(BaseTest):
         )
         response = self.client.put(
             url,
-            data={"investigation_description": "Test Description"},
+            data={"investigation_result": "Test Description"},
         )
 
         self.assertEqual(
-            response.json()["investigation_description"], "Test Description"
+            response.json()["investigation_result"], "Test Description"
         )
 
         # Send a patch request
