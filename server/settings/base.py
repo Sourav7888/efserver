@@ -141,6 +141,6 @@ CELERY_TIMEZONE = "America/Toronto"
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:8000",
-    "https://efworkstation-client.herokuapp.com/",
-    "https://efworkstation-server.herokuapp.com/",
+    "https://efworkstation-client.herokuapp.com",
+    "https://efworkstation-server.herokuapp.com",
 ]
