@@ -16,7 +16,7 @@ def get_or_create_user_info(request: HttpRequest) -> UserInfo:
     user_info = UserInfo.objects.filter(user=request.user)
 
     if not user_info.exists():
-        return UserInfo.objects.create(user=request.user, user_name=temp)
+        return UserInfo.objects.create(user=request.user)
 
     return user_info.first()
 

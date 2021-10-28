@@ -25,7 +25,7 @@ class Investigation(models.Model):
         db_column="investigation_investigator",
         null=True,
         blank=True,
-        to_field="user_name",
+        to_field="user_id",
         related_name="investigation_investigator",
     )
     investigation_creator = models.ForeignKey(
@@ -34,7 +34,7 @@ class Investigation(models.Model):
         db_column="investigation_creator",
         null=True,
         blank=True,
-        to_field="user_name",
+        to_field="user_id",
         related_name="investigation_creator",
     )
     investigation_date = models.DateField(null=False, blank=False)

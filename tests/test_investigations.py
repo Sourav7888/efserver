@@ -71,9 +71,7 @@ class InvestigationsTestCase(BaseTest):
             data={"investigation_result": "Test Description"},
         )
 
-        self.assertEqual(
-            response.json()["investigation_result"], "Test Description"
-        )
+        self.assertEqual(response.json()["investigation_result"], "Test Description")
 
         # Send a patch request
         url = reverse(
@@ -83,5 +81,7 @@ class InvestigationsTestCase(BaseTest):
             url,
             data={"closed": True},
         )
+
+        print(response.json())
 
         self.assertEqual(response.json()["closed"], True)

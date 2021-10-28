@@ -34,8 +34,13 @@ class UserInfo(models.Model):
         related_name="user_info",
     )
 
-    # Storing a user name here
-    user_name = models.CharField(max_length=255, unique=True, null=False, blank=False)
+    # Storing a user id here
+    # This is a unique field that is used for foreign key as users can change anytime with auth0
+    # being replaced at some point possibly
+    user_unique_id = models.UUIDField(default=uuid4, editable=False, unique=True)
+
+    # This is the name of the user to be displayed
+    user_name = models.CharField(max_length=100, null=True, blank=True)
 
     access_level = models.CharField(
         max_length=10,
@@ -90,7 +95,7 @@ class UserInfo(models.Model):
         verbose_name_plural = "User Info"
 
     def __str__(self):
-        return f"Name: {self.user_name}"
+        return f"Name: {self.user_name} | User: {self.user} | ID: {self.user_unique_id}"
 
 
 class Division(models.Model):
