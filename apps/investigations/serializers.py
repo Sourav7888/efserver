@@ -3,6 +3,21 @@ from .models import Investigation
 
 
 class GetInvestigationsSr(serializers.ModelSerializer):
+    investigation_investigator_name = serializers.SerializerMethodField()
+    investigation_creator_name = serializers.SerializerMethodField()
+
+    def get_investigation_creator_name(self, obj):
+        try:
+            return obj.investigation_creator.user_name
+        except:
+            return None
+
+    def get_investigation_investigator_name(self, obj):
+        try:
+            return obj.investigation_investigator.user_name
+        except:
+            return None
+
     class Meta:
         model = Investigation
         fields = "__all__"
