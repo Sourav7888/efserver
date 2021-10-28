@@ -47,7 +47,7 @@ class UpdateInvestigationSr(serializers.ModelSerializer):
             instance.save()
             return True
 
-        elif investigator == user.user_id:
+        elif investigator == user.user_unique_id:
             return True
 
         return False
