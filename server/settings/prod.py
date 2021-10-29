@@ -58,5 +58,5 @@ EMAIL_HOST_PASSWORD = os.environ.get("PRODUCTION_MAILGUN_SMTP_PASSWORD")
 CORS_ALLOWED_ORIGINS = [
     "https://efworkstation-client.herokuapp.com",
     "https://efworkstation-server.herokuapp.com",
-    "https://ems.enerfrog-workstation.app/",
+    "https://ems.enerfrog-workstation.app",
 ]
