@@ -31,6 +31,7 @@ INSTALLED_APPS = [
     "corsheaders",
     "django_filters",
     "storages",
+    "django_celery_beat",
     "drf_yasg",
     "core",
     "apps.investigations",
@@ -144,3 +145,5 @@ CORS_ALLOWED_ORIGINS = [
     "https://efworkstation-client.herokuapp.com",
     "https://efworkstation-server.herokuapp.com",
 ]
+
+CELERY_BEAT_SCHEDULER = "django_celery_beat.schedulers:DatabaseScheduler"
