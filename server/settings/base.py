@@ -31,6 +31,7 @@ INSTALLED_APPS = [
     "corsheaders",
     "django_filters",
     "storages",
+    "rest_framework.authtoken",
     "django_celery_beat",
     "drf_yasg",
     "core",
