@@ -33,6 +33,14 @@ api_paths = [
 # Admin link for prod
 prod_admin_link = "04a314d8-1d20-406a-af37-d43a97a0f5a9/"
 
+# Sentry error test
+def trigger_error(request):
+    division_by_zero = 1 / 0
+
+
+api_paths.append(path("test-sentry", trigger_error))
+
+
 # Only add these when we are in dev
 if (
     os.getenv("ENV_TYPE") == "DEVELOPMENT"
@@ -45,11 +53,6 @@ if (
     # Debug toolbar
     api_paths.append(path("__debug__", include(debug_toolbar.urls)))
 
-    # Sentry error test
-    def trigger_error(request):
-        division_by_zero = 1 / 0
-
-    api_paths.append(path("test-sentry", trigger_error))
 
 # Url patterns
 urlpatterns = [
