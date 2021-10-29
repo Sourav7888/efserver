@@ -59,22 +59,6 @@ class UserInfo(models.Model):
         to_field="customer_name",
     )
 
-    # Access to division level stats
-    access_division_energy = models.BooleanField(default=False, null=False, blank=False)
-
-    # Access to division level project stats
-    access_division_project = models.BooleanField(
-        default=False, null=False, blank=False
-    )
-
-    # Access to facility level energy
-    access_facility_energy = models.BooleanField(default=False, null=False, blank=False)
-
-    # Access to facility level project
-    access_facility_project = models.BooleanField(
-        default=False, null=False, blank=False
-    )
-
     # Access to investigations
     access_investigation = models.BooleanField(default=False, null=False, blank=False)
 
