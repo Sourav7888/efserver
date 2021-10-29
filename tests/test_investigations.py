@@ -82,6 +82,4 @@ class InvestigationsTestCase(BaseTest):
             data={"closed": True},
         )
 
-        print(response.json())
-
         self.assertEqual(response.json()["closed"], True)
