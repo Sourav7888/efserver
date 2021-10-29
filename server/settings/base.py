@@ -140,11 +140,4 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 # Celery Configuration Options
 CELERY_TIMEZONE = "America/Toronto"
 
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:8000",
-    "https://efworkstation-client.herokuapp.com",
-    "https://efworkstation-server.herokuapp.com",
-]
-
 CELERY_BEAT_SCHEDULER = "django_celery_beat.schedulers:DatabaseScheduler"
-

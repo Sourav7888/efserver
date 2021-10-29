@@ -50,7 +50,13 @@ AUTH0_DOMAIN = os.environ.get("PRODUCTION_AUTH0_DOMAIN")
 JWT_AUTH["JWT_AUDIENCE"] = AUTH0_AUDIENCE
 JWT_AUTH["JWT_ISSUER"] = AUTH0_DOMAIN
 
-EMAIL_HOST = os.environ.get('PRODUCTION_MAILGUN_SMTP_SERVER')
-EMAIL_PORT = os.environ.get('PRODUCTION_MAILGUN_SMTP_PORT')
-EMAIL_HOST_USER = os.environ.get('PRODUCTION_MAILGUN_SMTP_USER')
-EMAIL_HOST_PASSWORD = os.environ.get('PRODUCTION_MAILGUN_SMTP_PASSWORD')
+EMAIL_HOST = os.environ.get("PRODUCTION_MAILGUN_SMTP_SERVER")
+EMAIL_PORT = os.environ.get("PRODUCTION_MAILGUN_SMTP_PORT")
+EMAIL_HOST_USER = os.environ.get("PRODUCTION_MAILGUN_SMTP_USER")
+EMAIL_HOST_PASSWORD = os.environ.get("PRODUCTION_MAILGUN_SMTP_PASSWORD")
+
+CORS_ALLOWED_ORIGINS = [
+    "https://efworkstation-client.herokuapp.com",
+    "https://efworkstation-server.herokuapp.com",
+    "https://ems.enerfrog-workstation.app/",
+]
