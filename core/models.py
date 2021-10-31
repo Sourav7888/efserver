@@ -4,7 +4,11 @@ from django.core.validators import MinValueValidator
 from .storages_backends import Logos
 from uuid import uuid4
 
-ACCESS_CHOICES = [("ALL", "ALL"), ("RESTRICTED", "RESTRICTED")]
+ACCESS_CHOICES = [
+    ("ALL", "ALL"),
+    ("RESTRICTED", "RESTRICTED"),
+    ("ENERFROG_STAFF", "ENERFROG_STAFF"),
+]
 CATEGORY_CHOICES = [("Retail", "Retail"), ("Warehouse", "Warehouse")]
 
 
@@ -43,7 +47,7 @@ class UserInfo(models.Model):
     user_name = models.CharField(max_length=100, null=True, blank=True)
 
     access_level = models.CharField(
-        max_length=10,
+        max_length=14,
         default="RESTRICTED",
         blank=False,
         null=False,

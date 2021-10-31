@@ -36,6 +36,10 @@ def validate_facility_access(request: HttpRequest) -> Facility:
         "division"
     )
 
+    # Make an exeption for enerfrog staff access level
+    if access_level == "ENERFROG_STAFF":
+        return facilities
+
     if access_level == "RESTRICTED":
         access_control = (
             FacilityAccessControl.objects.filter(user=request.user)

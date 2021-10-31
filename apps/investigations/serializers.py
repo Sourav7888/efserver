@@ -25,16 +25,21 @@ class GetInvestigationsSr(serializers.ModelSerializer):
 
 class CreateInvestigationSr(serializers.ModelSerializer):
     def create(self, validated_data):
-        investigation = Investigation.objects.create(**validated_data)
-        setattr(
-            investigation,
-            "investigation_creator_id",
-            self.context["request"].user.user_info,
+        investigation, status = Investigation.objects.get_or_create(**validated_data)
+        if status:
+            setattr(
+                investigation,
+                "investigation_creator_id",
+                self.context["request"].user.user_info,
+            )
+
+            investigation.save()
+
+            return investigation
+
+        raise serializers.ValidationError(
+            {"message": "This investigation already exists!"}
         )
-
-        investigation.save()
-
-        return investigation
 
     class Meta:
         model = Investigation

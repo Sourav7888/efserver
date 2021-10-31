@@ -62,6 +62,19 @@ class InvestigationsTestCase(BaseTest):
             str(investigation.first().investigation_creator.user.username), str(user)
         )
 
+        # Test that when creating a duplicate fails
+        response = self.client.post(
+            url,
+            data={
+                "facility": "CoreFacilityName",
+                "investigation_date": "2021-12-12",
+                "investigation_type": "HC_WT",
+                "investigation_description": "This is a HC Investigation",
+            },
+        )
+
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
         # Test that you can update an investigation
         url = reverse(
             "update_investigation", args=(investigation.first().investigation_id,)
