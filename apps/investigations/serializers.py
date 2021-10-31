@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from .models import Investigation
+from .tasks import send_created_investigation
 
 
 class GetInvestigationsSr(serializers.ModelSerializer):
@@ -34,6 +35,9 @@ class CreateInvestigationSr(serializers.ModelSerializer):
             )
 
             investigation.save()
+
+            #@TODO: Refractor to be async
+            send_created_investigation(validated_data)
 
             return investigation
 
