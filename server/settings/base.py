@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     "drf_yasg",
     "core",
     "apps.investigations",
+    "apps.utility_manager",
 ]
 
 MIDDLEWARE = [

@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from .models import *
-
+from apps.utility_manager.admin import FacilityUtilityBillInline
 
 # Add the user info inline in django admin
 class UserInfoInline(admin.StackedInline):
@@ -22,10 +22,20 @@ class UserAdmin(BaseUserAdmin):
     )
 
 
+class FacilityAdmin(admin.ModelAdmin):
+    inlines = [FacilityUtilityBillInline]
+
+
+# User
 admin.site.register(Customer)
 admin.site.unregister(User)
 admin.site.register(User, UserAdmin)
-admin.site.register(Division)
-admin.site.register(Facility)
 admin.site.register(FacilityAccessControl)
 admin.site.register(UserInfo)
+
+# Division
+admin.site.register(Division)
+
+
+# Facility
+admin.site.register(Facility, FacilityAdmin)

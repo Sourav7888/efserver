@@ -26,6 +26,8 @@ api_paths = [
     path("core/", include("core.urls")),
     # Investigations ie: High Consumptions etc...
     path("investigations/", include("apps.investigations.urls")),
+    # Utility Manager
+    path("utility_manager/", include("apps.utility_manager.urls")),
     # Path to api documentation
     path("docs/", include("api_docs.urls")),
 ]
