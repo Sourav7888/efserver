@@ -56,4 +56,17 @@ class Investigation(models.Model):
         ]
 
     def __str__(self):
-        return f"Facility: {self.facility} | Type: {self.investigation_type} | Date: {self.investigation_date} | In Approval: {self.in_approval} | Closed: {self.closed}"
+        val = f"""
+        Facility: {self.facility} 
+        | Type: {self.investigation_type} 
+        | Date: {self.investigation_date} 
+        | In Approval: {self.in_approval} 
+        | Closed: {self.closed} 
+        """
+
+        try:
+            val += f" | Investigator: {self.investigation_investigator.user_name}"
+        except (AttributeError, UserInfo.DoesNotExist):
+            pass
+
+        return val
