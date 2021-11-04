@@ -1,6 +1,6 @@
 from django.db import models
 from core.models import Facility
-
+from .managers import MonthlyUtilityBillManager, YearlyUtilityBillManager
 
 TYPE_CHOICES = [
     ("Electricity", "Electricity"),
@@ -29,6 +29,13 @@ class UtilityBill(models.Model):
     cost = models.DecimalField(
         max_digits=13, decimal_places=3, default=0, null=False, blank=False
     )
+
+    # Default Manager
+    objects = models.Manager()
+    # For Yearly data
+    yearly = YearlyUtilityBillManager()
+    # For Monthly data
+    monthly = MonthlyUtilityBillManager()
 
     class Meta:
         verbose_name_plural = "Utility Manager"
