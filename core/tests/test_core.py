@@ -3,7 +3,7 @@ from django.urls import reverse
 from django.contrib.auth.models import User
 from django.contrib import auth
 from core.models import Division, Facility, FacilityAccessControl, Customer, UserInfo
-from tests.utils import BaseTest
+from core.tests.utils import BaseTest
 
 
 class CoreTestCase(BaseTest):

@@ -23,6 +23,17 @@ DATABASES = {
         "HOST": os.getenv("DEVELOPMENT_DATABASE_HOST"),
         "PORT": "5432",
     },
+    "weatherdatadb": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": os.getenv("WEATHER_DATABASE_NAME"),
+        "USER": os.getenv("WEATHER_DATABASE_USER"),
+        "PASSWORD": os.getenv("WEATHER_DATABASE_PASSWORD"),
+        "HOST": os.getenv("WEATHER_DATABASE_HOST"),
+        "PORT": "5432",
+        "OPTIONS": {
+            "sslmode": "require",
+        },
+    },
 }
 
 MIDDLEWARE += [

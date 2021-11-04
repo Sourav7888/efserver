@@ -28,6 +28,8 @@ api_paths = [
     path("investigations/", include("apps.investigations.urls")),
     # Utility Manager
     path("utility_manager/", include("apps.utility_manager.urls")),
+    # Utility Manager
+    path("weather_manager/", include("apps.weather_manager.urls")),
     # Path to api documentation
     path("docs/", include("api_docs.urls")),
 ]

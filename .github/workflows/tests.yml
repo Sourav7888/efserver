@@ -2,9 +2,9 @@ name: Tests
 
 on:
   push:
-    branches: [main]
+    branches: ['*']
   pull_request:
-    branches: [main]
+    branches: ['*']
 
 jobs:
   build:
@@ -53,7 +53,8 @@ jobs:
       - name: Run test & Generate report
         working-directory: .
         run: |
-          coverage run ./manage.py test tests --noinput  
+          coverage run ./manage.py test core --noinput  
+          coverage run -a ./manage.py test apps --noinput
           coverage xml
 
       - name: Download artifacts

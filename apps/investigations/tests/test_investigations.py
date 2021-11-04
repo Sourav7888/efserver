@@ -2,7 +2,7 @@ from rest_framework import status
 from django.urls import reverse
 from django.contrib.auth.models import User
 from django.contrib import auth
-from tests.utils import BaseTest
+from core.tests.utils import BaseTest
 from core.models import UserInfo
 from apps.investigations.models import Investigation
 

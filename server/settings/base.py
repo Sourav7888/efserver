@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     "core",
     "apps.investigations",
     "apps.utility_manager",
+    "apps.weather_manager",
 ]
 
 MIDDLEWARE = [
@@ -57,6 +58,10 @@ AUTHENTICATION_BACKENDS = [
     "django.contrib.auth.backends.RemoteUserBackend",
 ]
 
+DATABASE_ROUTERS = [
+    "apps.shared.dbrouter.DefaultRouter",
+    "apps.weather_manager.dbrouter.WeatherDataRouter",
+]
 
 REST_FRAMEWORK = {
     "DEFAULT_PERMISSION_CLASSES": ("rest_framework.permissions.IsAuthenticated",),

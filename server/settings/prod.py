@@ -39,6 +39,17 @@ DATABASES = {
             "sslmode": "require",
         },
     },
+    "weatherdata": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": os.environ.get("WEATHER_DATABASE_NAME"),
+        "USER": os.environ.get("WEATHER_DATABASE_USER"),
+        "PASSWORD": os.environ.get("WEATHER_DATABASE_PASSWORD"),
+        "HOST": os.environ.get("WEATHER_DATABASE_HOST"),
+        "PORT": "5432",
+        "OPTIONS": {
+            "sslmode": "require",
+        },
+    },
 }
 
 STATIC_URL = "/static/"
