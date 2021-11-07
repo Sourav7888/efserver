@@ -18,6 +18,7 @@ def create_hc_investigation(
     investigation_type: str,
     investigation_date: str,
     investigation_description: str,
+    include_document: bool = True,
     **kwargs,
 ):
     """
@@ -28,7 +29,19 @@ def create_hc_investigation(
         investigation_type=investigation_type,
         investigation_date=investigation_date,
         investigation_description=investigation_description,
+        **kwargs,
     )
+
+    if include_document:
+        upload_hc_document(investigation, template)
+
+    return investigation.investigation_id
+
+
+def upload_hc_document(investigation: Investigation, template: bytes):
+    """
+    Upload the document to the investigation
+    """
     buffer = BytesIO()
     buffer.write(template)
     content = ContentFile(buffer.getvalue())
@@ -36,8 +49,6 @@ def create_hc_investigation(
         f"{investigation.investigation_id}.html", content
     )
     investigation.save()
-
-    return investigation.investigation_id
 
 
 # @TODO: Add a logger -- Some dashboard of sorts
