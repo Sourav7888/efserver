@@ -63,6 +63,8 @@ def generate_gas_high_consumption(target_date: str, counter_limit: int = 3):
     """
     facilities = Facility.objects.all()
 
+    print(facilities)
+
     counter = 0
 
     for f in facilities:
