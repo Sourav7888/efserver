@@ -4,7 +4,7 @@ from django.template.loader import render_to_string
 from core.models import UserInfo
 from .models import Investigation
 
-
+# @TODO: Test
 def get_investigations_status():
     """
     Get all the investigations status
@@ -51,6 +51,7 @@ def send_created_investigation(info: dict[str, str]):
     template_name = "created_report"
     from_email = "info@enerfrog-workstation.ca"
 
+    # @TODO: Some user email include none when sent
     to_email = list(
         UserInfo.objects.filter(is_investigator=True)
         .exclude(user__email="")

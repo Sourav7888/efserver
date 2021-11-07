@@ -4,6 +4,8 @@ class DefaultRouter:
     Exclude any app that has its own router in 'exclude'
     """
 
+    # Exclude the unwanted apps model here and then create
+    # A special router for that apps in its own directory
     exclude = ["weather_manager"]
 
     def db_for_read(self, model, **hints):

@@ -1,4 +1,3 @@
-from rest_framework.test import APITestCase
 from apps.utility_manager.models import UtilityBill
 from core.models import Facility
 from core.tests.utils import BaseTest
