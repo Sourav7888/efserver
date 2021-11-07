@@ -68,14 +68,19 @@ def generate_gas_high_consumption(target_date: str, counter_limit: int = 3):
     counter = 0
 
     for f in facilities:
+        print(f"Counter: {counter} | CounterLimit: {counter_limit}")
+        print(f"Facility: {f.facility_name}")
         hc = GasHighConsumption.create_hc_by_facility_obj(f, target_date)
         try:
+            print(f"Running Method!")
             hc.run_method()
         except (TargetDateNotFound, EmptyDataFrame):
+            print(f"Unable to determine! Continuing")
             continue
 
         # if high consuming
         if hc.is_hc():
+            print("is high consuming, rendering template")
             template = hc.render_template(facility_context=True, stats_context=True)
             try:
                 # @TODO Doing this is very expensive, refractor next time
@@ -96,6 +101,7 @@ def generate_gas_high_consumption(target_date: str, counter_limit: int = 3):
                 send_created_investigation(info)
 
             except IntegrityError:
+                print("Failed to render template!")
                 continue
 
         if counter == counter_limit:
