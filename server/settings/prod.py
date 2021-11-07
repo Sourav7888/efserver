@@ -39,7 +39,7 @@ DATABASES = {
             "sslmode": "require",
         },
     },
-    "weatherdata": {
+    "weatherdatadb": {
         "ENGINE": "django.db.backends.postgresql",
         "NAME": os.environ.get("WEATHER_DATABASE_NAME"),
         "USER": os.environ.get("WEATHER_DATABASE_USER"),
