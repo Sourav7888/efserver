@@ -10,6 +10,8 @@ from django.core.files.base import ContentFile
 from .base import GasHighConsumption
 from .cs_exeptions import TargetDateNotFound, EmptyDataFrame
 from django.db.utils import IntegrityError
+from celery import shared_task
+from apps.investigations.tasks import send_created_investigation
 
 
 def create_hc_investigation(
@@ -52,7 +54,10 @@ def upload_hc_document(investigation: Investigation, template: bytes):
 
 
 # @TODO: Add a logger -- Some dashboard of sorts
-def generate_gas_high_consumption(target_date: str):
+
+
+@shared_task
+def generate_gas_high_consumption(target_date: str, counter_limit: int = 3):
     """
     Generate gas high_consumption based on simple linear regression and cost increase
     """
@@ -76,5 +81,21 @@ def generate_gas_high_consumption(target_date: str):
                 create_hc_investigation(
                     f, template, "HC_GAS", target_date, hc.get_description()
                 )
+
+                info = {
+                    "facility": f.facility_name,
+                    "investigation_date": target_date,
+                    "investigation_type": "HC_GAS",
+                    "investigation_description": hc.get_description(),
+                }
+
+                counter += 1
+
+                send_created_investigation(info)
+
             except IntegrityError:
                 continue
+
+        if counter == counter_limit:
+            # End the task when the counter limit is reached
+            break
