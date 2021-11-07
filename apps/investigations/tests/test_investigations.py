@@ -3,8 +3,9 @@ from django.urls import reverse
 from django.contrib.auth.models import User
 from django.contrib import auth
 from core.tests.utils import BaseTest
-from core.models import UserInfo
+from core.models import UserInfo, Facility
 from apps.investigations.models import Investigation
+from apps.investigations.tasks import get_investigations_status
 
 
 class InvestigationsTestCase(BaseTest):
@@ -96,3 +97,26 @@ class InvestigationsTestCase(BaseTest):
         )
 
         self.assertEqual(response.json()["closed"], True)
+
+    def test_get_investigations(self):
+        """
+        Test that the investigations are not empty
+        """
+
+        facility = Facility.objects.get(facility_name="CoreFacilityName")
+        Investigation.objects.create(
+            facility=facility,
+            investigation_type="HC_WT",
+            investigation_date="2021-12-12",
+        )
+
+        self.assertEqual(
+            get_investigations_status(),
+            {
+                "total_investigations": 1,
+                "closed_investigations": 0,
+                "in_monitoring_investigations": 0,
+                "open_investigations": 1,
+                "on_going_investigations": 0,
+            },
+        )

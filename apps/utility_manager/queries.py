@@ -36,7 +36,7 @@ def query_facility_specific_month_energy(
     month: int,  # The month required
     min_year: int = None,  # The minimum year required,
     max_year: int = None,  # The maximum year required,
-    **kwargs
+    **kwargs,
 ) -> pd.DataFrame:
     """
     Query the specific month energy usage for a facility
@@ -58,7 +58,10 @@ def query_facility_specific_month_energy(
 
 # @TODO: Integration Test -- Dependency injection
 def query_facility_energy_weather(
-    facility_obj: models.Model, utility_type: str, **kwargs
+    facility_obj: models.Model,
+    utility_type: str,
+    weather_method: callable = query_coord_weather_data,
+    **kwargs,
 ) -> pd.DataFrame:
     """
     Query the facility energy data paired with its weather counterpart
@@ -76,7 +79,7 @@ def query_facility_energy_weather(
         min_billing_date = energy.billing_date.min()
 
         # Weather data
-        weather_data = query_coord_weather_data(
+        weather_data = weather_method(
             lat=facility_obj.latitude,
             lng=facility_obj.longitude,
             date__gte=min_billing_date,
@@ -106,7 +109,8 @@ def query_facility_specific_month_stats(
     min_year: int = None,  # The minimum year required,
     max_year: int = None,  # The maximum year required,
     include_weather: bool = True,  # Include weather data
-    **kwargs
+    weather_method: callable = query_coord_specific_month_weather_data,
+    **kwargs,
 ) -> pd.DataFrame:
 
     if not min_year or not max_year:
@@ -115,7 +119,7 @@ def query_facility_specific_month_stats(
     energy = query_facility_specific_month_energy(
         facility_obj, month, min_year=min_year, max_year=max_year, **kwargs
     )
-
+    
     if not energy.empty:
         if include_weather:
             # get the max and min billing_date in energy dataframe
@@ -123,7 +127,7 @@ def query_facility_specific_month_stats(
             min_billing_date = energy.billing_date.min()
 
             # Weather data
-            weather_data = query_coord_specific_month_weather_data(
+            weather_data = weather_method(
                 facility_obj.latitude,
                 facility_obj.longitude,
                 month,
