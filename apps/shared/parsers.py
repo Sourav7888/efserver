@@ -61,7 +61,7 @@ class QuerysetParser:
         return df
 
 
-def parse_month_year(
+def parse_year_month(
     year: int, month: int, diff: int or None = None
 ) -> dt or (dt, dt) or None:
     """

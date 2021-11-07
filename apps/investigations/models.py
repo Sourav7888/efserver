@@ -1,6 +1,7 @@
 from django.db import models
 from core.models import UserInfo, Facility
 from uuid import uuid4
+from .storages_backends import InvestigationDocs
 
 HIGH_CONSUMPTION_OPTIONS = [
     ("HC_WT", "HC_WT"),
@@ -42,6 +43,9 @@ class Investigation(models.Model):
         max_length=6, choices=HIGH_CONSUMPTION_OPTIONS
     )
     investigation_description = models.TextField(null=True, blank=True)
+    investigation_document = models.FileField(
+        storage=InvestigationDocs(), null=True, blank=True
+    )
     investigation_result = models.TextField(null=True, blank=True)
 
     in_approval = models.BooleanField(default=False, null=False, blank=False)

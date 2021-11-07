@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>High Consumption Doc</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+      integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l"
+      crossorigin="anonymous"
+    />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <style>
+    body {
+      font-family: "Poppins", sans-serif;
+    }
+    .card-header {
+      background-color: #2f3944 !important;
+      color: white;
+    }
+    .chart_card .card-body {
+      height: 45vh;
+      width: auto;
+    }
+    .csTable thead {
+      color: white;
+    }
+
+    .my-custom-scrollbar {
+      position: relative;
+      height: 450px;
+      overflow: auto;
+    }
+    .table-wrapper-scroll-y {
+      display: block;
+    }
+  </style>
+  <body>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col">
+          <div class="container d-flex justify-content-center">
+            <a class="navbar-brand" href="#">
+              <img
+                src="https://productionefworkstations3.s3.amazonaws.com/_general_do_not_delete/enerfrog-logo.png"
+                alt=""
+                width="175"
+                height="40"
+              />
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="row mt-4">
+        <div class="col">
+          <h4><b>Auto-Generated High Consumption Document - Natural Gas</b></h4>
+        </div>
+      </div>
+      <div class="row card mt-2 border-0">
+        <div class="card-body">
+          <ul>
+            <li>Facility: {{ context.facility.facility_name }}</li>
+            <li>Address: {{ context.facility.address }}</li>
+            <li>Area: {{ context.facility.area }}</li>
+            <li>Category: {{ context.facility.category_type }}</li>
+            <li>Latitude: {{ context.facility.latitude }}</li>
+            <li>Longitude: {{ context.facility.longitude }}</li>
+          </ul>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <table class="table border-0">
+            <thead class="border-0">
+              <tr>
+                <th class="border-0 text-center" scope="col">Target Date</th>
+                <th class="border-0 text-center" scope="col">Month HDD (℃)</th>
+                <th class="border-0 text-center" scope="col">
+                  Month Usage (GJ)
+                </th>
+                <th class="border-0 text-center" scope="col">
+                  Prediction (GJ)
+                </th>
+                <th class="border-0 text-center" scope="col">
+                  Actual vs Prediction (GJ)
+                </th>
+                <th class="border-0 text-center" scope="col">
+                  Percentage diff (%)
+                </th>
+                <th class="border-0 text-center" scope="col">
+                  Estimated HC Cost ($)
+                </th>
+                <th class="border-0 text-center" scope="col">Score (%)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="border-0 text-center">{{ context.target_date }}</td>
+                <td class="border-0 text-center">{{ context.month_hdd }}</td>
+                <td class="border-0 text-center">{{ context.month_usage }}</td>
+                <td class="border-0 text-center">{{ context.prediction }}</td>
+                <td class="border-0 text-center">
+                  {{ context.usage_vs_prediction }}
+                </td>
+                <td class="border-0 text-center">
+                  {{ context.percentage_diff }}
+                </td>
+                <td class="border-0 text-center">
+                  {{ context.estimated_cost }}
+                </td>
+                <td class="border-0 text-center">
+                  {{ context.model.r2_score }}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <!-- Charts Linear Regression -->
+      <div class="row">
+        <div class="col">
+          <div class="container-fluid">
+            <div class="card chart_card">
+              <div
+                class="
+                  card-header
+                  d-flex
+                  justify-content-between
+                  align-items-center
+                "
+              >
+                <h5>Linear Regression</h5>
+              </div>
+              <div class="card-body">
+                <canvas id="LRChart"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="container-fluid">
+            <div class="card chart_card">
+              <div
+                class="
+                  card-header
+                  d-flex
+                  justify-content-between
+                  align-items-center
+                "
+              >
+                <h5>Natural Gas Consumption - Monthly Overview</h5>
+              </div>
+              <div class="card-body">
+                <canvas id="STATSChart"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Chart Stats -->
+      <div class="row mt-4">
+        <div class="col table-wrapper-scroll-y my-custom-scrollbar">
+          <table class="table csTable border-0">
+            <thead class="border-0 bg-dark">
+              <tr>
+                <th class="border-0 text-center" scope="col">x (℃)</th>
+                <th class="border-0 text-center" scope="col">y (GJ)</th>
+                <th class="border-0 text-center" scope="col">y-pred (GJ)</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for i in context.render.model %}
+              <tr>
+                <td class="border-0 text-center">{{ i.0 }}</td>
+                <td class="border-0 text-center">{{ i.1 }}</td>
+                <td class="border-0 text-center">{{ i.2 }}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        <div class="col table-wrapper-scroll-y my-custom-scrollbar">
+          <table class="table csTable border-0">
+            <thead class="border-0 bg-dark">
+              <tr>
+                <th class="border-0 text-center" scope="col">Date</th>
+                <th class="border-0 text-center" scope="col">HDD (℃)</th>
+                <th class="border-0 text-center" scope="col">Usage (GJ)</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for i in context.render.stats %}
+              <tr>
+                <td class="border-0 text-center">{{ i.0 }}</td>
+                <td class="border-0 text-center">{{ i.1 }}</td>
+                <td class="border-0 text-center">{{ i.2 }}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </body>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  {{ context.model.x|json_script:"hdd-data" }}
+  {{context.model.y|json_script:"ng-data" }}
+  {{context.model.y_test|json_script:"y-test"}}
+  {{context.stats.date|json_script:"stats-date"}}
+  {{context.stats.hdd|json_script:"stats-hdd"}}
+  {{context.stats.usage|json_script:"stats-usage"}}
+  <script>
+    const usage = JSON.parse(document.getElementById("ng-data").textContent);
+    const hdd = JSON.parse(document.getElementById("hdd-data").textContent);
+    const y_test = JSON.parse(document.getElementById("y-test").textContent);
+    const stats_date = JSON.parse(
+      document.getElementById("stats-date").textContent
+    );
+    const stats_hdd = JSON.parse(
+      document.getElementById("stats-hdd").textContent
+    );
+    const stats_usage = JSON.parse(
+      document.getElementById("stats-usage").textContent
+    );
+
+    // const usage = [
+    //   515.41, 550.1, 371.13, 218.39, 138.87, 5.71, 0, 0.04, 1.01, 96.23, 362.26,
+    //   424.7, 365.73, 396.69, 251.89, 281.06, 83.18, 1.53, 0.04, 0, 1.98, 142.78,
+    //   247.41, 401.8, 384.3, 417.01, 284.67, 213.39, 95.86, 2.35, 0.04, 0, 8.54,
+    // ];
+
+    // const hdd = [
+    //   802.1, 659.8, 636.5, 386.8, 207.5, 53.6, 2.2, 16.9, 89.6, 294.1, 556.9,
+    //   623.1, 634.4, 664, 483.6, 397.8, 236.7, 45.3, 0, 13.8, 113.8, 326.7,
+    //   370.5, 615.5, 687.1, 725, 474.3, 328.8, 210.7, 22.4, 16.2, 10.6, 85.3,
+    // ];
+
+    // const y_test = [
+    //   505.5714973145132, 410.9956498216269, 395.50993480698, 229.55358119507784,
+    //   110.38668410811718, 8.101210256007612, -26.06040999089578,
+    //   -16.290452449466212, 32.02763688808002, 167.94303261749138,
+    //   342.60594703161996, 386.6039871161531, 394.1142265867759,
+    //   413.7870662620354, 293.88908391687255, 236.86443377709995,
+    //   129.7936745985759, 2.5848396713909096, -27.522580507300205,
+    //   -18.35078363167245, 48.111512568528696, 189.60974117875693,
+    //   218.72022691444502, 381.5528526049378, 429.1398566842819,
+    //   454.32906694415806, 287.7080903702538, 191.00544939896116,
+    //   112.5134775865236, -12.63502615845515, -16.755688522867622,
+    //   -20.477577110078883, 29.16975815147137,
+    // ];
+
+    // const stats_date = ["2019-01-01", "2020-01-01", "2021-01-01"];
+
+    // const stats_hdd = [802.1, 634.4, 687.1];
+
+    // const stats_usage = [515.41, 365.73, 384.3];
+
+    // Chart for linear regression
+    const data = {
+      labels: hdd,
+      datasets: [
+        {
+          type: "scatter",
+          label: "usage (GJ)",
+          backgroundColor: "#176ADB",
+          borderColor: "#176ADB",
+          data: usage,
+        },
+        {
+          type: "line",
+          label: "Prediction",
+          backgroundColor: "#D21616",
+          borderColor: "#D21616",
+          data: y_test,
+        },
+      ],
+    };
+
+    const config = {
+      data,
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          y: {
+            title: {
+              display: true,
+              text: "Usage (GJ)",
+            },
+          },
+          x: {
+            title: {
+              display: true,
+              text: "HDD (℃)",
+            },
+          },
+        },
+      },
+    };
+    const lrChart = new Chart(document.getElementById("LRChart"), config);
+
+    // Chart for stats
+
+    // Chart for linear regression
+    const statsData = {
+      labels: stats_date,
+      datasets: [
+        {
+          label: "usage (GJ)",
+          backgroundColor: "#176ADB",
+          borderColor: "#176ADB",
+          data: stats_usage,
+          yAxisID: "yHdd",
+        },
+        {
+          label: "HDD",
+          backgroundColor: "#D21616",
+          borderColor: "#D21616",
+          data: stats_hdd,
+          yAxisID: "yUsage",
+        },
+      ],
+    };
+
+    const statsConfig = {
+      type: "bar",
+      data: statsData,
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          yHdd: {
+            grid: {
+              display: false,
+            },
+            title: {
+              display: true,
+              text: "HDD (℃)",
+            },
+          },
+          yUsage: {
+            position: "right",
+            title: {
+              display: true,
+              text: "Usage (GJ)",
+            },
+          },
+          x: {
+            grid: {
+              display: false,
+            },
+            title: {
+              display: true,
+              text: "Date",
+            },
+          },
+        },
+      },
+    };
+    const statsChart = new Chart(
+      document.getElementById("STATSChart"),
+      statsConfig
+    );
+  </script>
+</html>

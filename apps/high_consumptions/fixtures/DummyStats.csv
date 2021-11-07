@@ -1,0 +1,8 @@
+,facility_id,utility_type,usage,unit,billing_days,cost,year,month,hdd,cdd,date
+0,FixtureFacility1,NaturalGas,116.34,Gj,,2030.45,2015,1,1012.4,0.0,2015-01-01
+1,FixtureFacility1,NaturalGas,108.92,Gj,,2011.59,2016,1,845.1,0.0,2016-01-01
+2,FixtureFacility1,NaturalGas,85.64,Gj,,1471.59,2017,1,798.4,0.0,2017-01-01
+3,FixtureFacility1,NaturalGas,151.14,Gj,,2379.3,2018,1,976.4,0.0,2018-01-01
+4,FixtureFacility1,NaturalGas,97.09,Gj,,1538.78,2019,1,980.4,0.0,2019-01-01
+5,FixtureFacility1,NaturalGas,120.7,Gj,,1750.73,2020,1,835.3,0.0,2020-01-01
+6,FixtureFacility1,NaturalGas,142.67,Gj,,2043.55,2021,1,815.0,0.0,2021-01-01

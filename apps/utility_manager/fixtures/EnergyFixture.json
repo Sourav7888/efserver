@@ -1,0 +1,4275 @@
+[
+{
+    "model": "core.customer",
+    "pk": 1,
+    "fields": {
+        "customer_name": "FixtureCompany"
+    }
+},
+{
+    "model": "core.division",
+    "pk": 1,
+    "fields": {
+        "division_name": "FixtureDivision",
+        "logo": "",
+        "customer": "FixtureCompany"
+    }
+},
+{
+    "model": "core.facility",
+    "pk": 1,
+    "fields": {
+        "division": "FixtureDivision",
+        "facility_name": "FixtureFacility1",
+        "facility_identifier": "42",
+        "postal_code": "G9A6K9",
+        "latitude": "46.3282672",
+        "longitude": "-72.5679763",
+        "area": 24281,
+        "address": null,
+        "category_type": "Retail",
+        "closed": false
+    }
+},
+{
+    "model": "core.facility",
+    "pk": 2,
+    "fields": {
+        "division": "FixtureDivision",
+        "facility_name": "FixtureFacility2",
+        "facility_identifier": "107",
+        "postal_code": "J9A3G1",
+        "latitude": "45.4339988",
+        "longitude": "-75.7721405",
+        "area": 25841,
+        "address": null,
+        "category_type": "Retail",
+        "closed": false
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 1,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2020-01-01",
+        "utility_type": "NaturalGas",
+        "usage": "120.700",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "1750.730"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 2,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2020-07-01",
+        "utility_type": "NaturalGas",
+        "usage": "0.040",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "38.610"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 3,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2020-12-01",
+        "utility_type": "NaturalGas",
+        "usage": "68.590",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "1031.120"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 4,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2015-01-01",
+        "utility_type": "NaturalGas",
+        "usage": "116.340",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "2030.450"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 5,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2021-08-01",
+        "utility_type": "NaturalGas",
+        "usage": "0.000",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "30.700"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 6,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2015-02-01",
+        "utility_type": "NaturalGas",
+        "usage": "107.610",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "1846.470"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 7,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2015-03-01",
+        "utility_type": "NaturalGas",
+        "usage": "107.950",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "1885.940"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 8,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2015-04-01",
+        "utility_type": "NaturalGas",
+        "usage": "72.660",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "1312.000"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 9,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2015-05-01",
+        "utility_type": "NaturalGas",
+        "usage": "14.400",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "308.090"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 10,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2015-06-01",
+        "utility_type": "NaturalGas",
+        "usage": "6.830",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "168.050"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 11,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2015-07-01",
+        "utility_type": "NaturalGas",
+        "usage": "3.770",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "114.100"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 12,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2015-08-01",
+        "utility_type": "NaturalGas",
+        "usage": "3.690",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "112.640"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 13,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2015-09-01",
+        "utility_type": "NaturalGas",
+        "usage": "2.950",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "93.690"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 14,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2015-10-01",
+        "utility_type": "NaturalGas",
+        "usage": "10.820",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "246.940"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 15,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2015-11-01",
+        "utility_type": "NaturalGas",
+        "usage": "26.930",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "557.750"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 16,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2015-12-01",
+        "utility_type": "NaturalGas",
+        "usage": "49.610",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "937.370"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 17,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2016-01-01",
+        "utility_type": "NaturalGas",
+        "usage": "108.920",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "2011.590"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 18,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2016-02-01",
+        "utility_type": "NaturalGas",
+        "usage": "102.090",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "1884.450"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 19,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2016-03-01",
+        "utility_type": "NaturalGas",
+        "usage": "90.420",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "1683.960"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 20,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2016-04-01",
+        "utility_type": "NaturalGas",
+        "usage": "74.410",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "1414.890"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 21,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2016-05-01",
+        "utility_type": "NaturalGas",
+        "usage": "33.270",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "691.720"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 22,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2016-06-01",
+        "utility_type": "NaturalGas",
+        "usage": "12.530",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "287.050"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 23,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2016-07-01",
+        "utility_type": "NaturalGas",
+        "usage": "0.150",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "40.180"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 24,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2016-08-01",
+        "utility_type": "NaturalGas",
+        "usage": "0.000",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "33.620"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 25,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2016-09-01",
+        "utility_type": "NaturalGas",
+        "usage": "0.000",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "40.820"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 26,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2016-10-01",
+        "utility_type": "NaturalGas",
+        "usage": "3.510",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "107.330"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 27,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2016-11-01",
+        "utility_type": "NaturalGas",
+        "usage": "29.540",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "567.900"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 28,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2016-12-01",
+        "utility_type": "NaturalGas",
+        "usage": "49.940",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "893.260"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 29,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2017-01-01",
+        "utility_type": "NaturalGas",
+        "usage": "85.640",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "1471.590"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 30,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2017-02-01",
+        "utility_type": "NaturalGas",
+        "usage": "71.650",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "1221.950"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 31,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2017-03-01",
+        "utility_type": "NaturalGas",
+        "usage": "65.010",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "1113.780"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 32,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2017-04-01",
+        "utility_type": "NaturalGas",
+        "usage": "45.360",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "815.380"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 33,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2017-05-01",
+        "utility_type": "NaturalGas",
+        "usage": "13.470",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "278.380"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 34,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2017-06-01",
+        "utility_type": "NaturalGas",
+        "usage": "0.370",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "46.750"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 35,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2017-07-01",
+        "utility_type": "NaturalGas",
+        "usage": "0.000",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "36.390"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 36,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2017-08-01",
+        "utility_type": "NaturalGas",
+        "usage": "0.040",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "38.290"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 37,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2017-09-01",
+        "utility_type": "NaturalGas",
+        "usage": "0.000",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "38.820"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 38,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2017-10-01",
+        "utility_type": "NaturalGas",
+        "usage": "0.340",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "44.770"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 39,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2017-11-01",
+        "utility_type": "NaturalGas",
+        "usage": "16.110",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "306.150"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 40,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2017-12-01",
+        "utility_type": "NaturalGas",
+        "usage": "86.830",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "1420.650"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 41,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2018-01-01",
+        "utility_type": "NaturalGas",
+        "usage": "151.140",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "2379.300"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 42,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2018-02-01",
+        "utility_type": "NaturalGas",
+        "usage": "93.770",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "1511.290"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 43,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2018-03-01",
+        "utility_type": "NaturalGas",
+        "usage": "48.190",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "821.180"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 44,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2018-04-01",
+        "utility_type": "NaturalGas",
+        "usage": "52.030",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "890.140"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 45,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2018-05-01",
+        "utility_type": "NaturalGas",
+        "usage": "9.850",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "189.330"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 46,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2018-06-01",
+        "utility_type": "NaturalGas",
+        "usage": "0.480",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "27.130"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 47,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2018-07-01",
+        "utility_type": "NaturalGas",
+        "usage": "0.040",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "20.540"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 48,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2018-08-01",
+        "utility_type": "NaturalGas",
+        "usage": "0.000",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "18.040"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 49,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2018-09-01",
+        "utility_type": "NaturalGas",
+        "usage": "0.040",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "21.790"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 50,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2018-10-01",
+        "utility_type": "NaturalGas",
+        "usage": "5.520",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "114.720"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 51,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2018-11-01",
+        "utility_type": "NaturalGas",
+        "usage": "31.150",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "576.630"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 52,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2018-12-01",
+        "utility_type": "NaturalGas",
+        "usage": "75.910",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "1243.070"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 53,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2019-01-01",
+        "utility_type": "NaturalGas",
+        "usage": "97.090",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "1538.780"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 54,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2019-02-01",
+        "utility_type": "NaturalGas",
+        "usage": "133.610",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "2051.200"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 55,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2019-03-01",
+        "utility_type": "NaturalGas",
+        "usage": "61.470",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "994.290"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 56,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2019-04-01",
+        "utility_type": "NaturalGas",
+        "usage": "49.390",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "838.100"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 57,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2019-05-01",
+        "utility_type": "NaturalGas",
+        "usage": "17.120",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "334.540"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 58,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2019-06-01",
+        "utility_type": "NaturalGas",
+        "usage": "1.450",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "68.790"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 59,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2019-07-01",
+        "utility_type": "NaturalGas",
+        "usage": "0.040",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "39.300"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 60,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2019-08-01",
+        "utility_type": "NaturalGas",
+        "usage": "0.040",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "36.730"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 61,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2019-09-01",
+        "utility_type": "NaturalGas",
+        "usage": "0.190",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "45.750"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 62,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2019-10-01",
+        "utility_type": "NaturalGas",
+        "usage": "5.930",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "140.510"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 63,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2019-11-01",
+        "utility_type": "NaturalGas",
+        "usage": "34.050",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "635.870"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 64,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2019-12-01",
+        "utility_type": "NaturalGas",
+        "usage": "84.300",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "1301.640"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 65,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2020-02-01",
+        "utility_type": "NaturalGas",
+        "usage": "108.990",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "1582.350"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 66,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2020-03-01",
+        "utility_type": "NaturalGas",
+        "usage": "66.020",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "980.670"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 67,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2020-04-01",
+        "utility_type": "NaturalGas",
+        "usage": "56.700",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "891.090"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 68,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2020-05-01",
+        "utility_type": "NaturalGas",
+        "usage": "36.070",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "589.760"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 69,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2020-06-01",
+        "utility_type": "NaturalGas",
+        "usage": "4.330",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "101.280"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 70,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2020-08-01",
+        "utility_type": "NaturalGas",
+        "usage": "0.040",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "38.610"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 71,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2020-09-01",
+        "utility_type": "NaturalGas",
+        "usage": "1.010",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "49.100"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 72,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2020-10-01",
+        "utility_type": "NaturalGas",
+        "usage": "9.100",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "175.910"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 73,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2020-11-01",
+        "utility_type": "NaturalGas",
+        "usage": "28.800",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "479.980"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 74,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2021-01-01",
+        "utility_type": "NaturalGas",
+        "usage": "142.670",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "2043.550"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 75,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2021-02-01",
+        "utility_type": "NaturalGas",
+        "usage": "132.940",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "1681.200"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 76,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2021-03-01",
+        "utility_type": "NaturalGas",
+        "usage": "100.000",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "1280.760"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 77,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2021-04-01",
+        "utility_type": "NaturalGas",
+        "usage": "43.790",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "633.040"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 78,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2021-05-01",
+        "utility_type": "NaturalGas",
+        "usage": "33.870",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "486.420"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 79,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2021-06-01",
+        "utility_type": "NaturalGas",
+        "usage": "0.040",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "36.870"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 80,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2021-07-01",
+        "utility_type": "NaturalGas",
+        "usage": "0.040",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "31.200"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 81,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2021-05-01",
+        "utility_type": "Electricity",
+        "usage": "16560.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "2075.590"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 82,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2021-08-01",
+        "utility_type": "Electricity",
+        "usage": "22680.000",
+        "unit": null,
+        "billing_days": null,
+        "cost": "2723.660"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 83,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2021-09-01",
+        "utility_type": "NaturalGas",
+        "usage": "0.070",
+        "unit": null,
+        "billing_days": null,
+        "cost": "34.770"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 84,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2021-09-01",
+        "utility_type": "Electricity",
+        "usage": "17460.000",
+        "unit": null,
+        "billing_days": null,
+        "cost": "2055.300"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 85,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2021-10-01",
+        "utility_type": "NaturalGas",
+        "usage": "3.280",
+        "unit": null,
+        "billing_days": null,
+        "cost": "83.070"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 86,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2019-10-01",
+        "utility_type": "Electricity",
+        "usage": "17820.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "1881.090"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 87,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2015-01-01",
+        "utility_type": "Electricity",
+        "usage": "23580.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "2184.620"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 88,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2015-02-01",
+        "utility_type": "Electricity",
+        "usage": "22320.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "2078.370"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 89,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2015-03-01",
+        "utility_type": "Electricity",
+        "usage": "23760.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "2164.290"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 90,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2015-04-01",
+        "utility_type": "Electricity",
+        "usage": "23760.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "2569.530"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 91,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2015-05-01",
+        "utility_type": "Electricity",
+        "usage": "28980.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "3159.220"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 92,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2015-06-01",
+        "utility_type": "Electricity",
+        "usage": "29700.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "3131.780"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 93,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2015-07-01",
+        "utility_type": "Electricity",
+        "usage": "32760.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "3486.950"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 94,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2015-08-01",
+        "utility_type": "Electricity",
+        "usage": "34020.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "3496.050"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 95,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2015-09-01",
+        "utility_type": "Electricity",
+        "usage": "29880.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "3127.000"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 96,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2015-10-01",
+        "utility_type": "Electricity",
+        "usage": "25200.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "2513.910"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 97,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2015-11-01",
+        "utility_type": "Electricity",
+        "usage": "25020.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "2468.250"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 98,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2015-12-01",
+        "utility_type": "Electricity",
+        "usage": "24480.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "2335.320"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 99,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2016-01-01",
+        "utility_type": "Electricity",
+        "usage": "23220.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "2252.800"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 100,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2016-02-01",
+        "utility_type": "Electricity",
+        "usage": "22140.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "2087.750"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 101,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2016-03-01",
+        "utility_type": "Electricity",
+        "usage": "23400.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "2225.330"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 102,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2016-04-01",
+        "utility_type": "Electricity",
+        "usage": "23040.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "2885.460"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 103,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2016-05-01",
+        "utility_type": "Electricity",
+        "usage": "27000.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "2976.480"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 104,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2016-06-01",
+        "utility_type": "Electricity",
+        "usage": "29160.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "3088.620"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 105,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2016-07-01",
+        "utility_type": "Electricity",
+        "usage": "31860.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "3431.230"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 106,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2016-08-01",
+        "utility_type": "Electricity",
+        "usage": "34560.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "3534.760"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 107,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2016-09-01",
+        "utility_type": "Electricity",
+        "usage": "27540.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "2973.670"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 108,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2016-10-01",
+        "utility_type": "Electricity",
+        "usage": "24120.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "2611.780"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 109,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2016-11-01",
+        "utility_type": "Electricity",
+        "usage": "22500.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "2167.540"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 110,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2016-12-01",
+        "utility_type": "Electricity",
+        "usage": "23040.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "2205.690"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 111,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2017-01-01",
+        "utility_type": "Electricity",
+        "usage": "22680.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "2151.140"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 112,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2017-02-01",
+        "utility_type": "Electricity",
+        "usage": "20340.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "1927.020"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 113,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2017-03-01",
+        "utility_type": "Electricity",
+        "usage": "23580.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "2217.530"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 114,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2017-04-01",
+        "utility_type": "Electricity",
+        "usage": "22140.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "2312.020"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 115,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2017-05-01",
+        "utility_type": "Electricity",
+        "usage": "29880.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "3209.230"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 116,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2017-06-01",
+        "utility_type": "Electricity",
+        "usage": "28980.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "3074.520"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 117,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2017-07-01",
+        "utility_type": "Electricity",
+        "usage": "30960.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "3224.640"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 118,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2017-08-01",
+        "utility_type": "Electricity",
+        "usage": "31320.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "3279.510"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 119,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2017-09-01",
+        "utility_type": "Electricity",
+        "usage": "28080.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "3106.050"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 120,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2017-10-01",
+        "utility_type": "Electricity",
+        "usage": "25200.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "2571.500"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 121,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2017-11-01",
+        "utility_type": "Electricity",
+        "usage": "23040.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "2184.270"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 122,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2017-12-01",
+        "utility_type": "Electricity",
+        "usage": "23580.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "2336.620"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 123,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2018-01-01",
+        "utility_type": "Electricity",
+        "usage": "23940.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "2314.350"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 124,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2018-02-01",
+        "utility_type": "Electricity",
+        "usage": "21240.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "1995.690"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 125,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2018-03-01",
+        "utility_type": "Electricity",
+        "usage": "22680.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "2144.610"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 126,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2018-04-01",
+        "utility_type": "Electricity",
+        "usage": "20880.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "2421.570"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 127,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2018-05-01",
+        "utility_type": "Electricity",
+        "usage": "25560.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "2875.150"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 128,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2018-06-01",
+        "utility_type": "Electricity",
+        "usage": "23760.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "2651.630"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 129,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2018-07-01",
+        "utility_type": "Electricity",
+        "usage": "28080.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "3018.030"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 130,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2018-08-01",
+        "utility_type": "Electricity",
+        "usage": "28080.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "3004.290"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 131,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2018-09-01",
+        "utility_type": "Electricity",
+        "usage": "22860.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "2603.320"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 132,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2018-10-01",
+        "utility_type": "Electricity",
+        "usage": "22140.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "2330.210"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 133,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2018-11-01",
+        "utility_type": "Electricity",
+        "usage": "20700.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "2082.060"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 134,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2018-12-01",
+        "utility_type": "Electricity",
+        "usage": "20520.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "1974.420"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 135,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2019-01-01",
+        "utility_type": "Electricity",
+        "usage": "18360.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "1764.590"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 136,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2019-02-01",
+        "utility_type": "Electricity",
+        "usage": "17460.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "1644.120"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 137,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2019-03-01",
+        "utility_type": "Electricity",
+        "usage": "25200.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "2181.080"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 138,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2019-04-01",
+        "utility_type": "Electricity",
+        "usage": "17460.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "1738.960"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 139,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2019-05-01",
+        "utility_type": "Electricity",
+        "usage": "18180.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "2179.060"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 140,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2019-06-01",
+        "utility_type": "Electricity",
+        "usage": "17820.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "2046.450"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 141,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2019-07-01",
+        "utility_type": "Electricity",
+        "usage": "23220.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "2539.830"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 142,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2019-08-01",
+        "utility_type": "Electricity",
+        "usage": "21960.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "2369.950"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 143,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2019-09-01",
+        "utility_type": "Electricity",
+        "usage": "18000.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "1917.710"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 144,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2019-11-01",
+        "utility_type": "Electricity",
+        "usage": "17460.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "1670.230"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 145,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2019-12-01",
+        "utility_type": "Electricity",
+        "usage": "16920.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "1654.090"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 146,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2020-01-01",
+        "utility_type": "Electricity",
+        "usage": "17460.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "1697.450"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 147,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2020-02-01",
+        "utility_type": "Electricity",
+        "usage": "16200.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "1593.170"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 148,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2020-03-01",
+        "utility_type": "Electricity",
+        "usage": "16200.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "1640.170"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 149,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2020-04-01",
+        "utility_type": "Electricity",
+        "usage": "5940.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "886.650"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 150,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2020-05-01",
+        "utility_type": "Electricity",
+        "usage": "14040.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "1896.330"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 151,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2020-06-01",
+        "utility_type": "Electricity",
+        "usage": "17820.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "2131.930"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 152,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2020-07-01",
+        "utility_type": "Electricity",
+        "usage": "23580.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "2718.270"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 153,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2020-08-01",
+        "utility_type": "Electricity",
+        "usage": "22500.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "2503.390"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 154,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2020-09-01",
+        "utility_type": "Electricity",
+        "usage": "17640.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "1960.590"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 155,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2020-10-01",
+        "utility_type": "Electricity",
+        "usage": "15480.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "1847.960"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 156,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2020-11-01",
+        "utility_type": "Electricity",
+        "usage": "14940.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "1672.010"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 157,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2020-12-01",
+        "utility_type": "Electricity",
+        "usage": "15660.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "1562.170"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 158,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2021-01-01",
+        "utility_type": "Electricity",
+        "usage": "13500.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "1385.270"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 159,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2021-02-01",
+        "utility_type": "Electricity",
+        "usage": "13140.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "1327.860"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 160,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2021-03-01",
+        "utility_type": "Electricity",
+        "usage": "15480.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "1617.570"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 161,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2021-04-01",
+        "utility_type": "Electricity",
+        "usage": "16560.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "1841.240"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 162,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2021-06-01",
+        "utility_type": "Electricity",
+        "usage": "18000.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "2258.440"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 163,
+    "fields": {
+        "facility": "FixtureFacility1",
+        "billing_date": "2021-07-01",
+        "utility_type": "Electricity",
+        "usage": "19080.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "2351.320"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 164,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2021-07-01",
+        "utility_type": "NaturalGas",
+        "usage": "0.110",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "20.860"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 165,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2015-01-01",
+        "utility_type": "NaturalGas",
+        "usage": "79.820",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "1213.290"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 166,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2015-02-01",
+        "utility_type": "NaturalGas",
+        "usage": "82.360",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "1192.560"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 167,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2015-03-01",
+        "utility_type": "NaturalGas",
+        "usage": "24.660",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "391.450"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 168,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2015-04-01",
+        "utility_type": "NaturalGas",
+        "usage": "1.530",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "41.910"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 169,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2015-05-01",
+        "utility_type": "NaturalGas",
+        "usage": "0.000",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "19.700"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 170,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2015-06-01",
+        "utility_type": "NaturalGas",
+        "usage": "0.000",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "19.700"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 171,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2015-07-01",
+        "utility_type": "NaturalGas",
+        "usage": "0.000",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "19.700"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 172,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2015-08-01",
+        "utility_type": "NaturalGas",
+        "usage": "1.420",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "19.700"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 173,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2015-09-01",
+        "utility_type": "NaturalGas",
+        "usage": "0.000",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "19.700"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 174,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2015-10-01",
+        "utility_type": "NaturalGas",
+        "usage": "2.350",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "52.140"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 175,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2015-11-01",
+        "utility_type": "NaturalGas",
+        "usage": "11.120",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "170.590"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 176,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2015-12-01",
+        "utility_type": "NaturalGas",
+        "usage": "16.410",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "237.110"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 177,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2016-01-01",
+        "utility_type": "NaturalGas",
+        "usage": "49.610",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "637.100"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 178,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2016-02-01",
+        "utility_type": "NaturalGas",
+        "usage": "65.540",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "829.300"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 179,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2016-03-01",
+        "utility_type": "NaturalGas",
+        "usage": "21.370",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "277.140"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 180,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2016-04-01",
+        "utility_type": "NaturalGas",
+        "usage": "6.680",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "83.790"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 181,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2016-05-01",
+        "utility_type": "NaturalGas",
+        "usage": "0.110",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "20.780"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 182,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2016-06-01",
+        "utility_type": "NaturalGas",
+        "usage": "0.000",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "19.700"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 183,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2016-07-01",
+        "utility_type": "NaturalGas",
+        "usage": "0.000",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "19.700"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 184,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2016-08-01",
+        "utility_type": "NaturalGas",
+        "usage": "0.000",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "19.700"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 185,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2016-09-01",
+        "utility_type": "NaturalGas",
+        "usage": "0.000",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "19.700"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 186,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2016-10-01",
+        "utility_type": "NaturalGas",
+        "usage": "7.870",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "111.930"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 187,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2016-11-01",
+        "utility_type": "NaturalGas",
+        "usage": "22.190",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "275.160"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 188,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2016-12-01",
+        "utility_type": "NaturalGas",
+        "usage": "80.640",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "938.360"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 189,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2017-01-01",
+        "utility_type": "NaturalGas",
+        "usage": "59.460",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "681.770"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 190,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2017-02-01",
+        "utility_type": "NaturalGas",
+        "usage": "66.100",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "754.030"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 191,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2017-03-01",
+        "utility_type": "NaturalGas",
+        "usage": "66.280",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "756.740"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 192,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2017-04-01",
+        "utility_type": "NaturalGas",
+        "usage": "5.520",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "84.510"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 193,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2017-05-01",
+        "utility_type": "NaturalGas",
+        "usage": "0.410",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "24.550"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 194,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2017-06-01",
+        "utility_type": "NaturalGas",
+        "usage": "0.000",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "19.700"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 195,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2017-07-01",
+        "utility_type": "NaturalGas",
+        "usage": "0.000",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "19.700"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 196,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2017-08-01",
+        "utility_type": "NaturalGas",
+        "usage": "0.000",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "19.700"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 197,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2017-09-01",
+        "utility_type": "NaturalGas",
+        "usage": "0.000",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "19.700"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 198,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2017-10-01",
+        "utility_type": "NaturalGas",
+        "usage": "2.460",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "48.030"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 199,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2017-11-01",
+        "utility_type": "NaturalGas",
+        "usage": "51.210",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "582.540"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 200,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2017-12-01",
+        "utility_type": "NaturalGas",
+        "usage": "220.740",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "2356.010"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 201,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2018-01-01",
+        "utility_type": "NaturalGas",
+        "usage": "141.110",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "1559.180"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 202,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2018-02-01",
+        "utility_type": "NaturalGas",
+        "usage": "99.520",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "1117.570"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 203,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2018-03-01",
+        "utility_type": "NaturalGas",
+        "usage": "46.660",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "536.380"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 204,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2018-04-01",
+        "utility_type": "NaturalGas",
+        "usage": "51.400",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "561.110"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 205,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2018-05-01",
+        "utility_type": "NaturalGas",
+        "usage": "0.300",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "23.000"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 206,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2018-06-01",
+        "utility_type": "NaturalGas",
+        "usage": "0.110",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "20.940"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 207,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2018-07-01",
+        "utility_type": "NaturalGas",
+        "usage": "0.000",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "19.700"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 208,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2018-08-01",
+        "utility_type": "NaturalGas",
+        "usage": "0.000",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "19.700"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 209,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2018-09-01",
+        "utility_type": "NaturalGas",
+        "usage": "0.300",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "23.360"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 210,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2018-10-01",
+        "utility_type": "NaturalGas",
+        "usage": "1.430",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "103.810"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 211,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2018-11-01",
+        "utility_type": "NaturalGas",
+        "usage": "26.970",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "326.320"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 212,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2018-12-01",
+        "utility_type": "NaturalGas",
+        "usage": "84.560",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "970.590"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 213,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2019-01-01",
+        "utility_type": "NaturalGas",
+        "usage": "119.660",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "1434.690"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 214,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2019-02-01",
+        "utility_type": "NaturalGas",
+        "usage": "79.150",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "960.630"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 215,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2019-03-01",
+        "utility_type": "NaturalGas",
+        "usage": "45.660",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "562.900"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 216,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2019-04-01",
+        "utility_type": "NaturalGas",
+        "usage": "8.170",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "115.050"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 217,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2019-05-01",
+        "utility_type": "NaturalGas",
+        "usage": "0.220",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "22.350"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 218,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2019-06-01",
+        "utility_type": "NaturalGas",
+        "usage": "0.110",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "21.010"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 219,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2019-07-01",
+        "utility_type": "NaturalGas",
+        "usage": "0.000",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "19.700"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 220,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2019-08-01",
+        "utility_type": "NaturalGas",
+        "usage": "0.000",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "19.700"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 221,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2019-09-01",
+        "utility_type": "NaturalGas",
+        "usage": "1.430",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "21.820"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 222,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2019-10-01",
+        "utility_type": "NaturalGas",
+        "usage": "1.440",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "31.500"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 223,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2019-11-01",
+        "utility_type": "NaturalGas",
+        "usage": "25.920",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "294.380"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 224,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2019-12-01",
+        "utility_type": "NaturalGas",
+        "usage": "19.880",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "541.110"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 225,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2020-01-01",
+        "utility_type": "NaturalGas",
+        "usage": "58.860",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "610.090"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 226,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2020-02-01",
+        "utility_type": "NaturalGas",
+        "usage": "42.560",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "450.080"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 227,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2020-03-01",
+        "utility_type": "NaturalGas",
+        "usage": "31.560",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "338.740"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 228,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2020-04-01",
+        "utility_type": "NaturalGas",
+        "usage": "37.040",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "372.980"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 229,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2020-05-01",
+        "utility_type": "NaturalGas",
+        "usage": "2.800",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "47.420"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 230,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2020-06-01",
+        "utility_type": "NaturalGas",
+        "usage": "0.000",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "19.700"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 231,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2020-07-01",
+        "utility_type": "NaturalGas",
+        "usage": "0.000",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "19.700"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 232,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2020-08-01",
+        "utility_type": "NaturalGas",
+        "usage": "0.000",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "19.700"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 233,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2020-09-01",
+        "utility_type": "NaturalGas",
+        "usage": "0.220",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "21.990"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 234,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2020-10-01",
+        "utility_type": "NaturalGas",
+        "usage": "1.940",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "39.560"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 235,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2020-11-01",
+        "utility_type": "NaturalGas",
+        "usage": "20.400",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "222.570"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 236,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2020-12-01",
+        "utility_type": "NaturalGas",
+        "usage": "76.910",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "765.850"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 237,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2021-01-01",
+        "utility_type": "NaturalGas",
+        "usage": "79.000",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "791.050"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 238,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2021-02-01",
+        "utility_type": "NaturalGas",
+        "usage": "72.060",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "724.410"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 239,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2021-03-01",
+        "utility_type": "NaturalGas",
+        "usage": "51.850",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "532.050"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 240,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2021-04-01",
+        "utility_type": "NaturalGas",
+        "usage": "9.810",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "121.810"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 241,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2021-05-01",
+        "utility_type": "NaturalGas",
+        "usage": "1.310",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "33.470"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 242,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2021-06-01",
+        "utility_type": "NaturalGas",
+        "usage": "0.000",
+        "unit": "Gj",
+        "billing_days": null,
+        "cost": "19.700"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 243,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2021-06-01",
+        "utility_type": "Electricity",
+        "usage": "25920.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "2727.480"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 244,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2021-08-01",
+        "utility_type": "Electricity",
+        "usage": "31440.000",
+        "unit": null,
+        "billing_days": null,
+        "cost": "3027.980"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 245,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2021-08-01",
+        "utility_type": "NaturalGas",
+        "usage": "0.000",
+        "unit": null,
+        "billing_days": null,
+        "cost": "19.700"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 246,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2021-09-01",
+        "utility_type": "Electricity",
+        "usage": "23760.000",
+        "unit": null,
+        "billing_days": null,
+        "cost": "2478.690"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 247,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2021-09-01",
+        "utility_type": "NaturalGas",
+        "usage": "0.000",
+        "unit": null,
+        "billing_days": null,
+        "cost": "19.700"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 248,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2019-10-01",
+        "utility_type": "Electricity",
+        "usage": "29760.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "2947.500"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 249,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2015-02-01",
+        "utility_type": "Electricity",
+        "usage": "29040.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "2637.060"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 250,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2015-03-01",
+        "utility_type": "Electricity",
+        "usage": "27360.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "2616.670"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 251,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2015-04-01",
+        "utility_type": "Electricity",
+        "usage": "22800.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "2603.340"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 252,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2015-05-01",
+        "utility_type": "Electricity",
+        "usage": "27600.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "2960.730"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 253,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2015-06-01",
+        "utility_type": "Electricity",
+        "usage": "25920.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "2700.380"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 254,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2015-07-01",
+        "utility_type": "Electricity",
+        "usage": "30240.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "3163.180"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 255,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2015-08-01",
+        "utility_type": "Electricity",
+        "usage": "37920.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "3801.490"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 256,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2015-09-01",
+        "utility_type": "Electricity",
+        "usage": "31440.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "3283.730"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 257,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2015-10-01",
+        "utility_type": "Electricity",
+        "usage": "25920.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "2721.540"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 258,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2015-11-01",
+        "utility_type": "Electricity",
+        "usage": "26160.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "2677.480"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 259,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2015-12-01",
+        "utility_type": "Electricity",
+        "usage": "24720.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "2485.320"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 260,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2016-01-01",
+        "utility_type": "Electricity",
+        "usage": "27840.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "2721.490"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 261,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2016-02-01",
+        "utility_type": "Electricity",
+        "usage": "26400.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "2551.480"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 262,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2016-03-01",
+        "utility_type": "Electricity",
+        "usage": "23760.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "2395.720"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 263,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2016-04-01",
+        "utility_type": "Electricity",
+        "usage": "23280.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "2373.670"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 264,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2016-05-01",
+        "utility_type": "Electricity",
+        "usage": "27840.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "3059.940"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 265,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2016-06-01",
+        "utility_type": "Electricity",
+        "usage": "24000.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "2498.740"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 266,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2016-07-01",
+        "utility_type": "Electricity",
+        "usage": "26640.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "2763.160"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 267,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2016-08-01",
+        "utility_type": "Electricity",
+        "usage": "42240.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "3937.640"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 268,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2016-09-01",
+        "utility_type": "Electricity",
+        "usage": "30720.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "2973.830"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 269,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2016-10-01",
+        "utility_type": "Electricity",
+        "usage": "26880.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "2891.140"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 270,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2016-11-01",
+        "utility_type": "Electricity",
+        "usage": "24240.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "2439.660"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 271,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2016-12-01",
+        "utility_type": "Electricity",
+        "usage": "27120.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "2684.510"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 272,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2017-01-01",
+        "utility_type": "Electricity",
+        "usage": "25920.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "2570.400"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 273,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2017-02-01",
+        "utility_type": "Electricity",
+        "usage": "23280.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "2266.390"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 274,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2017-03-01",
+        "utility_type": "Electricity",
+        "usage": "27120.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "2691.350"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 275,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2017-04-01",
+        "utility_type": "Electricity",
+        "usage": "22560.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "2530.130"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 276,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2017-05-01",
+        "utility_type": "Electricity",
+        "usage": "29520.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "3298.370"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 277,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2017-06-01",
+        "utility_type": "Electricity",
+        "usage": "26640.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "2788.170"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 278,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2017-07-01",
+        "utility_type": "Electricity",
+        "usage": "30720.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "3020.630"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 279,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2017-08-01",
+        "utility_type": "Electricity",
+        "usage": "41760.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "3944.650"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 280,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2017-09-01",
+        "utility_type": "Electricity",
+        "usage": "32640.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "3461.190"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 281,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2017-10-01",
+        "utility_type": "Electricity",
+        "usage": "26880.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "2893.790"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 282,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2017-11-01",
+        "utility_type": "Electricity",
+        "usage": "24240.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "2420.410"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 283,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2017-12-01",
+        "utility_type": "Electricity",
+        "usage": "27600.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "2715.490"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 284,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2018-01-01",
+        "utility_type": "Electricity",
+        "usage": "27120.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "2734.350"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 285,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2018-02-01",
+        "utility_type": "Electricity",
+        "usage": "23040.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "2323.090"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 286,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2018-03-01",
+        "utility_type": "Electricity",
+        "usage": "24000.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "2415.480"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 287,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2018-04-01",
+        "utility_type": "Electricity",
+        "usage": "22800.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "2372.120"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 288,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2018-05-01",
+        "utility_type": "Electricity",
+        "usage": "29280.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "3473.410"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 289,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2018-06-01",
+        "utility_type": "Electricity",
+        "usage": "31680.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "3109.350"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 290,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2018-07-01",
+        "utility_type": "Electricity",
+        "usage": "39840.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "3658.370"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 291,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2018-08-01",
+        "utility_type": "Electricity",
+        "usage": "45120.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "4038.600"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 292,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2018-09-01",
+        "utility_type": "Electricity",
+        "usage": "29520.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "3101.810"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 293,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2018-10-01",
+        "utility_type": "Electricity",
+        "usage": "23760.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "2586.350"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 294,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2018-11-01",
+        "utility_type": "Electricity",
+        "usage": "26400.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "2718.300"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 295,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2018-12-01",
+        "utility_type": "Electricity",
+        "usage": "25680.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "2495.510"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 296,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2019-01-01",
+        "utility_type": "Electricity",
+        "usage": "28800.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "2813.670"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 297,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2019-02-01",
+        "utility_type": "Electricity",
+        "usage": "24720.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "2471.860"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 298,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2019-03-01",
+        "utility_type": "Electricity",
+        "usage": "25920.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "2653.590"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 299,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2019-04-01",
+        "utility_type": "Electricity",
+        "usage": "23520.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "2510.190"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 300,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2019-05-01",
+        "utility_type": "Electricity",
+        "usage": "31440.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "3152.060"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 301,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2019-06-01",
+        "utility_type": "Electricity",
+        "usage": "32400.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "3196.390"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 302,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2019-07-01",
+        "utility_type": "Electricity",
+        "usage": "36240.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "3646.180"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 303,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2019-08-01",
+        "utility_type": "Electricity",
+        "usage": "41040.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "3932.430"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 304,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2019-09-01",
+        "utility_type": "Electricity",
+        "usage": "29040.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "3018.840"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 305,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2015-01-01",
+        "utility_type": "Electricity",
+        "usage": "30240.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "2816.090"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 306,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2019-11-01",
+        "utility_type": "Electricity",
+        "usage": "26640.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "2848.190"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 307,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2019-12-01",
+        "utility_type": "Electricity",
+        "usage": "26880.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "2739.360"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 308,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2020-03-01",
+        "utility_type": "Electricity",
+        "usage": "24000.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "2484.470"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 309,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2020-04-01",
+        "utility_type": "Electricity",
+        "usage": "9840.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "1276.490"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 310,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2020-05-01",
+        "utility_type": "Electricity",
+        "usage": "25440.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "2959.230"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 311,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2020-06-01",
+        "utility_type": "Electricity",
+        "usage": "29280.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "3128.270"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 312,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2020-07-01",
+        "utility_type": "Electricity",
+        "usage": "33840.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "3495.250"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 313,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2020-08-01",
+        "utility_type": "Electricity",
+        "usage": "36480.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "3543.990"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 314,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2020-09-01",
+        "utility_type": "Electricity",
+        "usage": "28080.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "2834.250"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 315,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2020-10-01",
+        "utility_type": "Electricity",
+        "usage": "25440.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "2564.270"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 316,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2020-11-01",
+        "utility_type": "Electricity",
+        "usage": "21600.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "2246.600"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 317,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2020-12-01",
+        "utility_type": "Electricity",
+        "usage": "21120.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "2323.120"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 318,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2021-01-01",
+        "utility_type": "Electricity",
+        "usage": "17520.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "2038.700"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 319,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2021-02-01",
+        "utility_type": "Electricity",
+        "usage": "19680.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "2162.930"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 320,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2021-03-01",
+        "utility_type": "Electricity",
+        "usage": "18480.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "2024.920"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 321,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2021-04-01",
+        "utility_type": "Electricity",
+        "usage": "16080.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "1862.380"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 322,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2021-05-01",
+        "utility_type": "Electricity",
+        "usage": "20640.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "2400.590"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 323,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2020-01-01",
+        "utility_type": "Electricity",
+        "usage": "26880.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "2718.590"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 324,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2020-02-01",
+        "utility_type": "Electricity",
+        "usage": "26160.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "2562.960"
+    }
+},
+{
+    "model": "utility_manager.utilitybill",
+    "pk": 325,
+    "fields": {
+        "facility": "FixtureFacility2",
+        "billing_date": "2021-07-01",
+        "utility_type": "Electricity",
+        "usage": "26880.000",
+        "unit": "Kwh",
+        "billing_days": null,
+        "cost": "2855.620"
+    }
+}
+]

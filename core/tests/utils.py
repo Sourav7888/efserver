@@ -4,7 +4,6 @@ from django.contrib.auth.models import User
 
 
 class BaseTest(APITestCase):
-    # << ONLY USE self.data to access in setup ! Elsewhere must be hard coded >>
     data = {
         "user": {"username": "CoreTestUser", "password": "123"},
         "division": [
