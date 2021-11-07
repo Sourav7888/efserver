@@ -5,6 +5,8 @@ from apps.high_consumptions.base import GasHighConsumption
 import pandas as pd
 from datetime import datetime as dt
 from apps.high_consumptions.cs_exeptions import EmptyDataFrame
+from apps.high_consumptions.tasks import create_hc_investigation
+from apps.investigations.models import Investigation
 
 
 def dummy_data(*args) -> pd.DataFrame:
@@ -74,3 +76,18 @@ class BaseTestCase(BaseTest):
 
         # Test that this is high consuming
         self.assertEqual(hc.is_hc(), True)
+
+        # Test that creating an investigation work correctly
+        investigation_id = create_hc_investigation(
+            facility,
+            template,
+            "HC_GAS",
+            "2020-01-01",
+            hc.get_description(),
+            include_document=False,
+        )
+
+        self.assertEqual(
+            Investigation.objects.filter(investigation_id=investigation_id).exists(),
+            True,
+        )
