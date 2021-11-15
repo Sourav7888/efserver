@@ -52,6 +52,7 @@ def send_created_investigation(info: dict[str, str]):
     from_email = "info@enerfrog-workstation.ca"
 
     # @TODO: Some user email include none when sent
+    # @TODO: Add on ENERFROG_STAFF should receive this and not customers
     to_email = list(
         UserInfo.objects.filter(is_investigator=True)
         .exclude(user__email="")
