@@ -56,7 +56,6 @@ def query_facility_specific_month_energy(
     return energy
 
 
-# @TODO: Integration Test -- Dependency injection
 def query_facility_energy_weather(
     facility_obj: models.Model,
     utility_type: str,
@@ -102,7 +101,6 @@ def query_facility_energy_weather(
     return pd.DataFrame([])
 
 
-# @TODO: Integration Test -- Dependency injection
 def query_facility_specific_month_stats(
     facility_obj: models.Model,  # The facility object
     month: int,  # The month required
@@ -119,12 +117,9 @@ def query_facility_specific_month_stats(
     energy = query_facility_specific_month_energy(
         facility_obj, month, min_year=min_year, max_year=max_year, **kwargs
     )
-    
+
     if not energy.empty:
         if include_weather:
-            # get the max and min billing_date in energy dataframe
-            max_billing_date = energy.billing_date.max()
-            min_billing_date = energy.billing_date.min()
 
             # Weather data
             weather_data = weather_method(
