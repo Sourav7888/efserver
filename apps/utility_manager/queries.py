@@ -4,10 +4,8 @@ from apps.weather_manager.queries import (
     query_coord_specific_month_weather_data,
 )
 from django.db import models
-from datetime import datetime as dt
 import pandas as pd
 from .models import UtilityBill
-from typing import Any
 from dateutil.relativedelta import relativedelta
 from core.models import Facility
 
