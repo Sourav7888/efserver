@@ -125,7 +125,7 @@ class BaseTestCase(BaseTest):
 
         assert_frame_equal(stats, _context, check_dtype=False, check_index_type=False)
 
-        self.assertEqual(hc.is_hc(), True)
+        self.assertEqual(hc.is_hc(), False)
 
         # test that on render the context return bytes but also add additional context
         template = hc.render_template(facility_context=True)
