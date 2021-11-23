@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>High Consumption Doc</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+      integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l"
+      crossorigin="anonymous"
+    />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <style>
+    body {
+      font-family: "Poppins", sans-serif;
+    }
+    .card-header {
+      background-color: #2f3944 !important;
+      color: white;
+    }
+    .chart_card .card-body {
+      height: 45vh;
+      width: auto;
+    }
+    .csTable thead {
+      color: white;
+    }
+
+    .my-custom-scrollbar {
+      position: relative;
+      height: 450px;
+      overflow: auto;
+    }
+    .table-wrapper-scroll-y {
+      display: block;
+    }
+  </style>
+  <body>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col">
+          <div class="container d-flex justify-content-center">
+            <a class="navbar-brand" href="#">
+              <img
+                src="https://productionefworkstations3.s3.amazonaws.com/_general_do_not_delete/enerfrog-logo.png"
+                alt=""
+                width="175"
+                height="40"
+              />
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="row mt-4">
+        <div class="col">
+          <h4><b>Auto-Generated High Consumption Document - Electricity</b></h4>
+        </div>
+      </div>
+      <div class="row card mt-2 border-0">
+        <div class="card-body">
+          <ul>
+            <li>Facility: {{ context.facility.facility_name }}</li>
+            <li>Address: {{ context.facility.address }}</li>
+            <li>Area: {{ context.facility.area }}</li>
+            <li>Category: {{ context.facility.category_type }}</li>
+            <li>Latitude: {{ context.facility.latitude }}</li>
+            <li>Longitude: {{ context.facility.longitude }}</li>
+          </ul>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <table class="table border-0">
+            <thead class="border-0">
+              <tr>
+                <th class="border-0 text-center" scope="col">Target Date</th>
+                <th class="border-0 text-center" scope="col">Month CDD (℃)</th>
+                <th class="border-0 text-center" scope="col">
+                  Month Usage (Kwh)
+                </th>
+                <th class="border-0 text-center" scope="col">
+                  Past Average (Kwh)
+                </th>
+                <th class="border-0 text-center" scope="col">
+                  12 Month Usage/Area (Kwh/sqft)
+                </th>
+                <th class="border-0 text-center" scope="col">
+                  Est. HC Cost ($)
+                </th>
+                <th class="border-0 text-center" scope="col">Diff (%)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="border-0 text-center">{{ context.target_date }}</td>
+                <td class="border-0 text-center">{{ context.month_CDD }}</td>
+                <td class="border-0 text-center">{{ context.month_usage }}</td>
+                <td class="border-0 text-center">{{ context.average }}</td>
+                <td class="border-0 text-center">{{ context.usage_area }}</td>
+                <td class="border-0 text-center">
+                  {{ context.estimated_cost }}
+                </td>
+                <td class="border-0 text-center">
+                  {{ context.percentage_diff }}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <!-- Charts Linear Regression -->
+      <div class="row">
+        <div class="col">
+          <div class="container-fluid">
+            <div class="card chart_card">
+              <div
+                class="
+                  card-header
+                  d-flex
+                  justify-content-between
+                  align-items-center
+                "
+              >
+                <h5>Electricity Consumption - Monthly Overview</h5>
+              </div>
+              <div class="card-body">
+                <canvas id="STATSChart"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Chart Stats -->
+      <div class="row mt-4">
+        <div class="col table-wrapper-scroll-y my-custom-scrollbar">
+          <table class="table csTable border-0">
+            <thead class="border-0 bg-dark">
+              <tr>
+                <th class="border-0 text-center" scope="col">Date</th>
+                <th class="border-0 text-center" scope="col">CDD (℃)</th>
+                <th class="border-0 text-center" scope="col">Usage (GJ)</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for i in context.render.stats %}
+              <tr>
+                <td class="border-0 text-center">{{ i.0 }}</td>
+                <td class="border-0 text-center">{{ i.1 }}</td>
+                <td class="border-0 text-center">{{ i.2 }}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </body>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  {{context.stats.date|json_script:"stats-date"}}
+  {{context.stats.cdd|json_script:"stats-cdd"}}
+  {{context.stats.usage|json_script:"stats-usage"}}
+  {{context.render.avg|json_script:"render-avg"}}
+  <script>
+    const stats_date = JSON.parse(
+      document.getElementById("stats-date").textContent
+    );
+    const stats_cdd = JSON.parse(
+      document.getElementById("stats-cdd").textContent
+    );
+    const stats_usage = JSON.parse(
+      document.getElementById("stats-usage").textContent
+    );
+    const render_avg = JSON.parse(
+      document.getElementById("render-avg").textContent
+    );
+
+    // Chart for stats
+
+    // Chart for linear regression
+    const statsData = {
+      labels: stats_date,
+      datasets: [
+        {
+          label: "average (Kwh)",
+          backgroundColor: "#FFE033",
+          borderColor: "#FFE033",
+          data: render_avg,
+          yAxisID: "yUsage",
+          type: "line",
+        },
+        {
+          label: "usage (Kwh)",
+          backgroundColor: "#176ADB",
+          borderColor: "#176ADB",
+          data: stats_usage,
+          yAxisID: "yUsage",
+        },
+
+        {
+          label: "CDD",
+          backgroundColor: "#D21616",
+          borderColor: "#D21616",
+          data: stats_cdd,
+          yAxisID: "yCdd",
+        },
+      ],
+    };
+
+    const statsConfig = {
+      type: "bar",
+      data: statsData,
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          yCdd: {
+            grid: {
+              display: false,
+            },
+            title: {
+              display: true,
+              text: "CDD (℃)",
+            },
+          },
+          yUsage: {
+            position: "right",
+            title: {
+              display: true,
+              text: "Usage (Kwh)",
+            },
+          },
+          x: {
+            grid: {
+              display: false,
+            },
+            title: {
+              display: true,
+              text: "Date",
+            },
+          },
+        },
+      },
+    };
+    const statsChart = new Chart(
+      document.getElementById("STATSChart"),
+      statsConfig
+    );
+  </script>
+</html>

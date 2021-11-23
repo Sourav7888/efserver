@@ -8,6 +8,7 @@ from apps.utility_manager.queries import (
     query_facility_specific_month_stats,
 )
 from .analytics.linear_regression import get_linear_regression_model
+from .analytics.basics import calculate_col_avg
 import pandas as pd
 from apps.shared.parsers import parse_year_month
 from .cs_exeptions import TargetDateNotFound, EmptyDataFrame
@@ -128,7 +129,7 @@ class GasHighConsumption(HighConsumption):
         self._dataframe = method(self._facility, "NaturalGas")
         return self._dataframe
 
-    def check_dataframe(self) -> bool:
+    def check_dataframe(self):
         """
         Check that runs before the method to ensure that the data
         has all the necessary attributes
@@ -268,4 +269,151 @@ class GasHighConsumption(HighConsumption):
         Returns a description of the high consumption
         """
         return f"""Auto-generated High Consumption:\n\nThe facility {self._facility.facility_name} has been flagged for High Natural Gas usage.\nBased on a linear prediction there is a {self.context["percentage_diff"]} (%) increase at an estimated cost of ${self.context["estimated_cost"]}.
+        """
+
+
+class ElectricityHighConsumption(HighConsumption):
+    """
+    Electricity high consumption:
+    method?
+    """
+
+    template = "hc_el.html"
+
+    def get_data(
+        self,
+        method: Any = query_facility_energy_weather,
+    ) -> pd.DataFrame:
+        """
+        Get the data for the high consumption, method can be overriden
+        """
+        self._dataframe = method(self._facility, "Electricity")
+
+        return self._dataframe
+
+    def check_dataframe(self):
+        # Similar to NaturalGasHighConsumption
+        if self._dataframe.empty:
+            raise EmptyDataFrame("Dataframe is empty! Check not passed.")
+
+        # Test if the investigation date is in the dataframe
+        if self._dataframe[self._dataframe["date"] == self._investigation_date].empty:
+            raise TargetDateNotFound(
+                "Investigation date not in dataframe! Check not passed."
+            )
+
+    def fetch_stats(self) -> pd.DataFrame:
+        """
+        Filter the dataframe to only the month of the investigation date
+        updates the context as well
+        """
+        stats = self._dataframe[
+            self._dataframe["date"].dt.month == self._investigation_date.month
+        ]
+
+        stats_date = stats["date"].astype(str).tolist()
+        stats_cdd = stats["cdd"].tolist()
+        stats_usage = stats["usage"].tolist()
+
+        self._context["stats"] = {
+            "date": stats_date,
+            "cdd": stats_cdd,
+            "usage": stats_usage,
+        }
+
+        if not self._context.get("render", None):
+            self._context["render"] = {}
+
+        self._context["render"]["stats"] = list(zip(stats_date, stats_cdd, stats_usage))
+
+        return stats
+
+    def _add_facility_context(self):
+        """
+        Add the facility context to the context
+        """
+        self._context["facility"] = {
+            "facility_name": self._facility.facility_name,
+            "address": self._facility.address,
+            "area": self._facility.area,
+            "category_type": self._facility.category_type,
+            "latitude": self._facility.latitude,
+            "longitude": self._facility.longitude,
+        }
+
+    def additional_context(self, **kwargs):
+        """
+        Add additional context to the template
+        """
+        if kwargs.get("facility_context", None):
+            self._add_facility_context()
+
+    # @TODO: Breakdown and test
+    def run_method(self):
+        # The current stats
+        target = self._dataframe[self._dataframe["date"] == self._investigation_date]
+
+        # Dataframe including specific months
+        stats = self._dataframe[
+            self._dataframe["date"].dt.month == self._investigation_date.month
+        ]
+
+        # Add a unit cost to dataframe
+        self._dataframe.loc[self._dataframe["usage"] > 0.0, "unit_cost"] = (
+            self._dataframe["cost"] / self._dataframe["usage"]
+        )
+
+        # Exclude the target year when calculating the average
+        avg_stats = stats[stats["date"].dt.year < self._investigation_date.year]
+
+        # Calculate average
+        average = calculate_col_avg(avg_stats, "usage")
+        # Calculate unit cost
+        average_unit_cost = calculate_col_avg(self._dataframe, "unit_cost")
+        # Calculate diff
+        diff = target["usage"].item() - average
+
+        # Percentage difference
+        percentage_diff = round(diff * 100 / average, 2)
+
+        # Calculate estimated hc cost
+        estimated_cost = round(diff * average_unit_cost, 2)
+
+        # Calculate rolling usage/sqft
+        usage_area = (
+            (
+                self._dataframe["usage"]
+                .rolling(12)
+                .sum()[self._dataframe["date"] == self._investigation_date]
+            )
+            .round(2)
+            .item()
+        )
+
+        self._context = {
+            "target_date": self._investigation_date,
+            "month_cdd": target.cdd.item(),
+            "month_usage": target.usage.item(),
+            "average": average,
+            "estimated_cost": estimated_cost,
+            "percentage_diff": percentage_diff,
+            "usage_area": usage_area,
+        }
+
+        if not self._context.get("render", None):
+            self._context["render"] = {}
+
+        self._context["render"]["avg"] = [average for _ in range(len(stats))]
+
+    def is_hc(self) -> bool:
+        if self._context["percentage_diff"] > 15:
+            return True
+
+        if self._context["usage_area"] > 14:
+            return True
+
+        return False
+
+    def get_description(self) -> str:
+        return """Auto-generated High Consumption:\n\nThe facility {self._facility.facility_name} has been flagged for High Electricity usage.\n Please investigate.
         """

@@ -1,8 +1,4 @@
 from core.models import Facility
-from apps.utility_manager.queries import (
-    query_facility_energy_weather,
-    query_facility_specific_month_stats,
-)
 from datetime import datetime as dt
 from apps.investigations.models import Investigation
 from io import BytesIO
