@@ -1,9 +1,8 @@
 from core.models import Facility
-from datetime import datetime as dt
 from apps.investigations.models import Investigation
 from io import BytesIO
 from django.core.files.base import ContentFile
-from .base import GasHighConsumption
+from .base import GasHighConsumption, ElectricityHighConsumption
 from .cs_exeptions import TargetDateNotFound, EmptyDataFrame
 from django.db.utils import IntegrityError
 from celery import shared_task
@@ -51,18 +50,28 @@ def upload_hc_document(investigation: Investigation, template: bytes):
 
 # @TODO: Add a logger -- Some dashboard of sorts
 
-
-@shared_task
-def generate_gas_high_consumption(target_date: str, counter_limit: int = 3):
+# @TODO: Test
+def generate_hc(
+    hc_method,
+    target_date: str,
+    hc_type: str,
+    counter_limit: int = 3,
+    warn: bool = True,
+    **kwargs,
+):
     """
-    Generate gas high_consumption based on simple linear regression and cost increase
+    HC_METHOD: The high consumption object
+    target_date: The date to be used as the target date
+    hc_type: The type of high consumption
+    counter_limit: The number of times the target date has to be found
+    **kargs is the render arguments
     """
     facilities = Facility.objects.all()
 
     counter = 0
 
     for f in facilities:
-        hc = GasHighConsumption.create_hc_by_facility_obj(f, target_date)
+        hc = hc_method.create_hc_by_facility_obj(f, target_date)
         try:
             hc.run_method()
         except (TargetDateNotFound, EmptyDataFrame):
@@ -70,24 +79,27 @@ def generate_gas_high_consumption(target_date: str, counter_limit: int = 3):
 
         # if high consuming
         if hc.is_hc():
-            template = hc.render_template(facility_context=True, stats_context=True)
+            template = hc.render_template(**kwargs)
             try:
                 # @TODO Doing this is very expensive, refractor next time
                 # Test that the investigation does not already exist
                 create_hc_investigation(
-                    f, template, "HC_GAS", target_date, hc.get_description()
+                    f, template, hc_type, target_date, hc.get_description()
                 )
 
                 info = {
                     "facility": f.facility_name,
                     "investigation_date": target_date,
-                    "investigation_type": "HC_GAS",
+                    "investigation_type": hc_type,
                     "investigation_description": hc.get_description(),
                 }
 
                 counter += 1
 
-                send_created_investigation(info)
+                print(info)
+
+                if warn:
+                    send_created_investigation(info)
 
             except IntegrityError:
                 continue
@@ -95,3 +107,34 @@ def generate_gas_high_consumption(target_date: str, counter_limit: int = 3):
         if counter == counter_limit:
             # End the task when the counter limit is reached
             break
+
+
+@shared_task
+def generate_gas_high_consumption(target_date: str, counter_limit: int = 3):
+    """
+    Generate gas high_consumption based on simple linear regression and cost increase
+    """
+    generate_hc(
+        GasHighConsumption,
+        target_date,
+        "HC_GAS",
+        warn=True,
+        counter_limit=counter_limit,
+        facility_context=True,
+        stats_context=True,
+    )
+
+
+@shared_task
+def generate_electricity_high_consumtion(target_date, counter_limit: int = 3):
+    """
+    Generate electricity high consumption
+    """
+    generate_hc(
+        ElectricityHighConsumption,
+        target_date,
+        "HC_EL",
+        warn=True,
+        counter_limit=counter_limit,
+        facility_context=True,
+    )

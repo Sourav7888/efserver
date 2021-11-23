@@ -348,8 +348,19 @@ class ElectricityHighConsumption(HighConsumption):
         if kwargs.get("facility_context", None):
             self._add_facility_context()
 
+        # Add additional stats should be in additional stats
+        if not self._context:
+            raise Exception("Warning! Context is empty! Unable to add additional stats")
+
+        self.fetch_stats()
+
     # @TODO: Breakdown and test
     def run_method(self):
+        if self._dataframe.empty:
+            self.get_data()
+
+        self.check_dataframe()
+
         # The current stats
         target = self._dataframe[self._dataframe["date"] == self._investigation_date]
 
@@ -379,13 +390,12 @@ class ElectricityHighConsumption(HighConsumption):
         # Calculate estimated hc cost
         estimated_cost = round(diff * average_unit_cost, 2)
 
+        # Dataframe for usage / area
+        u_a = self.dataframe["usage"] / self._facility.area
+
         # Calculate rolling usage/sqft
         usage_area = (
-            (
-                self._dataframe["usage"]
-                .rolling(12)
-                .sum()[self._dataframe["date"] == self._investigation_date]
-            )
+            (u_a.rolling(12).sum()[self._dataframe["date"] == self._investigation_date])
             .round(2)
             .item()
         )
@@ -415,5 +425,5 @@ class ElectricityHighConsumption(HighConsumption):
         return False
 
     def get_description(self) -> str:
-        return """Auto-generated High Consumption:\n\nThe facility {self._facility.facility_name} has been flagged for High Electricity usage.\n Please investigate.
+        return f"""Auto-generated High Consumption:\n\nThe facility {self._facility.facility_name} has been flagged for High Electricity usage.\n Please investigate.
         """
