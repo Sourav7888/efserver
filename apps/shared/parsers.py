@@ -3,6 +3,7 @@ from datetime import datetime as dt
 from typing import Union
 from datetime import timedelta, datetime as dt
 import csv
+from typing import Any
 
 
 class QuerysetParser:
@@ -87,7 +88,7 @@ def parse_year_month(
         return None
 
 
-def parse_in_memory_csv(file) -> list[list[Union[str, int, float]]] or None:
+def parse_in_memory_csv(file) -> list[Any] or None:
     """
     Parse in memory file to a list of list or return none if an error occurs
     """
