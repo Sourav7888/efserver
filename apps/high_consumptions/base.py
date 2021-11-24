@@ -425,5 +425,5 @@ class ElectricityHighConsumption(HighConsumption):
         return False
 
     def get_description(self) -> str:
-        return f"""Auto-generated High Consumption:\n\nThe facility {self._facility.facility_name} has been flagged for High Electricity usage.\n Please investigate.
+        return f"""Auto-generated High Consumption:\n\nThe facility {self._facility.facility_name} has been flagged for High Electricity usage as of {self._investigation_date.month}-{self._investigation_date.year}.\n Please investigate.
         """
