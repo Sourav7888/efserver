@@ -2,7 +2,7 @@ from rest_framework import serializers
 from .models import UtilityBill
 
 
-class DivisionUtilitySr(serializers.ModelSerializer):
+class UtilitySr(serializers.ModelSerializer):
     """
     Can be used to serialize data |Be aware of order by group by issue
     """

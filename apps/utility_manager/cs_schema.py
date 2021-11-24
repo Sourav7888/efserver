@@ -37,3 +37,25 @@ DivisionUtility = {
         ],
     ),
 }
+
+FacilityUtility = {
+    "name": "get",
+    "decorator": swagger_auto_schema(
+        manual_parameters=[
+            openapi.Parameter(
+                "facility_name",
+                in_=openapi.IN_QUERY,
+                description="facility_name",
+                type=openapi.TYPE_STRING,
+                required=True,
+            ),
+            openapi.Parameter(
+                "timeframe",
+                in_=openapi.IN_QUERY,
+                description="yearly | monthly",
+                type=openapi.TYPE_STRING,
+                required=True,
+            ),
+        ],
+    ),
+}

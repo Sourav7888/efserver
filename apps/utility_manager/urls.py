@@ -12,6 +12,11 @@ patterns = [
         views.GetDivisionUtility.as_view(),
         name="get_division_utility",
     ),
+    path(
+        "facility-utility/",
+        views.GetFacilityUtility.as_view(),
+        name="get_facility_utility",
+    ),
 ]
 
 urlpatterns = [path("", include(patterns))]

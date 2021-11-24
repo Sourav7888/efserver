@@ -29,7 +29,37 @@ class ViewsTestCase(BaseTest):
 
         # Adding timeframe monthly to query
         response = self.client.get(url, {"timeframe": "monthly"} | data)
-        print(response.json())
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(not response.json()["results"], False)
+
+        # Testing Yearly query
+        response = self.client.get(url, {"timeframe": "yearly"} | data)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_get_facility_utility(self):
+        # Very similar to division utility
+        # Test that only user with the same customer has access
+        user = auth.get_user(self.client)
+        user_info = UserInfo.objects.create(user=user)
+
+        url = reverse("get_facility_utility")
+        data = {
+            "utility_type": "Electricity",
+            "facility_name": "FixtureFacility1",
+        }
+        response = self.client.get(url, data)
+
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+
+        # Modify the user customer
+        customer = Customer.objects.get(customer_name="FixtureCompany")
+        user_info.customer = customer
+        # Change the access level as well or it will fail
+        user_info.access_level = "ALL"
+        user_info.save()
+
+        # Adding timeframe monthly to query
+        response = self.client.get(url, {"timeframe": "monthly"} | data)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(not response.json()["results"], False)
 

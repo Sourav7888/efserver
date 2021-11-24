@@ -9,11 +9,54 @@ from rest_framework.parsers import MultiPartParser
 from rest_framework.generics import ListAPIView
 from .models import UtilityBill
 from core.models import Facility, Division
-from .serializers import DivisionUtilitySr
-from .paginations import DivisionUtilityPg
-from .filters import DivisionUtilityFl
-from .cs_schema import DivisionUtility
+from .serializers import UtilitySr
+from .paginations import UtilityPg
+from .filters import UtilityFl
+from .cs_schema import DivisionUtility, FacilityUtility
 from core.permissions import CheckRequestBody
+from rest_framework.permissions import IsAuthenticated
+
+
+@method_decorator(**FacilityUtility)
+class GetFacilityUtility(ListAPIView):
+    """
+    List all utility for a facility
+    """
+
+    filterset_class = UtilityFl
+    serializer_class = UtilitySr
+    pagination_class = UtilityPg
+    permission_classes = [IsAuthenticated, CheckRequestBody]
+
+    def list(self, request, *args, **kwargs):
+        if request.GET["timeframe"].lower() == "monthly":
+            return super().list(self, request, *args, **kwargs)
+
+        # Overriding for yearly due to an issue where group by is required yet if not
+        # Grouped by start date will fail regardless of the pagination
+        # To fix in the future
+        elif request.GET["timeframe"].lower() == "yearly":
+            queryset = self.filter_queryset(self.get_queryset())
+            if not queryset:
+                Response({"Invalid timeframe"}, status=status.HTTP_400_BAD_REQUEST)
+
+            results = [{"display_date": x["year"].year, **x} for x in queryset]
+
+            return Response({"results": results}, status=status.HTTP_200_OK)
+
+        else:
+            return Response({"Invalid timeframe"}, status=status.HTTP_400_BAD_REQUEST)
+
+    def get_queryset(self):
+
+        facility = Facility.objects.get(facility_name=self.request.GET["facility_name"])
+        if self.request.GET["timeframe"].lower() == "yearly":
+            return UtilityBill.yearly.filter(facility=facility)
+        elif self.request.GET["timeframe"].lower() == "monthly":
+            # @TODO: Possibly use object here but change the serializer conditionaly
+            return UtilityBill.monthly.filter(facility=facility)
+        else:
+            return None
 
 
 @method_decorator(**DivisionUtility)
@@ -22,19 +65,12 @@ class GetDivisionUtility(ListAPIView):
     Get all utilities for a Division
     """
 
-    serializer_class = DivisionUtilitySr
-    pagination_class = DivisionUtilityPg
-    filterset_class = DivisionUtilityFl
+    serializer_class = UtilitySr
+    pagination_class = UtilityPg
+    filterset_class = UtilityFl
+    permission_classes = [IsAuthenticated, CheckRequestBody]
 
     def list(self, request, *args, **kwargs):
-        # Check here otherwise swagger will not display the endpoint
-        perm = CheckRequestBody()
-        if not perm.has_division_permission(request, request.GET):
-            return Response(
-                {"message": "You are not allowed to access this resource."},
-                status=status.HTTP_403_FORBIDDEN,
-            )
-
         if request.GET["timeframe"].lower() == "monthly":
             return super().list(self, request, *args, **kwargs)
 

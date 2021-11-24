@@ -1,5 +1,5 @@
 from rest_framework.pagination import CursorPagination
 
 
-class DivisionUtilityPg(CursorPagination):
+class UtilityPg(CursorPagination):
     ordering = "billing_date"
