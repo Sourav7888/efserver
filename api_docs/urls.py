@@ -6,12 +6,12 @@ from django.urls import re_path
 
 schema_view = get_schema_view(
     openapi.Info(
-        title="Snippets API",
+        title="EFServer API",
         default_version="v1",
-        description="Test description",
-        terms_of_service="https://www.google.com/policies/terms/",
-        contact=openapi.Contact(email="contact@snippets.local"),
-        license=openapi.License(name="BSD License"),
+        description="Powered by Enerfrog",
+        terms_of_service="",
+        contact=openapi.Contact(email="tantely.raza@enerfrog.com"),
+        license=openapi.License(name="Private"),
     ),
     public=False,
     permission_classes=(permissions.IsAuthenticated,),
