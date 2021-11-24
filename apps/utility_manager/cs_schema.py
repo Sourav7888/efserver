@@ -15,3 +15,25 @@ BulkCreateUtility = {
         ]
     ),
 }
+
+DivisionUtility = {
+    "name": "get",
+    "decorator": swagger_auto_schema(
+        manual_parameters=[
+            openapi.Parameter(
+                "division_name",
+                in_=openapi.IN_QUERY,
+                description="division",
+                type=openapi.TYPE_STRING,
+                required=True,
+            ),
+            openapi.Parameter(
+                "timeframe",
+                in_=openapi.IN_QUERY,
+                description="yearly | monthly",
+                type=openapi.TYPE_STRING,
+                required=True,
+            ),
+        ],
+    ),
+}
