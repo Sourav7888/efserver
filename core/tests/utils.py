@@ -1,5 +1,5 @@
 from rest_framework.test import APITestCase
-from core.models import Division, Facility, FacilityAccessControl, Customer, UserInfo
+from core.models import Division, Facility, Customer
 from django.contrib.auth.models import User
 
 
