@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     "apps.utility_manager",
     "apps.weather_manager",
     "apps.high_consumptions",
+    "apps.reports",
 ]
 
 MIDDLEWARE = [

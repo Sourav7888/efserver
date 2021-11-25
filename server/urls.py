@@ -33,6 +33,8 @@ api_paths = [
     # High Consumptions
     path("hc/", include("apps.high_consumptions.urls")),
     # Path to api documentation
+    path("reports/", include("apps.reports.urls")),
+    # Path to api documentation
     path("docs/", include("api_docs.urls")),
 ]
 
