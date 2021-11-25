@@ -39,6 +39,7 @@ class Report(models.Model):
         to_field="username",
         related_name="user_report",
     )
+    is_ready = models.BooleanField(default=False, null=False)
 
     def __str__(self):
         return f"{self.log_name} | log_id: {self.log_id}"
