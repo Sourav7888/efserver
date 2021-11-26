@@ -8,11 +8,12 @@ from apps.analytics.scorecard.scorecard_analytics import generate_scorecard
 from rest_framework.response import Response
 
 
+# @TODO: This is supposed to be an async funtion with report
 @method_decorator(**CreateScorecard)
 class CreateScorecard(APIView):
     """
     Will create an instance of report
-    and attach a json file of the scorecard will return the report id
+    and attach a json file of the scorecard data - will return the report id
     """
 
     parser_classes = [MultiPartParser]

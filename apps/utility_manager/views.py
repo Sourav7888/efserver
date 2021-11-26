@@ -125,6 +125,6 @@ class BulkCreateUtility(APIView):
                 async_bulk_create_utility.delay(data)
 
         return Response(
-            {"message": "Task created will notify tantely.raza@enerfrog.com"},
+            {"message": "Task created"},
             status=status.HTTP_201_CREATED,
         )

@@ -17,7 +17,7 @@ class Log(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f"{self.log_name} | log_id: {self.log_id}"
+        return f"{self.log_name} | log_id: {self.log_id} | {self.created_at}"
 
 
 class Report(models.Model):
@@ -42,4 +42,4 @@ class Report(models.Model):
     is_ready = models.BooleanField(default=False, null=False)
 
     def __str__(self):
-        return f"{self.log_name} | log_id: {self.log_id}"
+        return f"{self.report_name} | report_id: {self.report_id}"

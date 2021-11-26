@@ -35,3 +35,4 @@ class ETLTestCase(BaseTest):
         self.assertEqual(int(utility.cost), 15)
         self.assertEqual(int(utility.usage), 15)
         self.assertEqual(int(utility.billing_days), 10)
+
