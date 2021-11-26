@@ -101,7 +101,11 @@ class ScoreCardQ(ScoreCard):
             ),
         )
 
-        return queries
+        data = {}
+        for k in queries:
+            data[k] = self._add_emmission(queries[k], k)
+
+        return data
 
     def _add_emmission(self, query: dict, utility_type: str, col: str = "usage"):
         """
