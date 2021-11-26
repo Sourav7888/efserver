@@ -1,10 +1,11 @@
-from core.models import Facility
+from core.models import Division, Facility
 from core.tests.utils import BaseTest
 from apps.utility_manager.queries import (
     query_facility_energy_as_dataframe,
     query_facility_specific_month_energy,
     query_facility_energy_weather,
     query_facility_specific_month_stats,
+    query_avg_division_usage_per_month_per_facility,
 )
 import pandas as pd
 from datetime import datetime as dt
@@ -112,3 +113,12 @@ class QueriesTestCase(BaseTest):
         # Merged correctly
         self.assertEqual("hdd" in df.columns, True)
         self.assertEqual(int(df[df["date"] == dt(2019, 1, 1)].hdd), 2)
+
+    def test_avg_division_usage_per_month(self):
+        division = Division.objects.get(division_name="FixtureDivision")
+        facilities = Facility.objects.filter(division=division)
+        avg = query_avg_division_usage_per_month_per_facility(facilities, "Electricity")
+
+        self.assertEqual(
+            float(avg[0]["avg_usage"]), (23580.000 + 30240.000) / 2
+        )  # 26910

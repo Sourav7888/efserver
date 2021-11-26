@@ -8,6 +8,25 @@ import pandas as pd
 from .models import UtilityBill
 from dateutil.relativedelta import relativedelta
 from core.models import Facility
+from django.db.models import Avg
+
+
+def query_avg_division_usage_per_month_per_facility(
+    facilities: list[Facility], utility_type: str, **kwargs
+) -> dict:
+    """
+    Query the average consumption per facility per month
+    """
+
+    query = (
+        UtilityBill.objects.filter(
+            facility__in=facilities, utility_type=utility_type, **kwargs
+        )
+        .values("billing_date__month", "billing_date__year", "utility_type")
+        .annotate(avg_usage=Avg("usage"))
+    )
+
+    return query
 
 
 def query_facility_energy_as_dataframe(

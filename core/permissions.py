@@ -76,10 +76,6 @@ class CheckRequestBody(BasePermission):
     """
 
     def has_permission(self, request, view):
-        # Skip if super_user
-        if request.user.is_superuser:
-            return True
-
         body = getattr(request, request.method, None)
 
         # Check that the user has UserInfo already created if not create
