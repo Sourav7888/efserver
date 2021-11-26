@@ -3,8 +3,7 @@ from .etl import bulk_create_utility
 from typing import Any
 from apps.reports.models import Log
 
-# @TODO: Add some sort of a logger
-# @TODO: This is a quick fix for the notification
+
 @shared_task
 def async_bulk_create_utility(data: list[Any]) -> None:
     bulk = bulk_create_utility(data)
