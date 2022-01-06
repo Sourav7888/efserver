@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     "apps.weather_manager",
     "apps.high_consumptions",
     "apps.reports",
+    # ETL Projects
+    "apps.etl.waste_manager",
 ]
 
 MIDDLEWARE = [

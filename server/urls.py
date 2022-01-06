@@ -36,6 +36,8 @@ api_paths = [
     path("reports/", include("apps.reports.urls")),
     # Path to api documentation
     path("docs/", include("api_docs.urls")),
+    # Path to ETL projects
+    path("etl-waste-manager/", include("apps.etl.waste_manager.urls")),
 ]
 
 # Admin link for prod
