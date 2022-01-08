@@ -66,7 +66,7 @@ def validate_facility_access(request: HttpRequest) -> Facility:
 
 class CheckRequestBody(BasePermission):
     """
-    This permission check the request body or keyword<Not sure about keyword>
+    This permission check the request body
     This only check a single instance ie: Division: exampleDivision and not Division: [Division1, ...]
     This catches whether the queried instance exist or not as well so that will be handled by a 403
     When using this permission the request body to check division and facility must be

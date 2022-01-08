@@ -11,6 +11,8 @@ from .filters import WasteDataFl
 from rest_framework.parsers import MultiPartParser
 from apps.shared.parsers import parse_in_memory_csv
 from rest_framework import status
+from django.utils.decorators import method_decorator
+from .cs_schema import BulkCreateWasteData
 
 
 class GetWasteData(ListAPIView):
@@ -21,7 +23,8 @@ class GetWasteData(ListAPIView):
     pagination_class = WasteDataPg
 
 
-class BulkUpdateWasteData(APIView):
+@method_decorator(**BulkCreateWasteData)
+class BulkCreateWasteData(APIView):
     parser_classes = [MultiPartParser]
 
     def post(self, request):
