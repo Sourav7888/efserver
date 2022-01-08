@@ -1,3 +1,7 @@
 from django.contrib import admin
 
-# Register your models here.
+from .models import *
+
+admin.site.register(WasteData)
+admin.site.register(WasteProvider)
+admin.site.register(WasteCategory)

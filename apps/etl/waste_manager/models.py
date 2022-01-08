@@ -5,6 +5,9 @@ from core.models import Facility
 class WasteCategory(models.Model):
     category_name = models.CharField(max_length=100)
 
+    class Meta:
+        verbose_name_plural = "Waste Categories"
+
 
 class WasteProvider(models.Model):
     provider_name = models.CharField(max_length=100)
@@ -45,6 +48,7 @@ class WasteData(models.Model):
     )
 
     class Meta:
+        verbose_name_plural = "Waste Data"
         constraints = [
             models.UniqueConstraint(
                 fields=["facility", "pickup_date", "waste_name"],

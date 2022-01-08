@@ -66,7 +66,7 @@ def validate_facility_access(request: HttpRequest) -> Facility:
 
 class CheckRequestBody(BasePermission):
     """
-    This permission check the request body or keyword
+    This permission check the request body or keyword<Not sure about keyword>
     This only check a single instance ie: Division: exampleDivision and not Division: [Division1, ...]
     This catches whether the queried instance exist or not as well so that will be handled by a 403
     When using this permission the request body to check division and facility must be
@@ -75,7 +75,7 @@ class CheckRequestBody(BasePermission):
     If user_info has not been created as well this will handle it
     """
 
-    def has_permission(self, request, view):
+    def has_permission(self, request):
         body = getattr(request, request.method, None)
 
         # Check that the user has UserInfo already created if not create
@@ -96,7 +96,7 @@ class CheckRequestBody(BasePermission):
         """
         Check division permission if in body
         """
-        if "division_name" in body:
+        if "division_name" in body or "division" in body:
             try:
                 _division = Division.objects.get(division_name=body["division_name"])
             except Division.DoesNotExist:
@@ -111,7 +111,7 @@ class CheckRequestBody(BasePermission):
         """
         Check facility permission if in body
         """
-        if "facility_name" in body:
+        if "facility_name" in body or "facility" in body:
             try:
                 facility = Facility.objects.get(facility_name=body["facility_name"])
 
