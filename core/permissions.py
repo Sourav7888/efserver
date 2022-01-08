@@ -75,7 +75,7 @@ class CheckRequestBody(BasePermission):
     If user_info has not been created as well this will handle it
     """
 
-    def has_permission(self, request):
+    def has_permission(self, request, view):
         body = getattr(request, request.method, None)
 
         # Check that the user has UserInfo already created if not create
