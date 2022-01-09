@@ -29,5 +29,5 @@ def bulk_create_waste_data(data: list[Any]) -> None:
             return {"success": True, "description": desc}
 
     except Exception as error:
-
+        print(error)
         return {"success": False, "description": str(error)}

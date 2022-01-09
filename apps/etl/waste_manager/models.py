@@ -3,14 +3,14 @@ from core.models import Facility
 
 
 class WasteCategory(models.Model):
-    category_name = models.CharField(max_length=100)
+    category_name = models.CharField(max_length=100, unique=True)
 
     class Meta:
         verbose_name_plural = "Waste Categories"
 
 
 class WasteProvider(models.Model):
-    provider_name = models.CharField(max_length=100)
+    provider_name = models.CharField(max_length=100, unique=True)
 
 
 class WasteData(models.Model):
@@ -39,12 +39,16 @@ class WasteData(models.Model):
     waste_category = models.ForeignKey(
         WasteCategory,
         on_delete=models.CASCADE,
-        db_column="category_name",
+        db_column="waste_category",
         blank=False,
         null=False,
+        to_field="category_name",
     )
     provided_by = models.ForeignKey(
-        WasteProvider, on_delete=models.CASCADE, db_column="provider_name"
+        WasteProvider,
+        on_delete=models.CASCADE,
+        db_column="provided_by",
+        to_field="provider_name",
     )
 
     class Meta:
