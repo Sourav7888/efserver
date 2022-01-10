@@ -187,3 +187,24 @@ class FacilityAccessControl(models.Model):
 
     def __str__(self):
         return "{} - {}".format(self.user, self.facility)
+
+
+class PreAuthorizedUser(models.Model):
+    """
+    Users that are anticipated to log in to the sustainability dashboard
+    and a process will automatically comfirm them and create their profile upon login in
+    """
+
+    email = models.EmailField(max_length=255, unique=True)
+    user_name = models.CharField(max_length=100, null=True, blank=True)
+    customer = models.ForeignKey(
+        Customer,
+        on_delete=models.SET_NULL,
+        db_column="customer",
+        null=True,
+        blank=False,
+        to_field="customer_name",
+    )
+
+    def __str__(self):
+        return f"{self.email} | {self.user_name}"

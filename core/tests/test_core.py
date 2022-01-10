@@ -2,7 +2,14 @@ from rest_framework import status
 from django.urls import reverse
 from django.contrib.auth.models import User
 from django.contrib import auth
-from core.models import Division, Facility, FacilityAccessControl, Customer, UserInfo
+from core.models import (
+    Division,
+    Facility,
+    FacilityAccessControl,
+    Customer,
+    UserInfo,
+    PreAuthorizedUser,
+)
 from core.tests.utils import BaseTest
 
 
@@ -129,3 +136,27 @@ class CoreTestCase(BaseTest):
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(2, len(response.json()["results"]))
+
+    def test_user_permission(self):
+        # Testing pre-authorized user
+
+        url = reverse("get_user_permission")
+        response = self.client.get(url, data={"email": "TestUserEmail@gmail.com"})
+        # Test that the user is not confirmed and it is not assigned to a customer
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.json()["confirmed_user"], False)
+        self.assertEqual(response.json()["customer"], None)
+
+        # Creating a pre-authorized user should allow the user to be confirmed and assigned to a customer
+        customer = Customer.objects.get(customer_name="CoreCustomerName")
+        PreAuthorizedUser.objects.create(
+            email="TestUserEmail@gmail.com", customer=customer, user_name="TestUserName"
+        )
+        url = reverse("get_user_permission")
+        response = self.client.get(url, data={"email": "TestUserEmail@gmail.com"})
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.json()["confirmed_user"], True)
+        self.assertEqual(response.json()["customer"], "CoreCustomerName")
+        self.assertEqual(response.json()["user_name"], "TestUserName")
+        user = User.objects.get(username="CoreTestUser")
+        self.assertEqual(user.email, "TestUserEmail@gmail.com")

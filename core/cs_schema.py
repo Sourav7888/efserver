@@ -23,3 +23,17 @@ TestViewSc = {
         ],
     ),
 }
+
+UserInfo = {
+    "name": "get",
+    "decorator": swagger_auto_schema(
+        manual_parameters=[
+            openapi.Parameter(
+                "email",
+                in_=openapi.IN_QUERY,
+                description="user email",
+                type=openapi.TYPE_STRING,
+            ),
+        ]
+    ),
+}

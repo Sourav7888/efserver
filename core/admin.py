@@ -39,3 +39,6 @@ admin.site.register(Division)
 
 # Facility
 admin.site.register(Facility, FacilityAdmin)
+
+# PreAuthorizedUser
+admin.site.register(PreAuthorizedUser)

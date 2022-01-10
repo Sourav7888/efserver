@@ -1,7 +1,7 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from .cs_schema import TestViewSc
+from .cs_schema import TestViewSc, UserInfo
 from django.utils.decorators import method_decorator
 from core.permissions import CheckRequestBody, validate_facility_access
 from rest_framework.permissions import IsAuthenticated
@@ -12,6 +12,9 @@ from .paginations import DivisionPg
 from .models import Division
 from .serializers import FacilitySr
 from .paginations import FacilityPg
+from .models import PreAuthorizedUser
+from django.utils.decorators import method_decorator
+from django.contrib.auth.models import User
 
 
 @method_decorator(
@@ -28,6 +31,7 @@ class CoreTestView(APIView):
         return Response({"message": "hello world"}, status=status.HTTP_200_OK)
 
 
+@method_decorator(**UserInfo)
 class UserPermission(RetrieveAPIView):
     """
     Return the user permissions across modules
@@ -39,6 +43,28 @@ class UserPermission(RetrieveAPIView):
         # Create the user info if it does not exist yet
         # Because usually this view is called as soon as the user log in
         user_info = get_or_create_user_info(self.request)
+
+        # Check if user is not confirmed
+        # Check preauthorized users and if exists update informations and that 's it <This is for sustainability dashboard>
+        # To streamline users coming in to the dashboard
+        if not user_info.confirmed_user:
+            email = self.request.query_params.get("email")
+            if email:
+                user_check = PreAuthorizedUser.objects.filter(email=email)
+                if user_check.exists():
+                    user_info.confirmed_user = True
+                    user_info.user_name = user_check[0].user_name
+                    user_info.customer = user_check[0].customer
+                    user_info.access_level = "ALL"
+                    user_info.save()
+
+                    # Update the users' email
+                    user = User.objects.get(id=user_info.user.id)
+                    user.email = email
+                    user.save()
+
+                    return user_info
+
         return user_info
 
 
