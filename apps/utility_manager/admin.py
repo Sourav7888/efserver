@@ -1,5 +1,4 @@
 from django.contrib import admin
-from core.models import Facility
 from .models import UtilityBill
 
 

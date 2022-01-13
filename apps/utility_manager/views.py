@@ -90,6 +90,8 @@ class GetDivisionUtility(ListAPIView):
             return Response({"Invalid timeframe"}, status=status.HTTP_400_BAD_REQUEST)
 
     def get_queryset(self):
+        if "division_name" not in self.request.GET:
+            return UtilityBill.objects.none()
         division = Division.objects.get(division_name=self.request.GET["division_name"])
         facilities = Facility.objects.filter(division=division)
         if self.request.GET["timeframe"].lower() == "yearly":
@@ -97,7 +99,7 @@ class GetDivisionUtility(ListAPIView):
         elif self.request.GET["timeframe"].lower() == "monthly":
             return UtilityBill.monthly.filter(facility__in=facilities)
         else:
-            return None
+            return UtilityBill.objects.none()
 
 
 @method_decorator(**BulkCreateUtility)

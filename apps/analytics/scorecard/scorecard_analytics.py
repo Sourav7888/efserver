@@ -144,7 +144,7 @@ class ScoreCardQ(ScoreCard):
 class ScoreCardDf(ScoreCardQ):
     """
     Subclass that will mainly returns the scorecard datas as dataframes
-    or dict but its processed an curated
+    or dict but its processed and curated
     """
 
     def __init__(self, division_name: str, json_safe: bool = False):
@@ -183,6 +183,7 @@ class ScoreCardDf(ScoreCardQ):
         return df if not self.json_safe else self._as_json(df)
 
     def avg_facility_usg_per_month(self) -> pd.DataFrame:
+
         df = self._as_df(super().avg_facility_usg_per_month())
 
         # We need to format the date and sort for simplicity of use later on

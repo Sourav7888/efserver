@@ -31,4 +31,4 @@ class UtilitySr(serializers.ModelSerializer):
             if "billing_date__month" in obj
             else None
         )
-        return None
+
