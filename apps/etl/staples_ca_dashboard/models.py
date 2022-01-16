@@ -33,7 +33,12 @@ class Renewables(models.Model):
 class LedList(models.Model):
     retrofit_date = models.DateField(null=False, blank=False)
     vendor = models.CharField(max_length=255, null=False, blank=False)
-    facility = models.ForeignKey(Facility, on_delete=models.CASCADE)
+    facility = models.ForeignKey(
+        Facility,
+        on_delete=models.CASCADE,
+        to_field="facility_name",
+        db_column="facility",
+    )
 
     class Neta:
         constants = [
