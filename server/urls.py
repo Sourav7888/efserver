@@ -38,6 +38,7 @@ api_paths = [
     path("docs/", include("api_docs.urls")),
     # Path to ETL projects
     path("etl-waste-manager/", include("apps.etl.waste_manager.urls")),
+    path("etl-staples-ca-dashboard/", include("apps.etl.staples_ca_dashboard.urls")),
 ]
 
 # Admin link for prod

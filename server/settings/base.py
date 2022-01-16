@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     "apps.reports",
     # ETL Projects
     "apps.etl.waste_manager",
+    "apps.etl.staples_ca_dashboard",
 ]
 
 MIDDLEWARE = [

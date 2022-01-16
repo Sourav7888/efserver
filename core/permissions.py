@@ -63,6 +63,12 @@ def validate_facility_access(request: HttpRequest) -> Facility:
 
 class CheckRequestBody(BasePermission):
     """
+    @WARNING: This only works if the models has a foreign key relationship with
+    core division or facility
+
+    @Warning: Make sure that the variables division or facility are required in the api
+    otherwise users can ommit those and access the data
+
     This permission check the request body
     This only check a single instance ie: Division: exampleDivision and not Division: [Division1, ...]
     This catches whether the queried instance exist or not as well so that will be handled by a 403
@@ -74,7 +80,6 @@ class CheckRequestBody(BasePermission):
 
     def has_permission(self, request, view):
         body = getattr(request, request.method, None)
-
         # Check that the user has UserInfo already created if not create
         if not hasattr(request.user, "user_info"):
             get_or_create_user_info(request)
@@ -95,7 +100,8 @@ class CheckRequestBody(BasePermission):
         """
         if "division_name" in body or "division" in body:
             try:
-                _division = Division.objects.get(division_name=body["division_name"])
+                var = "division_name" if "division_name" in body else "division"
+                _division = Division.objects.get(division_name=body[var])
             except Division.DoesNotExist:
                 return False
 
@@ -109,8 +115,9 @@ class CheckRequestBody(BasePermission):
         Check facility permission if in body
         """
         if "facility_name" in body or "facility" in body:
+            var = "facility_name" if "facility_name" in body else "facility"
             try:
-                facility = Facility.objects.get(facility_name=body["facility_name"])
+                facility = Facility.objects.get(facility_name=body[var])
 
                 # Check if the facility is of the same customer base
                 if request.user.user_info.customer != facility.division.customer:
