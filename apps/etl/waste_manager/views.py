@@ -33,6 +33,22 @@ class GetWasteData(ListAPIView):
         )
 
 
+@method_decorator(
+    **{
+        "name": "get",
+        "decorator": swagger_auto_schema(
+            manual_parameters=[
+                openapi.Parameter(
+                    "division",
+                    in_=openapi.IN_QUERY,
+                    description="division",
+                    type=openapi.TYPE_STRING,
+                    required=True,
+                )
+            ]
+        ),
+    }
+)
 class GetWasteDataYearly(ListAPIView):
     permission_classes = [IsAuthenticated, CheckRequestBody]
     serializer_class = WasteDataSr
@@ -50,7 +66,9 @@ class GetWasteDataYearly(ListAPIView):
         return Response({"results": results}, status=status.HTTP_200_OK)
 
     def get_queryset(self):
-        facilities = validate_facility_access(self.request)
+        facilities = validate_facility_access(self.request).filter(
+            division=self.request.GET["division"]
+        )
         data = WasteData.yearly.filter(facility__in=facilities)
 
         return data

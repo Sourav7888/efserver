@@ -5,6 +5,8 @@ from core.models import Facility
 
 from django.urls import reverse
 from rest_framework import status
+from django.contrib import auth
+from core.models import UserInfo, Customer
 
 
 class ETLTestCase(BaseTest):
@@ -68,14 +70,21 @@ class ETLTestCase(BaseTest):
         self.assertEqual(int(yearly[0]["weight"]), 25)
 
     def test_yearly_view(self):
+        user = auth.get_user(self.client)
+        user_info = UserInfo.objects.create(user=user)
+
+        customer = Customer.objects.get(customer_name="CoreCustomerName")
+        user_info.customer = customer
+        user_info.save()
+
         url = reverse("get_waste_data_yearly")
-        data = {}
+        data = {"division": "CoreDivisionName"}
         response = self.client.get(url, data)
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
         url = reverse("get_waste_data")
-        data = {}
+        data = {"division": "CoreDivisionName"}
         response = self.client.get(url, data)
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
