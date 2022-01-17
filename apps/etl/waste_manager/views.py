@@ -12,18 +12,43 @@ from rest_framework.parsers import MultiPartParser
 from apps.shared.parsers import parse_in_memory_csv
 from rest_framework import status
 from django.utils.decorators import method_decorator
-from .cs_schema import BulkCreateWasteData
+from drf_yasg.utils import swagger_auto_schema
+from drf_yasg import openapi
+from core.permissions import validate_facility_access
 
 
 class GetWasteData(ListAPIView):
     permission_classes = [IsAuthenticated, CheckRequestBody]
-    queryset = WasteData.objects.all()
     serializer_class = WasteDataSr
     filterset_class = WasteDataFl
     pagination_class = WasteDataPg
 
+    def get_queryset(self):
+        facilities = validate_facility_access(self.request)
+        return (
+            WasteData.objects.filter(facility__in=facilities)
+            .select_related("facility")
+            .select_related("provided_by")
+            .select_related("waste_category")
+        )
 
-@method_decorator(**BulkCreateWasteData)
+
+@method_decorator(
+    **{
+        "name": "post",
+        "decorator": swagger_auto_schema(
+            manual_parameters=[
+                openapi.Parameter(
+                    "file",
+                    in_=openapi.IN_FORM,
+                    description="(pickup_date, facility, waste_name, weight, is_recycled, waste_category, provided_by) ",
+                    type=openapi.TYPE_FILE,
+                    required=True,
+                )
+            ]
+        ),
+    }
+)
 class BulkCreateWasteData(APIView):
     parser_classes = [MultiPartParser]
 

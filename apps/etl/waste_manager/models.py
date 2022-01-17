@@ -5,12 +5,18 @@ from core.models import Facility
 class WasteCategory(models.Model):
     category_name = models.CharField(max_length=100, unique=True)
 
+    def __str__(self):
+        return self.category_name
+
     class Meta:
         verbose_name_plural = "Waste Categories"
 
 
 class WasteProvider(models.Model):
     provider_name = models.CharField(max_length=100, unique=True)
+
+    def __str__(self):
+        return self.provider_name
 
 
 class WasteData(models.Model):
@@ -34,7 +40,7 @@ class WasteData(models.Model):
         to_field="facility_name",
     )
     waste_name = models.CharField(max_length=255)
-    weight = models.DecimalField(max_digits=10, decimal_places=2, default=0.0)
+    weight = models.DecimalField(max_digits=15, decimal_places=6, default=0.0)
     is_recycled = models.BooleanField(default=False, null=False, blank=False)
     waste_category = models.ForeignKey(
         WasteCategory,
