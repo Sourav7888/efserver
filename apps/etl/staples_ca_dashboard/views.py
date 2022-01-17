@@ -8,6 +8,7 @@ from .paginations import RenewablesPg, LedListPg
 
 # THis view is not critical
 # @TODO Add extra checks to ensure other users that are not from staples can access
+# @TODO Override list so that to make sure the bug groupby is fixed
 class GetRenewablesYearly(ListAPIView):
     permission_classes = [IsAuthenticated]
     queryset = Renewables.yearly.all()

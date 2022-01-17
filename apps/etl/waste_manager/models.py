@@ -1,5 +1,7 @@
 from django.db import models
+from apps.etl.waste_manager.managers import WasteYearlyManager
 from core.models import Facility
+from .managers import WasteYearlyManager
 
 
 class WasteCategory(models.Model):
@@ -56,6 +58,10 @@ class WasteData(models.Model):
         db_column="provided_by",
         to_field="provider_name",
     )
+
+    objects = models.Manager()
+
+    yearly = WasteYearlyManager()
 
     class Meta:
         verbose_name_plural = "Waste Data"

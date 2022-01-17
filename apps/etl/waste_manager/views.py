@@ -33,6 +33,29 @@ class GetWasteData(ListAPIView):
         )
 
 
+class GetWasteDataYearly(ListAPIView):
+    permission_classes = [IsAuthenticated, CheckRequestBody]
+    serializer_class = WasteDataSr
+    filterset_class = WasteDataFl
+    pagination_class = WasteDataPg
+
+    def list(self, request, *args, **kwargs):
+        # @NOTE: Overriding due to issue with group by making the annotation not working
+        queryset = self.filter_queryset(self.get_queryset())
+
+        results = [
+            {**x, "display_date": str(x["year"]).split("-")[0]} for x in queryset
+        ]
+
+        return Response({"results": results}, status=status.HTTP_200_OK)
+
+    def get_queryset(self):
+        facilities = validate_facility_access(self.request)
+        data = WasteData.yearly.filter(facility__in=facilities)
+
+        return data
+
+
 @method_decorator(
     **{
         "name": "post",
