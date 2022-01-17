@@ -8,9 +8,9 @@ from .paginations import RenewablesPg, LedListPg
 
 # THis view is not critical
 # @TODO Add extra checks to ensure other users that are not from staples can access
-class GetRenewables(ListAPIView):
+class GetRenewablesYearly(ListAPIView):
     permission_classes = [IsAuthenticated]
-    queryset = Renewables.objects.all()
+    queryset = Renewables.yearly.all()
     serializer_class = RenewablesSr
     filterset_class = RenewablesFl
     pagination_class = RenewablesPg

@@ -1,5 +1,6 @@
 from django.db import models
 from core.models import Facility
+from .managers import RenewablesYearlyManager
 
 DIVISION_CHOISES = (
     ("retail", "retail"),
@@ -16,6 +17,12 @@ class Renewables(models.Model):
         choices=DIVISION_CHOISES, max_length=25, null=False, blank=False
     )
     buyer = models.CharField(max_length=255, null=False, blank=False)
+
+    # Default Manager
+    objects = models.Manager()
+
+    # Yearly Manager
+    yearly = RenewablesYearlyManager()
 
     class Meta:
         verbose_name_plural = "Renewable Energy"

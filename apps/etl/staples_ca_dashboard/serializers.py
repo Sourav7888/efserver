@@ -5,7 +5,7 @@ from .models import Renewables, LedList
 class RenewablesSr(ModelSerializer):
     class Meta:
         model = Renewables
-        fields = "__all__"
+        fields = ("year", "purchased_energy", "emission_reduction")
 
 
 class LedListSr(ModelSerializer):
