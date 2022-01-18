@@ -12,6 +12,11 @@ patterns = [
         name="get_waste_recycling_rate",
     ),
     path(
+        "contribution-by-name/",
+        views.GetWasteContributionByName.as_view(),
+        name="get_waste_contribution_by_name",
+    ),
+    path(
         "bulk-create-waste-data/",
         views.BulkCreateWasteData.as_view(),
         name="waste_manager_test",

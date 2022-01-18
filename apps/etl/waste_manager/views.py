@@ -154,6 +154,77 @@ class GetWasteTotalFromStart(APIView):
                     type=openapi.TYPE_STRING,
                     required=True,
                 ),
+                openapi.Parameter(
+                    "year",
+                    in_=openapi.IN_QUERY,
+                    description="year",
+                    type=openapi.TYPE_INTEGER,
+                    required=True,
+                ),
+            ]
+        ),
+    }
+)
+class GetWasteContributionByName(APIView):
+    permission_classes = [IsAuthenticated, CheckRequestBody]
+
+    def get(self, request):
+        try:
+            division = self.request.GET["division"]
+            year = self.request.GET["year"]
+            waste_category = self.request.GET["waste_category"]
+
+            facilities = Facility.objects.filter(division=division)
+
+            query = (
+                WasteData.objects.filter(
+                    facility__in=facilities,
+                    pickup_date__year=year,
+                    waste_category=waste_category,
+                )
+                .values("pickup_date__year", "waste_name")
+                .annotate(
+                    weight=Sum("weight"),
+                )
+            )
+
+            total = query.aggregate(Sum("weight"))["weight__sum"]
+
+            data = [
+                {
+                    "waste_name": x["waste_name"],
+                    "contrib": round(x["weight"] * 100 / total, 2),
+                }
+                for x in query
+            ]
+
+        except Exception as error:
+            print(error)
+            return Response(
+                {"message": "Something went wrong"}, status=status.HTTP_400_BAD_REQUEST
+            )
+        return Response({"results": data}, status=status.HTTP_200_OK)
+
+
+@method_decorator(
+    **{
+        "name": "get",
+        "decorator": swagger_auto_schema(
+            manual_parameters=[
+                openapi.Parameter(
+                    "division",
+                    in_=openapi.IN_QUERY,
+                    description="division",
+                    type=openapi.TYPE_STRING,
+                    required=True,
+                ),
+                openapi.Parameter(
+                    "waste_category",
+                    in_=openapi.IN_QUERY,
+                    description="waste_category",
+                    type=openapi.TYPE_STRING,
+                    required=True,
+                ),
             ]
         ),
     }

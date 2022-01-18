@@ -133,3 +133,14 @@ class ETLTestCase(BaseTest):
         response = self.client.get(url, data)
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+        # Contribution by name
+        url = reverse("get_waste_contribution_by_name")
+        data = {
+            "division": "CoreDivisionName",
+            "waste_category": "TestCategory",
+            "year": 2020,
+        }
+        response = self.client.get(url, data)
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
