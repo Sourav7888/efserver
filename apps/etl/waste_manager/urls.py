@@ -5,6 +5,12 @@ from . import views
 patterns = [
     path("", views.GetWasteData.as_view(), name="get_waste_data"),
     path("yearly/", views.GetWasteDataYearly.as_view(), name="get_waste_data_yearly"),
+    path("total/", views.GetWasteTotalFromStart.as_view(), name="get_waste_data_total"),
+    path(
+        "recycling-rate/",
+        views.GetRecyclingRate.as_view(),
+        name="get_waste_recycling_rate",
+    ),
     path(
         "bulk-create-waste-data/",
         views.BulkCreateWasteData.as_view(),

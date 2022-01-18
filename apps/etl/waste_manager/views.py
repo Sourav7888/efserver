@@ -1,3 +1,4 @@
+from __future__ import division
 from .tasks import async_bulk_create_waste_data
 from rest_framework.response import Response
 from rest_framework.generics import ListAPIView
@@ -15,6 +16,8 @@ from django.utils.decorators import method_decorator
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
 from core.permissions import validate_facility_access
+from core.models import Facility
+from django.db.models import Sum
 
 
 class GetWasteData(ListAPIView):
@@ -72,6 +75,100 @@ class GetWasteDataYearly(ListAPIView):
         data = WasteData.yearly.filter(facility__in=facilities)
 
         return data
+
+
+@method_decorator(
+    **{
+        "name": "get",
+        "decorator": swagger_auto_schema(
+            manual_parameters=[
+                openapi.Parameter(
+                    "division",
+                    in_=openapi.IN_QUERY,
+                    description="division",
+                    type=openapi.TYPE_STRING,
+                    required=True,
+                ),
+                openapi.Parameter(
+                    "waste_category",
+                    in_=openapi.IN_QUERY,
+                    description="waste_category",
+                    type=openapi.TYPE_STRING,
+                    required=True,
+                ),
+            ]
+        ),
+    }
+)
+class GetWasteTotalFromStart(APIView):
+    permission_classes = [IsAuthenticated, CheckRequestBody]
+
+    def get(self, request):
+        try:
+            facilities = Facility.objects.filter(division=request.GET["division"])
+            data = WasteData.yearly.filter(
+                facility__in=facilities,
+                waste_category=request.GET["waste_category"],
+                is_recycled=True,
+            ).aggregate(Sum("weight"))
+        except Exception as error:
+            print(error)
+            return Response(
+                {"message": "Something went wrong"}, status=status.HTTP_400_BAD_REQUEST
+            )
+        return Response({"total": data["weight__sum"]}, status=status.HTTP_200_OK)
+
+
+@method_decorator(
+    **{
+        "name": "get",
+        "decorator": swagger_auto_schema(
+            manual_parameters=[
+                openapi.Parameter(
+                    "division",
+                    in_=openapi.IN_QUERY,
+                    description="division",
+                    type=openapi.TYPE_STRING,
+                    required=True,
+                ),
+                openapi.Parameter(
+                    "waste_category",
+                    in_=openapi.IN_QUERY,
+                    description="waste_category",
+                    type=openapi.TYPE_STRING,
+                    required=True,
+                ),
+            ]
+        ),
+    }
+)
+class GetRecyclingRate(APIView):
+    permission_classes = [IsAuthenticated, CheckRequestBody]
+
+    def get(self, request):
+        try:
+            facilities = Facility.objects.filter(division=request.GET["division"])
+            data = WasteData.yearly.filter(
+                facility__in=facilities,
+                waste_category=request.GET["waste_category"],
+            )
+
+            recycling_rate = 0
+            if data.exists():
+                total = data.aggregate(Sum("weight"))["weight__sum"]
+                recycled = data.filter(is_recycled=True).aggregate(Sum("weight"))[
+                    "weight__sum"
+                ]
+
+                if recycled and total > 0:
+                    recycling_rate = recycled * 100 / total
+
+        except Exception as error:
+            print(error)
+            return Response(
+                {"message": "Something went wrong"}, status=status.HTTP_400_BAD_REQUEST
+            )
+        return Response({"recycling_rate": recycling_rate}, status=status.HTTP_200_OK)
 
 
 @method_decorator(

@@ -1,7 +1,7 @@
 from django.db import models
 from apps.etl.waste_manager.managers import WasteYearlyManager
 from core.models import Facility
-from .managers import WasteYearlyManager
+from .managers import WasteYearlyManager, WasteMonthlyManager
 
 
 class WasteCategory(models.Model):
@@ -63,11 +63,13 @@ class WasteData(models.Model):
 
     yearly = WasteYearlyManager()
 
+    monthly = WasteMonthlyManager()
+
     class Meta:
         verbose_name_plural = "Waste Data"
         constraints = [
             models.UniqueConstraint(
-                fields=["facility", "pickup_date", "waste_name"],
+                fields=["facility", "pickup_date", "waste_name", "is_recycled"],
                 name="no_duplicate_waste_data",
             )
         ]

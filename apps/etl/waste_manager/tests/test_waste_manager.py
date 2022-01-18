@@ -35,13 +35,33 @@ class ETLTestCase(BaseTest):
                 "TestCategory",
                 "TestWasteProvider",
             ],
+            [
+                "2020-04-03",
+                "CoreFacilityName",
+                "Test",
+                "15",
+                "true",
+                "TestCategory",
+                "TestWasteProvider",
+            ],
+            [
+                "2020-01-01",
+                "CoreFacilityName",
+                "Test",
+                "15",
+                "false",
+                "TestCategory",
+                "TestWasteProvider",
+            ],
         ]
         # Test Create
         bulk_create_waste_data(data)
 
         facility = Facility.objects.get(facility_name="CoreFacilityName")
 
-        waste = WasteData.objects.get(facility=facility, pickup_date="2020-01-01")
+        waste = WasteData.objects.get(
+            facility=facility, pickup_date="2020-01-01", is_recycled=True
+        )
 
         self.assertEqual(int(waste.weight), 10)
 
@@ -58,18 +78,27 @@ class ETLTestCase(BaseTest):
         ]
 
         # # Test Update
-
         bulk_create_waste_data(update)
-        waste = WasteData.objects.get(facility=facility, pickup_date="2020-01-01")
-
+        waste = WasteData.objects.get(
+            facility=facility, pickup_date="2020-01-01", is_recycled=True
+        )
         self.assertEqual(int(waste.weight), 15)
 
         # Test the yearly manager
         yearly = WasteData.yearly.all()
 
-        self.assertEqual(int(yearly[0]["weight"]), 25)
+        self.assertEqual(int(yearly[0]["weight"]), 15)
+        self.assertEqual(int(yearly[0]["is_recycled"]), False)
 
-    def test_yearly_view(self):
+        self.assertEqual(int(yearly[1]["weight"]), 40)
+        self.assertEqual(int(yearly[1]["is_recycled"]), True)
+
+        # Test monthly manager
+        monthly = WasteData.monthly.all()
+
+        self.assertEqual(int(monthly[1]["weight"]), 25)
+
+    def test_views(self):
         user = auth.get_user(self.client)
         user_info = UserInfo.objects.create(user=user)
 
@@ -77,14 +106,30 @@ class ETLTestCase(BaseTest):
         user_info.customer = customer
         user_info.save()
 
+        # Yearly
         url = reverse("get_waste_data_yearly")
         data = {"division": "CoreDivisionName"}
         response = self.client.get(url, data)
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
+        # Monthly
         url = reverse("get_waste_data")
         data = {"division": "CoreDivisionName"}
+        response = self.client.get(url, data)
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+        # Total
+        url = reverse("get_waste_data_total")
+        data = {"division": "CoreDivisionName", "waste_category": "TestCategory"}
+        response = self.client.get(url, data)
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+        # Recycling rate
+        url = reverse("get_waste_recycling_rate")
+        data = {"division": "CoreDivisionName", "waste_category": "TestCategory"}
         response = self.client.get(url, data)
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
