@@ -18,6 +18,7 @@ from drf_yasg import openapi
 from core.permissions import validate_facility_access
 from core.models import Facility
 from django.db.models import Sum
+from distutils.util import strtobool
 
 
 class GetWasteData(ListAPIView):
@@ -96,6 +97,13 @@ class GetWasteDataYearly(ListAPIView):
                     type=openapi.TYPE_STRING,
                     required=True,
                 ),
+                openapi.Parameter(
+                    "diversion",
+                    in_=openapi.IN_QUERY,
+                    description="diversion",
+                    type=openapi.TYPE_BOOLEAN,
+                    required=False,
+                ),
             ]
         ),
     }
@@ -106,10 +114,18 @@ class GetWasteTotalFromStart(APIView):
     def get(self, request):
         try:
             facilities = Facility.objects.filter(division=request.GET["division"])
+
+            is_recycled = True
+            # @NOTE: if diversion meaning that all is not recycled but diverted hebce
+            # We can use non recycled as recycled
+            # Maybe add to moldes diverted this is a quick fix
+            if "diversion" in request.GET:
+                is_recycled = not bool(strtobool(request.GET["diversion"]))
+
             data = WasteData.yearly.filter(
                 facility__in=facilities,
                 waste_category=request.GET["waste_category"],
-                is_recycled=True,
+                is_recycled=is_recycled,
             ).aggregate(Sum("weight"))
         except Exception as error:
             print(error)
