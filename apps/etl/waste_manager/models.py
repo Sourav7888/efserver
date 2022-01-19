@@ -69,7 +69,13 @@ class WasteData(models.Model):
         verbose_name_plural = "Waste Data"
         constraints = [
             models.UniqueConstraint(
-                fields=["facility", "pickup_date", "waste_name", "is_recycled"],
+                fields=[
+                    "facility",
+                    "pickup_date",
+                    "waste_name",
+                    "waste_category",
+                    "is_recycled",
+                ],
                 name="no_duplicate_waste_data",
             )
         ]
