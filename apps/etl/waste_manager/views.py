@@ -194,6 +194,8 @@ class GetWasteContributionByName(APIView):
                 {
                     "waste_name": x["waste_name"],
                     "contrib": round(x["weight"] * 100 / total, 2),
+                    "weight": x["weight"],
+                    "year": x["pickup_date__year"],
                 }
                 for x in query
             ]
