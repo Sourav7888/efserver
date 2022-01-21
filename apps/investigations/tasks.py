@@ -1,3 +1,4 @@
+from os import access
 from celery import shared_task
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
@@ -54,7 +55,7 @@ def send_created_investigation(info: dict[str, str]):
     # @TODO: Some user email include none when sent
     # @TODO: Add on ENERFROG_STAFF should receive this and not customers
     to_email = list(
-        UserInfo.objects.filter(is_investigator=True)
+        UserInfo.objects.filter(is_investigator=True, access_level="ENERFROG_STAFF")
         .exclude(user__email="")
         .values_list("user__email", flat=True)
     )

@@ -55,6 +55,7 @@ class UserPermission(RetrieveAPIView):
                     user_info.confirmed_user = True
                     user_info.user_name = user_check[0].user_name
                     user_info.customer = user_check[0].customer
+                    user_info.is_investigator = False
                     # @NOTE: This need to be all as certain data are dependent on how many facilities
                     # The user has access to
                     # @TODO: Add an exception in the validate_facility_access that if the user has dashboard access
