@@ -1,4 +1,3 @@
-from __future__ import division
 from .tasks import async_bulk_create_waste_data
 from rest_framework.response import Response
 from rest_framework.generics import ListAPIView
