@@ -10,8 +10,6 @@ def bulk_create_waste_data(data: list[Any]) -> None:
     Insert in bulk waste and update whatever is in
     """
 
-    print(f"[INFO] Bulk insert {len(data)} rows")
-
     try:
         query = """
                 INSERT INTO waste_manager_wastedata (pickup_date, facility, waste_name, weight, is_recycled, waste_category, provided_by) 

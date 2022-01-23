@@ -64,7 +64,7 @@ class QuerysetParser:
 
 def parse_year_month(
     year: int, month: int, diff: int or None = None
-) -> dt or (dt, dt) or None:
+) -> dt or tuple[dt, dt] or None:
     """
     Parse month and year to provide a datetime object but also
     using diff provide the corresponding datetime object of a timedelta
@@ -103,3 +103,19 @@ def parse_in_memory_csv(file) -> list[Any] or None:
         print(error)
 
     return None
+
+
+def list_to_odr_list(data: list, headers: tuple) -> list:
+    """
+    EX: [[headers], [data]]
+    Ensure that the list is organized as the headers
+    [data[headers[0]], data[headers[1]] ...]
+    """
+    df = pd.DataFrame(data[1:], columns=data[0]).to_dict("records")
+
+    r = []
+
+    for x in df:
+        r.append([x[k] for k in headers])
+
+    return r

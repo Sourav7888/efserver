@@ -1,7 +1,6 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from .cs_schema import TestViewSc, UserInfo
 from django.utils.decorators import method_decorator
 from core.permissions import CheckRequestBody, validate_facility_access
 from rest_framework.permissions import IsAuthenticated
@@ -15,10 +14,35 @@ from .paginations import FacilityPg
 from .models import PreAuthorizedUser
 from django.utils.decorators import method_decorator
 from django.contrib.auth.models import User
+from drf_yasg.utils import swagger_auto_schema
+from drf_yasg import openapi
+from rest_framework.parsers import MultiPartParser
+from apps.shared.parsers import parse_in_memory_csv
+from .tasks import async_bulk_create_facility
 
 
 @method_decorator(
-    **TestViewSc,
+    **{
+        "name": "get",
+        "decorator": swagger_auto_schema(
+            manual_parameters=[
+                openapi.Parameter(
+                    "facility_name",
+                    in_=openapi.IN_QUERY,
+                    description="facility_name",
+                    type=openapi.TYPE_STRING,
+                    required=True,
+                ),
+                openapi.Parameter(
+                    "division_name",
+                    in_=openapi.IN_QUERY,
+                    description="division_name",
+                    type=openapi.TYPE_STRING,
+                    required=True,
+                ),
+            ],
+        ),
+    }
 )
 class CoreTestView(APIView):
     """
@@ -31,7 +55,21 @@ class CoreTestView(APIView):
         return Response({"message": "hello world"}, status=status.HTTP_200_OK)
 
 
-@method_decorator(**UserInfo)
+@method_decorator(
+    **{
+        "name": "get",
+        "decorator": swagger_auto_schema(
+            manual_parameters=[
+                openapi.Parameter(
+                    "email",
+                    in_=openapi.IN_QUERY,
+                    description="user email",
+                    type=openapi.TYPE_STRING,
+                ),
+            ]
+        ),
+    }
+)
 class UserPermission(RetrieveAPIView):
     """
     Return the user permissions across modules
@@ -105,3 +143,49 @@ class FacilityList(ListAPIView):
     def get_queryset(self):
         facilities = validate_facility_access(self.request)
         return facilities
+
+
+@method_decorator(
+    **{
+        "name": "post",
+        "decorator": swagger_auto_schema(
+            manual_parameters=[
+                openapi.Parameter(
+                    "file",
+                    in_=openapi.IN_FORM,
+                    description="CSV File containing a list of energy data",
+                    type=openapi.TYPE_FILE,
+                    required=True,
+                )
+            ]
+        ),
+    }
+)
+class BulkCreateFacility(APIView):
+    """
+    Bulk create/update Facility
+    Headers must be present with the following
+    (facility_name, facility_identifier, postal_code, latitude, longitude, area, address, category_type, closed)
+    category type must be "Retail" | "Warehouse"
+    """
+
+    parser_classes = [MultiPartParser]
+
+    def post(self, request):
+        if not request.user.is_superuser:
+            return Response(
+                {"message": "Only super users allowed"},
+                status=status.HTTP_403_FORBIDDEN,
+            )
+
+        if "file" in request.data:
+            # Parse file
+            data = parse_in_memory_csv(request.data["file"])
+
+            if data:
+                async_bulk_create_facility.delay(data)
+
+        return Response(
+            {"message": "Task created"},
+            status=status.HTTP_201_CREATED,
+        )

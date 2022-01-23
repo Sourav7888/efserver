@@ -11,6 +11,7 @@ from core.models import (
     PreAuthorizedUser,
 )
 from core.tests.utils import BaseTest
+from core.etl import bulk_create_facility
 
 
 class CoreTestCase(BaseTest):
@@ -160,3 +161,40 @@ class CoreTestCase(BaseTest):
         self.assertEqual(response.json()["user_name"], "TestUserName")
         user = User.objects.get(username="CoreTestUser")
         self.assertEqual(user.email, "TestUserEmail@gmail.com")
+
+    def test_bulk_create_facility(self):
+        mock = [
+            [
+                "facility_name",
+                "facility_identifier",
+                "postal_code",
+                "latitude",
+                "longitude",
+                "area",
+                "address",
+                "category_type",
+                "closed",
+            ],
+            [
+                "CoreFacilityName",
+                "CoreFacilityIdentifier",
+                "CFC",
+                "10",
+                "10",
+                "0",
+                "CoreAddress",
+                "Retail",
+                "False",
+            ],
+        ]
+        bulk_create_facility(mock)
+        facility = Facility.objects.get(facility_name="CoreFacilityName")
+        self.assertEqual(facility.facility_name, "CoreFacilityName")
+        self.assertEqual(facility.facility_identifier, "CoreFacilityIdentifier")
+        self.assertEqual(facility.postal_code, "CFC")
+        self.assertEqual(facility.latitude, 10)
+        self.assertEqual(facility.longitude, 10)
+        self.assertEqual(facility.area, 0)
+        self.assertEqual(facility.address, "CoreAddress")
+        self.assertEqual(facility.category_type, "Retail")
+        self.assertEqual(facility.closed, False)

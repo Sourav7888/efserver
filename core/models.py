@@ -130,9 +130,7 @@ class Facility(models.Model):
         max_length=50, null=False, blank=False, unique=True
     )
     # An identifier is simply a name given to the facility and can be null
-    facility_identifier = models.CharField(
-        max_length=50, null=True, blank=True, unique=True
-    )
+    facility_identifier = models.CharField(max_length=50, null=True, blank=True)
     postal_code = models.CharField(max_length=10, null=True, blank=True)
     latitude = models.DecimalField(
         max_digits=20, decimal_places=7, null=False, blank=False, default=0.0

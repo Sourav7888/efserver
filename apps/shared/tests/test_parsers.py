@@ -2,7 +2,7 @@ from shared.parsers import parse_year_month, parse_in_memory_csv
 from datetime import datetime as dt
 from rest_framework.test import APITestCase
 from django.core.files.uploadedfile import SimpleUploadedFile
-from shared.parsers import parse_in_memory_csv
+from shared.parsers import parse_in_memory_csv, list_to_odr_list
 
 
 class TestParsers(APITestCase):
@@ -37,3 +37,8 @@ class TestParsers(APITestCase):
                 ]
             ],
         )
+
+    def test_list_to_odr_list(self):
+        mock = [["a", "b", "c"], [1, 2, 3]]
+        result = list_to_odr_list(mock, ["c", "b", "a"])
+        self.assertEqual(result, [[3, 2, 1]])

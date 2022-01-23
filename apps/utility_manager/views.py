@@ -3,7 +3,6 @@ from apps.shared.parsers import parse_in_memory_csv
 from apps.utility_manager.tasks import async_bulk_create_utility
 from rest_framework.response import Response
 from rest_framework import status
-from .cs_schema import BulkCreateUtility
 from django.utils.decorators import method_decorator
 from rest_framework.parsers import MultiPartParser
 from rest_framework.generics import ListAPIView
@@ -12,12 +11,35 @@ from core.models import Facility, Division
 from .serializers import UtilitySr
 from .paginations import UtilityPg
 from .filters import UtilityFl
-from .cs_schema import DivisionUtility, FacilityUtility
 from core.permissions import CheckRequestBody
 from rest_framework.permissions import IsAuthenticated
+from drf_yasg.utils import swagger_auto_schema
+from drf_yasg import openapi
 
 
-@method_decorator(**FacilityUtility)
+@method_decorator(
+    **{
+        "name": "get",
+        "decorator": swagger_auto_schema(
+            manual_parameters=[
+                openapi.Parameter(
+                    "division_name",
+                    in_=openapi.IN_QUERY,
+                    description="division",
+                    type=openapi.TYPE_STRING,
+                    required=True,
+                ),
+                openapi.Parameter(
+                    "timeframe",
+                    in_=openapi.IN_QUERY,
+                    description="yearly | monthly",
+                    type=openapi.TYPE_STRING,
+                    required=True,
+                ),
+            ],
+        ),
+    }
+)
 class GetFacilityUtility(ListAPIView):
     """
     List all utility for a facility
@@ -59,7 +81,29 @@ class GetFacilityUtility(ListAPIView):
             return None
 
 
-@method_decorator(**DivisionUtility)
+@method_decorator(
+    **{
+        "name": "get",
+        "decorator": swagger_auto_schema(
+            manual_parameters=[
+                openapi.Parameter(
+                    "facility_name",
+                    in_=openapi.IN_QUERY,
+                    description="facility_name",
+                    type=openapi.TYPE_STRING,
+                    required=True,
+                ),
+                openapi.Parameter(
+                    "timeframe",
+                    in_=openapi.IN_QUERY,
+                    description="yearly | monthly",
+                    type=openapi.TYPE_STRING,
+                    required=True,
+                ),
+            ],
+        ),
+    }
+)
 class GetDivisionUtility(ListAPIView):
     """
     Get all utilities for a Division
@@ -102,7 +146,22 @@ class GetDivisionUtility(ListAPIView):
             return UtilityBill.objects.none()
 
 
-@method_decorator(**BulkCreateUtility)
+@method_decorator(
+    **{
+        "name": "post",
+        "decorator": swagger_auto_schema(
+            manual_parameters=[
+                openapi.Parameter(
+                    "file",
+                    in_=openapi.IN_FORM,
+                    description="CSV File containing a list of energy data",
+                    type=openapi.TYPE_FILE,
+                    required=True,
+                )
+            ]
+        ),
+    }
+)
 class BulkCreateUtility(APIView):
     """
     Bulk create/update utility
