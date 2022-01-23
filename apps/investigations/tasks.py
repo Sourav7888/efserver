@@ -14,9 +14,11 @@ def get_investigations_status():
     investigations = Investigation.objects.all()
     total_investigations = investigations.count()
     closed_investigations = investigations.filter(closed=True).count()
-    in_monitoring_investigations = investigations.filter(in_approval=True).count()
+    in_monitoring_investigations = investigations.filter(
+        in_approval=True, closed=False
+    ).count()
     open_investigations = investigations.filter(
-        investigation_investigator__isnull=True
+        investigation_investigator__isnull=True, closed=False
     ).count()
     on_going_investigations = investigations.filter(
         closed=False, in_approval=False, investigation_investigator__isnull=False
