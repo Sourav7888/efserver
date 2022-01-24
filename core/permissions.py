@@ -73,7 +73,7 @@ class CheckRequestBody(BasePermission):
     This only check a single instance ie: Division: exampleDivision and not Division: [Division1, ...]
     This catches whether the queried instance exist or not as well so that will be handled by a 403
     When using this permission the request body to check division and facility must be
-    facility_name and division_name
+    facility_name | facility and division_name | division
 
     If user_info has not been created as well this will handle it
     """

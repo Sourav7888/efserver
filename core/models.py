@@ -76,7 +76,7 @@ class UserInfo(models.Model):
         blank=False,
     )
 
-    # User are only confirmed once manually validated
+    # User are only confirmed once manually validated or added as a pre-authorized user
     confirmed_user = models.BooleanField(default=False, null=False, blank=False)
 
     class Meta:
