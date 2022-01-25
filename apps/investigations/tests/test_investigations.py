@@ -32,6 +32,7 @@ class InvestigationsTestCase(BaseTest):
         user_info = UserInfo.objects.get(user=user)
         user_info.access_investigation = True
         user_info.is_investigation_manager = True
+        user_info.is_investigator = True
 
         user_info.save()
 
