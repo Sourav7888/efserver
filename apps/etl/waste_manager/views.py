@@ -69,6 +69,9 @@ class GetWasteDataYearly(ListAPIView):
         return Response({"results": results}, status=status.HTTP_200_OK)
 
     def get_queryset(self):
+
+        # @TODO: This is not good this needs to not depend on validate_facility_access
+        # Rather filter by the division since all dashboard users need all the available data aggregated
         facilities = validate_facility_access(self.request).filter(
             division=self.request.GET["division"]
         )

@@ -63,12 +63,13 @@ class UserInfo(models.Model):
         to_field="customer_name",
     )
 
+    # @TODO: These need to be moved to an investigation permissions model
     # Access to investigations
     access_investigation = models.BooleanField(default=False, null=False, blank=False)
 
     # Allow to address investigations -> Can grab Investigations and investigate
     # And submit for approval to the manager
-    is_investigator = models.BooleanField(default=True, null=False, blank=False)
+    is_investigator = models.BooleanField(default=False, null=False, blank=False)
 
     # Allow to approve and create investigations -> Can Create|Delete|Approve Investigations
     is_investigation_manager = models.BooleanField(

@@ -7,6 +7,7 @@ from .cs_exeptions import TargetDateNotFound, EmptyDataFrame
 from django.db.utils import IntegrityError
 from celery import shared_task
 from apps.investigations.tasks import send_created_investigation
+from .base import HighConsumption
 
 
 def create_hc_investigation(
@@ -50,9 +51,10 @@ def upload_hc_document(investigation: Investigation, template: bytes):
 
 # @TODO: Add a logger -- Some dashboard of sorts
 
+
 # @TODO: Test
 def generate_hc(
-    hc_method,
+    hc_method: HighConsumption,
     target_date: str,
     hc_type: str,
     counter_limit: int = 3,
