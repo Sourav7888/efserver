@@ -8,6 +8,35 @@ from django.db.utils import IntegrityError
 from celery import shared_task
 from apps.investigations.tasks import send_created_investigation
 from .base import HighConsumption
+from apps.reports.models import Log, Report
+
+
+def create_hc_report(
+    facility: Facility,
+    template: bytes,
+    report_desc: str,
+    include_document: bool = True,
+):
+    report = Report.objects.create(
+        report_name=f"HC-Report -- {facility.facility_name}",
+        report_description=report_desc,
+    )
+
+    if include_document:
+        upload_report_document(report, template)
+
+    return report.report_id
+
+
+def upload_report_document(report: Report, template: bytes):
+    """
+    Upload the document to the report model
+    """
+    buffer = BytesIO()
+    buffer.write(template)
+    content = ContentFile(buffer.getvalue())
+    report.report_file.save(f"{report.report_id}.html", content)
+    report.save()
 
 
 def create_hc_investigation(
@@ -52,7 +81,8 @@ def upload_hc_document(investigation: Investigation, template: bytes):
 # @TODO: Add a logger -- Some dashboard of sorts
 
 
-# @TODO: Test
+# @TODO: Test if needed - Non-critical
+# @NOTE: Currently not used
 def generate_hc(
     hc_method: HighConsumption,
     target_date: str,
@@ -109,6 +139,34 @@ def generate_hc(
         if counter == counter_limit:
             # End the task when the counter limit is reached
             break
+
+
+# @TODO: Test if needed - Non-critical
+def generate_hc_report_by_facility(
+    facility: Facility,
+    hc_method: HighConsumption,
+    target_date: str,
+    **kwargs,
+):
+    hc = hc_method.create_hc_by_facility_obj(facility, target_date)
+
+    log_description = ""
+
+    try:
+        hc.run_method()
+        log_description = "Successfully generated HC report"
+    except (TargetDateNotFound, EmptyDataFrame) as e:
+        log_description = str(e)
+
+    report = create_hc_report(facility, hc.render_template(**kwargs), log_description)
+
+    # Create a log
+    Log.objects.create(
+        log_name=f"HC Report -- Facility: {facility.facility_name}",
+        log_description=log_description,
+    )
+
+    return report
 
 
 @shared_task
