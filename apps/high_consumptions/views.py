@@ -53,7 +53,10 @@ class GenerateHCReport(APIView):
 
         # @NOTE: Should be made async if it causes issues
         report_id = generate_hc_report_by_facility(
-            facility, ElectricityHighConsumption, request.GET["investigation_date"]
+            facility,
+            ElectricityHighConsumption,
+            request.GET["investigation_date"],
+            facility_context=True,
         )
 
         return Response({"report_id": report_id}, status=status.HTTP_200_OK)
