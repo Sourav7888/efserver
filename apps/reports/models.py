@@ -1,7 +1,7 @@
 from django.db import models
 import uuid
 from .storages_backends import LogsDocs, ReportsDocs
-from django.contrib.auth.models import User
+from core.models import UserInfo
 
 # Create your models here.
 class Log(models.Model):
@@ -32,11 +32,11 @@ class Report(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, editable=False)
     updated_at = models.DateTimeField(auto_now=True)
     created_by = models.ForeignKey(
-        User,
+        UserInfo,
         on_delete=models.SET_NULL,
         db_column="user",
         null=True,
-        to_field="username",
+        to_field="user_unique_id",
         related_name="user_report",
     )
     is_ready = models.BooleanField(default=False, null=False)
