@@ -66,7 +66,7 @@ class GenerateHCReport(APIView):
                 request.GET["investigation_date"],
                 facility_context=True,
             )
-        elif request.GET["utility_type"] == "natural_gas":
+        elif request.GET["utility_type"] == "natural gas":
             report_id = generate_hc_report_by_facility(
                 facility,
                 GasHighConsumption,
