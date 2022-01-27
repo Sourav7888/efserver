@@ -6,7 +6,7 @@ from rest_framework import status
 from django.utils.decorators import method_decorator
 from .tasks import generate_hc_report_by_facility
 from core.models import Facility
-from .base import ElectricityHighConsumption
+from .base import ElectricityHighConsumption, NaturalGasHighConsumption
 
 
 @method_decorator(
@@ -18,6 +18,13 @@ from .base import ElectricityHighConsumption
                     "facility",
                     in_=openapi.IN_QUERY,
                     description="facility",
+                    type=openapi.TYPE_STRING,
+                    required=True,
+                ),
+                openapi.Parameter(
+                    "utility_type",
+                    in_=openapi.IN_QUERY,
+                    description="electricity or natural gas",
                     type=openapi.TYPE_STRING,
                     required=True,
                 ),
@@ -51,12 +58,25 @@ class GenerateHCReport(APIView):
 
         facility = facility[0]
 
-        # @NOTE: Should be made async if it causes issues
-        report_id = generate_hc_report_by_facility(
-            facility,
-            ElectricityHighConsumption,
-            request.GET["investigation_date"],
-            facility_context=True,
-        )
+        if request.GET["utility_type"] == "electricity":
+            # @NOTE: Should be made async if it causes issues
+            report_id = generate_hc_report_by_facility(
+                facility,
+                ElectricityHighConsumption,
+                request.GET["investigation_date"],
+                facility_context=True,
+            )
+        elif request.GET["utility_type"] == "natural_gas":
+            report_id = generate_hc_report_by_facility(
+                facility,
+                NaturalGasHighConsumption,
+                request.GET["investigation_date"],
+                facility_context=True,
+                stats_context=True,
+            )
+        else:
+            return Response(
+                {"message": "Invalid utility type"}, status=status.HTTP_400_BAD_REQUEST
+            )
 
         return Response({"report_id": report_id}, status=status.HTTP_200_OK)
