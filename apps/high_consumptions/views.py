@@ -6,7 +6,7 @@ from rest_framework import status
 from django.utils.decorators import method_decorator
 from .tasks import generate_hc_report_by_facility
 from core.models import Facility
-from .base import ElectricityHighConsumption, NaturalGasHighConsumption
+from .base import ElectricityHighConsumption, GasHighConsumption
 
 
 @method_decorator(
@@ -69,7 +69,7 @@ class GenerateHCReport(APIView):
         elif request.GET["utility_type"] == "natural_gas":
             report_id = generate_hc_report_by_facility(
                 facility,
-                NaturalGasHighConsumption,
+                GasHighConsumption,
                 request.GET["investigation_date"],
                 facility_context=True,
                 stats_context=True,
