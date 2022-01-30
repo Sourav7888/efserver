@@ -3,9 +3,9 @@ from . import views
 
 patterns = [
     path(
-        "generate-hc-report/",
+        "generate-hc-report-by-facility/",
         views.GenerateHCReport.as_view(),
-        name="generate-hc-report",
+        name="generate-hc-report-by-facility",
     )
 ]
 
