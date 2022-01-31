@@ -8,7 +8,6 @@ from apps.high_consumptions.tasks import (
 from apps.investigations.models import Investigation
 from apps.high_consumptions.models import HC
 from apps.reports.models import Report
-from apps.high_consumptions.base import ElectricityHighConsumption
 import uuid
 
 

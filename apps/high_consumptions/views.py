@@ -5,9 +5,16 @@ from drf_yasg import openapi
 from rest_framework.response import Response
 from rest_framework import status
 from django.utils.decorators import method_decorator
+from rest_framework.permissions import IsAuthenticated
+from core.permissions import IsSuperUser
 from .tasks import generate_hc_report_by_facility, generate_hc
 from core.models import Facility
 from .base import ElectricityHighConsumption, GasHighConsumption
+from rest_framework.generics import ListAPIView
+from .models import HC
+from .serializers import HCSr
+from .filters import HCFl
+from .paginations import HCPg
 
 
 @method_decorator(
@@ -145,3 +152,16 @@ class GenerateHC(APIView):
             )
 
         return Response({"hc_id": _id}, status=status.HTTP_200_OK)
+
+
+class GetGeneratedHC(ListAPIView):
+    """
+    Get Generated
+    """
+
+    permission_classes = [IsAuthenticated, IsSuperUser]
+
+    serializer_class = HCSr
+    filter_class = HCFl
+    pagination_class = HCPg
+    queryset = HC.objects.all()

@@ -7,7 +7,8 @@ patterns = [
         views.GenerateHCReport.as_view(),
         name="generate-hc-report-by-facility",
     ),
-    path("generate-hc", views.GenerateHC.as_view(), name="generate-hc"),
+    path("generate-hc/", views.GenerateHC.as_view(), name="generate-hc"),
+    path("get-generated-hc/", views.GetGeneratedHC.as_view(), name="get-generated-hc"),
 ]
 
 urlpatterns = [path("", include(patterns))]

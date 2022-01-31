@@ -3,6 +3,13 @@ from rest_framework.permissions import BasePermission
 from django.http import HttpRequest
 
 
+class IsSuperUser(BasePermission):
+    def has_permission(self, request, view):
+        if not request.user.is_superuser:
+            return False
+        return True
+
+
 def get_or_create_user_info(request: HttpRequest) -> UserInfo:
     """
     Check if this user has user info yet, if not create one
