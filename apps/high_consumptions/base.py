@@ -416,7 +416,7 @@ class ElectricityHighConsumption(HighConsumption):
         self._context["render"]["avg"] = [average for _ in range(len(stats))]
 
     def is_hc(self) -> bool:
-        if self._context["percentage_diff"] > 25:
+        if self._context["percentage_diff"] > 15:
             return True
 
         return False
