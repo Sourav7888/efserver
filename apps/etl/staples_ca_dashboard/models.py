@@ -47,10 +47,10 @@ class LedList(models.Model):
         db_column="facility",
     )
 
-    class Neta:
-        constants = [
-            models.UniqueConstraint(
-                fields=["retrofit", "vendor", "facility"],
-                name="no_duplicate_led_data",
-            )
-        ]
+
+class BillAudit(models.Model):
+    facility = models.CharField(max_length=255, null=False, blank=False)
+    audit_date = models.DateField(null=True, blank=True)
+    issue = models.TextField(null=True, blank=True)
+    funds_recovered = models.DecimalField(max_digits=12, decimal_places=2, default=0)
+    cost_avoidance = models.DecimalField(max_digits=12, decimal_places=2, default=0)

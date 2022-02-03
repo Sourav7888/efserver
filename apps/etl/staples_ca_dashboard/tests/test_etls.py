@@ -54,3 +54,15 @@ class TestLedList(BaseTest):
         response = self.client.get(url, data)
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+
+class TestBillAudit(BaseTest):
+    def test_bill_audit(self):
+        # Test that only user with the same customer has access
+        user = auth.get_user(self.client)
+
+        url = reverse("get_bill_audit")
+        data = {}
+        response = self.client.get(url, data)
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)

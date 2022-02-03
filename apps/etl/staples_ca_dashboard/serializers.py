@@ -1,5 +1,5 @@
 from rest_framework.serializers import ModelSerializer
-from .models import Renewables, LedList
+from .models import Renewables, LedList, BillAudit
 
 
 class RenewablesSr(ModelSerializer):
@@ -11,4 +11,10 @@ class RenewablesSr(ModelSerializer):
 class LedListSr(ModelSerializer):
     class Meta:
         model = LedList
+        fields = "__all__"
+
+
+class BillAuditSr(ModelSerializer):
+    class Meta:
+        model = BillAudit
         fields = "__all__"
