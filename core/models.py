@@ -63,20 +63,6 @@ class UserInfo(models.Model):
         to_field="customer_name",
     )
 
-    # @TODO: These need to be moved to an investigation permissions model
-    # Access to investigations
-    access_investigation = models.BooleanField(default=False, null=False, blank=False)
-
-    # Allow to address investigations -> Can grab Investigations and investigate
-    # And submit for approval to the manager
-    is_investigator = models.BooleanField(default=False, null=False, blank=False)
-
-    # Allow to approve and create investigations -> Can Create|Delete|Approve Investigations
-    is_investigation_manager = models.BooleanField(
-        default=False,
-        blank=False,
-    )
-
     # User are only confirmed once manually validated or added as a pre-authorized user
     confirmed_user = models.BooleanField(default=False, null=False, blank=False)
 

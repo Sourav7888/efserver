@@ -4,8 +4,9 @@ from django.contrib.auth.models import User
 from django.contrib import auth
 from core.tests.utils import BaseTest
 from core.models import UserInfo, Facility
-from apps.investigations.models import Investigation
+from apps.investigations.models import Investigation, InvestigationAuthorization
 from apps.investigations.tasks import get_investigations_status
+from apps.investigations.permissions import get_or_create_investigation_authorization
 
 
 class InvestigationsTestCase(BaseTest):
@@ -13,6 +14,17 @@ class InvestigationsTestCase(BaseTest):
         super().setUp()
         user = auth.get_user(self.client)
         UserInfo.objects.create(user=user)
+
+    def test_get_or_create_investigation_authorization(self):
+        user = auth.get_user(self.client)
+        inv_auth = InvestigationAuthorization.objects.filter(user_info=user.user_info)
+
+        self.assertEqual(inv_auth.exists(), False)
+
+        get_or_create_investigation_authorization(user.user_info.user_unique_id)
+
+        inv_auth = InvestigationAuthorization.objects.filter(user_info=user.user_info)
+        self.assertEqual(inv_auth.exists(), True)
 
     def test_investigations(self):
         """
@@ -29,12 +41,17 @@ class InvestigationsTestCase(BaseTest):
 
         # Giving the user the permission should allow
         user = auth.get_user(self.client)
-        user_info = UserInfo.objects.get(user=user)
-        user_info.access_investigation = True
-        user_info.is_investigation_manager = True
-        user_info.is_investigator = True
 
-        user_info.save()
+        get_or_create_investigation_authorization(
+            user.user_info.user_unique_id, as_dict=True
+        )
+
+        user_info = UserInfo.objects.get(user=user)
+        inv_auth = InvestigationAuthorization.objects.get(user_info=user_info)
+        inv_auth.is_investigation_manager = True
+        inv_auth.access_investigation = True
+        inv_auth.is_investigator = True
+        inv_auth.save()
 
         response = self.client.post(
             url,

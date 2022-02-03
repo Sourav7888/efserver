@@ -5,13 +5,13 @@ from django.utils.decorators import method_decorator
 from core.permissions import CheckRequestBody, validate_facility_access
 from rest_framework.permissions import IsAuthenticated
 from .permissions import get_or_create_user_info
-from rest_framework.generics import RetrieveAPIView, ListAPIView
-from .serializers import UserInfoSr, DivisionSr
+from rest_framework.generics import ListAPIView
+from .serializers import DivisionSr, model_to_dict
 from .paginations import DivisionPg
 from .models import Division
 from .serializers import FacilitySr
 from .paginations import FacilityPg
-from .models import PreAuthorizedUser
+from .models import PreAuthorizedUser, UserInfo
 from django.utils.decorators import method_decorator
 from django.contrib.auth.models import User
 from drf_yasg.utils import swagger_auto_schema
@@ -19,6 +19,8 @@ from drf_yasg import openapi
 from rest_framework.parsers import MultiPartParser
 from apps.shared.parsers import parse_in_memory_csv
 from .tasks import async_bulk_create_facility
+from apps import investigations
+from rest_framework.response import Response
 
 
 @method_decorator(
@@ -70,45 +72,57 @@ class CoreTestView(APIView):
         ),
     }
 )
-class UserPermission(RetrieveAPIView):
+class UserPermission(APIView):
     """
     Return the user permissions across modules
     """
 
-    serializer_class = UserInfoSr
+    def perform_pre_authorized_user_check(self, email: str, user_info: UserInfo):
+        user_check = PreAuthorizedUser.objects.filter(email=email)
+        if user_check.exists():
+            user_info.confirmed_user = True
+            user_info.user_name = user_check[0].user_name
+            user_info.customer = user_check[0].customer
+            # @NOTE: This need to be all as certain data are dependent on how many facilities
+            # The user has access to
+            # @TODO: Add an exception in the validate_facility_access that if the user has dashboard access
+            # Allow all or separate the permissions in both
+            user_info.access_level = "ALL"
+            user_info.save()
 
-    def get_object(self):
+            # Update the users' email
+            user = User.objects.get(id=user_info.user.id)
+            user.email = email
+            user.save()
+
+    def get(self, request):
         # Create the user info if it does not exist yet
         # Because usually this view is called as soon as the user log in
-        user_info = get_or_create_user_info(self.request)
+        # Also required for other apps authorization
+        user_info = get_or_create_user_info(request)
+
+        # ------ PUT APP AUTHORIZATION HERE ------ #
+        # This a good place to trigger creations of authorization models if they dont exist
+        # Handle errors in the functions to return an empty {} to avoid failures here
+        app_investigations = (
+            investigations.permissions.get_or_create_investigation_authorization(
+                user_info.user_unique_id, as_dict=True
+            )["model"]
+        )
+        # ------ BUILD RETURN CONTEXT HERE ------ #
+        app_context = {"app_investigations": app_investigations}
 
         # Check if user is not confirmed
-        # Check preauthorized users and if exists update informations and that 's it <This is for sustainability dashboard>
+        # Check preauthorized users and if exists update informations and that 's it
         # To streamline users coming in to the dashboard
         if not user_info.confirmed_user:
-            email = self.request.query_params.get("email")
+            email = request.query_params.get("email")
             if email:
-                user_check = PreAuthorizedUser.objects.filter(email=email)
-                if user_check.exists():
-                    user_info.confirmed_user = True
-                    user_info.user_name = user_check[0].user_name
-                    user_info.customer = user_check[0].customer
-                    user_info.is_investigator = False
-                    # @NOTE: This need to be all as certain data are dependent on how many facilities
-                    # The user has access to
-                    # @TODO: Add an exception in the validate_facility_access that if the user has dashboard access
-                    # Allow all or separate the permissions in both
-                    user_info.access_level = "ALL"
-                    user_info.save()
+                self.perform_pre_authorized_user_check(email, user_info)
 
-                    # Update the users' email
-                    user = User.objects.get(id=user_info.user.id)
-                    user.email = email
-                    user.save()
-
-                    return user_info
-
-        return user_info
+        return Response(
+            {**model_to_dict(user_info), **app_context}, status=status.HTTP_200_OK
+        )
 
 
 class DivisionList(ListAPIView):

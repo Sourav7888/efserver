@@ -2,6 +2,8 @@ from django.db import models
 from core.models import UserInfo, Facility
 from uuid import uuid4
 from .storages_backends import InvestigationDocs
+from core.models import UserInfo
+
 
 HIGH_CONSUMPTION_OPTIONS = [
     ("HC_WT", "HC_WT"),
@@ -74,3 +76,32 @@ class Investigation(models.Model):
             pass
 
         return val
+
+
+class InvestigationAuthorization(models.Model):
+    user_info = models.OneToOneField(
+        UserInfo,
+        on_delete=models.SET_NULL,
+        db_column="user_info",
+        null=True,
+        to_field="user_unique_id",
+        related_name="investigation_authorization",
+        unique=True,
+    )
+
+    # @TODO: These need to be moved to an investigation permissions model
+    # Access to investigations
+    access_investigation = models.BooleanField(default=False, null=False, blank=False)
+
+    # Allow to address investigations -> Can grab Investigations and investigate
+    # And submit for approval to the manager
+    is_investigator = models.BooleanField(default=False, null=False, blank=False)
+
+    # Allow to approve and create investigations -> Can Create|Delete|Approve Investigations
+    is_investigation_manager = models.BooleanField(
+        default=False,
+        blank=False,
+    )
+
+    def __str__(self):
+        return f"Name: {self.user_info}"
