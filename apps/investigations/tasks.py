@@ -56,7 +56,10 @@ def send_created_investigation(info: dict[str, str]):
 
     # @TODO: Some user email include none when sent
     to_email = list(
-        UserInfo.objects.filter(is_investigator=True, access_level="ENERFROG_STAFF")
+        UserInfo.objects.filter(
+            investigation_authorization__is_investigator=True,
+            access_level="ENERFROG_STAFF",
+        )
         .exclude(user__email="")
         .values_list("user__email", flat=True)
     )

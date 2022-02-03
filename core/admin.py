@@ -3,7 +3,10 @@ from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from .models import *
 from apps.utility_manager.admin import FacilityUtilityBillInline
 from apps.etl.waste_manager.admin import FacilityWasteDataInline
+from apps.investigations.admin import InvestigationAuthorizationInline
 
+
+# ------------------ Add users related inlines here ------------------ #
 # Add the user info inline in django admin
 class UserInfoInline(admin.StackedInline):
     model = UserInfo
@@ -23,6 +26,14 @@ class UserAdmin(BaseUserAdmin):
     )
 
 
+# ------------------ Add apps authorizations inlines here ------------------ #
+class UserInfoAdmin(admin.ModelAdmin):
+    inlines = (InvestigationAuthorizationInline,)
+
+
+# ------------------ Add apps facilities inlines here ------------------ #
+
+
 class FacilityAdmin(admin.ModelAdmin):
     inlines = [FacilityUtilityBillInline, FacilityWasteDataInline]
 
@@ -31,12 +42,12 @@ class FacilityAdmin(admin.ModelAdmin):
 admin.site.register(Customer)
 admin.site.unregister(User)
 admin.site.register(User, UserAdmin)
-admin.site.register(FacilityAccessControl)
-admin.site.register(UserInfo)
+
+# User Info
+admin.site.register(UserInfo, UserInfoAdmin)
 
 # Division
 admin.site.register(Division)
-
 
 # Facility
 admin.site.register(Facility, FacilityAdmin)
