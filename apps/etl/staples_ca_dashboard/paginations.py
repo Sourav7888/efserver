@@ -7,3 +7,7 @@ class RenewablesPg(CursorPagination):
 
 class LedListPg(CursorPagination):
     ordering = "retrofit_date"
+
+
+class BillAuditPg(CursorPagination):
+    ordering = "facility"
