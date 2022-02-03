@@ -2,10 +2,11 @@ from core.models import UserInfo
 from apps.investigations.models import InvestigationAuthorization
 from rest_framework.permissions import BasePermission
 from typing import Union
+from core.serializers import model_to_dict
 
 
 def get_or_create_investigation_authorization(
-    id: str,
+    id: str, as_dict=False
 ) -> Union[bool, InvestigationAuthorization]:
     """
     Create investigation authorization if does not yet exist
@@ -13,12 +14,23 @@ def get_or_create_investigation_authorization(
 
     user_info = UserInfo.objects.get(user_unique_id=id)
     inv_auth = InvestigationAuthorization.objects.filter(user_info=user_info)
-    if inv_auth.exists():
-        return inv_auth.first()
 
+    context = {}
+    model = None
+
+    if inv_auth.exists():
+        context["status"] = True
+        model = inv_auth.first()
     else:
-        InvestigationAuthorization.objects.create(user_info=user_info)
-        return False
+        context["status"] = False
+        model = InvestigationAuthorization.objects.create(user_info=user_info)
+
+    if as_dict:
+        context["model"] = model_to_dict(model)
+    else:
+        context["model"] = model
+
+    return context
 
 
 class HasInvestigationAccess(BasePermission):
@@ -31,8 +43,8 @@ class HasInvestigationAccess(BasePermission):
             request.user.user_info.user_unique_id
         )
 
-        if x:
-            if x.access_investigation:
+        if x["status"]:
+            if x["model"].access_investigation:
                 return True
 
         return False
@@ -49,8 +61,8 @@ class IsInvestigationManager(BasePermission):
             request.user.user_info.user_unique_id
         )
 
-        if x:
-            if x.is_investigation_manager:
+        if x["status"]:
+            if x["model"].is_investigation_manager:
                 return True
 
         return False
@@ -66,8 +78,8 @@ class IsInvestigator(BasePermission):
             request.user.user_info.user_unique_id
         )
 
-        if x:
-            if x.is_investigator:
+        if x["status"]:
+            if x["model"].is_investigator:
                 return True
 
         return False

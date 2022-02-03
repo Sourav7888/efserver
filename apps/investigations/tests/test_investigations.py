@@ -41,6 +41,11 @@ class InvestigationsTestCase(BaseTest):
 
         # Giving the user the permission should allow
         user = auth.get_user(self.client)
+
+        get_or_create_investigation_authorization(
+            user.user_info.user_unique_id, as_dict=True
+        )
+
         user_info = UserInfo.objects.get(user=user)
         inv_auth = InvestigationAuthorization.objects.get(user_info=user_info)
         inv_auth.is_investigation_manager = True

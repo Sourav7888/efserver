@@ -36,7 +36,7 @@ class CreateInvestigationSr(serializers.ModelSerializer):
 
             investigation.save()
 
-            #@TODO: Refractor to be async
+            # @TODO: Refractor to be async
             send_created_investigation(validated_data)
 
             return investigation

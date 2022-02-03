@@ -140,7 +140,6 @@ class CoreTestCase(BaseTest):
 
     def test_user_permission(self):
         # Testing pre-authorized user
-
         url = reverse("get_user_permission")
         response = self.client.get(url, data={"email": "TestUserEmail@gmail.com"})
         # Test that the user is not confirmed and it is not assigned to a customer
