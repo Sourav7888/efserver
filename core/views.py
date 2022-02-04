@@ -106,7 +106,7 @@ class UserPermission(APIView):
         # Handle errors in the functions to return an empty {} to avoid failures here
         app_investigations = (
             investigations.permissions.get_or_create_investigation_authorization(
-                user_info.user_unique_id, as_dict=True
+                "", as_dict=True, user_info_model=user_info
             )["model"]
         )
         # ------ BUILD RETURN CONTEXT HERE ------ #

@@ -3,16 +3,25 @@ from apps.investigations.models import InvestigationAuthorization
 from rest_framework.permissions import BasePermission
 from typing import Union
 from core.serializers import model_to_dict
+from typing import Union
 
 
 def get_or_create_investigation_authorization(
-    id: str, as_dict=False
+    id: str,
+    as_dict=False,
+    user_info_model: Union[
+        UserInfo, None
+    ] = None,  # To avoid additional query when user info can be passed
 ) -> Union[bool, InvestigationAuthorization]:
     """
     Create investigation authorization if does not yet exist
     """
+    user_info = None
+    if user_info_model:
+        user_info = user_info_model
+    else:
+        user_info = UserInfo.objects.get(user_unique_id=id)
 
-    user_info = UserInfo.objects.get(user_unique_id=id)
     inv_auth = InvestigationAuthorization.objects.filter(user_info=user_info)
 
     context = {}
@@ -40,9 +49,10 @@ class HasInvestigationAccess(BasePermission):
 
     def has_permission(self, request, view):
         x = get_or_create_investigation_authorization(
-            request.user.user_info.user_unique_id
+            "",
+            user_info_model=request.user.user_info,
         )
-
+        
         if x["status"]:
             if x["model"].access_investigation:
                 return True
@@ -58,7 +68,8 @@ class IsInvestigationManager(BasePermission):
     def has_permission(self, request, view):
 
         x = get_or_create_investigation_authorization(
-            request.user.user_info.user_unique_id
+            "",
+            user_info_model=request.user.user_info,
         )
 
         if x["status"]:
@@ -75,7 +86,8 @@ class IsInvestigator(BasePermission):
 
     def has_permission(self, request, view):
         x = get_or_create_investigation_authorization(
-            request.user.user_info.user_unique_id
+            "",
+            user_info_model=request.user.user_info,
         )
 
         if x["status"]:
