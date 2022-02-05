@@ -85,9 +85,12 @@ class UserPermission(APIView):
             user_info.customer = user_check[0].customer
             # @NOTE: This need to be all as certain data are dependent on how many facilities
             # The user has access to
+            # @NOTE: For subsequent apps create a different permission models that handle platforma accessing
             # @TODO: Add an exception in the validate_facility_access that if the user has dashboard access
             # Allow all or separate the permissions in both
             user_info.access_level = "ALL"
+            user_info.cs_staples_ca_ds = user_check[0].cs_staples_ca_ds
+
             user_info.save()
 
             # Update the users' email

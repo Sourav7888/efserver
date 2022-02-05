@@ -148,9 +148,13 @@ class CoreTestCase(BaseTest):
         self.assertEqual(response.json()["customer"], None)
 
         # Creating a pre-authorized user should allow the user to be confirmed and assigned to a customer
+        # But also we need a fast solution to only accept certain users to access Staples CA custom dashboard
         customer = Customer.objects.get(customer_name="CoreCustomerName")
         PreAuthorizedUser.objects.create(
-            email="TestUserEmail@gmail.com", customer=customer, user_name="TestUserName"
+            email="TestUserEmail@gmail.com",
+            customer=customer,
+            user_name="TestUserName",
+            cs_staples_ca_ds=True,
         )
         url = reverse("get_user_permission")
         response = self.client.get(url, data={"email": "TestUserEmail@gmail.com"})
@@ -158,6 +162,7 @@ class CoreTestCase(BaseTest):
         self.assertEqual(response.json()["confirmed_user"], True)
         self.assertEqual(response.json()["customer"], "CoreCustomerName")
         self.assertEqual(response.json()["user_name"], "TestUserName")
+        self.assertEqual(response.json()["cs_staples_ca_ds"], True)
         user = User.objects.get(username="CoreTestUser")
         self.assertEqual(user.email, "TestUserEmail@gmail.com")
 

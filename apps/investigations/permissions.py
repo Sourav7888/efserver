@@ -22,6 +22,7 @@ def get_or_create_investigation_authorization(
     else:
         user_info = UserInfo.objects.get(user_unique_id=id)
 
+    # @NOTE: This can be changed to get_or_create right away
     inv_auth = InvestigationAuthorization.objects.filter(user_info=user_info)
 
     context = {}
@@ -32,6 +33,8 @@ def get_or_create_investigation_authorization(
         model = inv_auth.first()
     else:
         context["status"] = False
+        # @NOTE: This can be removed once the get_or_create is implemented
+        # @NOTE: Refractor permissions below
         model = InvestigationAuthorization.objects.create(user_info=user_info)
 
     if as_dict:
@@ -52,7 +55,7 @@ class HasInvestigationAccess(BasePermission):
             "",
             user_info_model=request.user.user_info,
         )
-        
+
         if x["status"]:
             if x["model"].access_investigation:
                 return True

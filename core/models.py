@@ -1,3 +1,4 @@
+from sys import platform
 from django.db import models
 from django.contrib.auth.models import User
 from django.core.validators import MinValueValidator
@@ -62,6 +63,12 @@ class UserInfo(models.Model):
         blank=True,
         to_field="customer_name",
     )
+
+    # @NOTE: Temporary and fast solution for Staples CA to access sustainability dashboard
+    # But restrict others from accessing that particular platform, this is required for
+    # A smooth pre-authorization process for that platform
+    # To be removed in the future or moved to a more scalable solution
+    cs_staples_ca_ds = models.BooleanField(default=False)
 
     # User are only confirmed once manually validated or added as a pre-authorized user
     confirmed_user = models.BooleanField(default=False, null=False, blank=False)
@@ -190,6 +197,8 @@ class PreAuthorizedUser(models.Model):
         blank=False,
         to_field="customer_name",
     )
+
+    cs_staples_ca_ds = models.BooleanField(default=False)
 
     def __str__(self):
         return f"{self.email} | {self.user_name}"
