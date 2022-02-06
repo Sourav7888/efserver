@@ -198,6 +198,10 @@ class PreAuthorizedUser(models.Model):
         to_field="customer_name",
     )
 
+    # @NOTE: Temporary and fast solution for Staples CA to access sustainability dashboard
+    # But restrict others from accessing that particular platform, this is required for
+    # A smooth pre-authorization process for that platform
+    # To be removed in the future or moved to a more scalable solution
     cs_staples_ca_ds = models.BooleanField(default=False)
 
     def __str__(self):
