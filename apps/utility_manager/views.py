@@ -87,7 +87,7 @@ class GetFacilityUtility(ListAPIView):
         "decorator": swagger_auto_schema(
             manual_parameters=[
                 openapi.Parameter(
-                    "facility_name",
+                    "division_name",
                     in_=openapi.IN_QUERY,
                     description="facility_name",
                     type=openapi.TYPE_STRING,
