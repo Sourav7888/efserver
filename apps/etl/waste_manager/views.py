@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from rest_framework.generics import ListAPIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
-from core.permissions import CheckRequestBody
+from core.permissions import CheckRequestBody, IsSuperUser
 from .models import WasteData
 from .serializers import WasteDataSr
 from .paginations import WasteDataPg
@@ -255,7 +255,6 @@ class GetRecyclingRate(APIView):
                     recycling_rate = recycled * 100 / total
 
         except Exception as error:
-            print(error)
             return Response(
                 {"message": "Something went wrong"}, status=status.HTTP_400_BAD_REQUEST
             )
@@ -280,13 +279,9 @@ class GetRecyclingRate(APIView):
 )
 class BulkCreateWasteData(APIView):
     parser_classes = [MultiPartParser]
+    permission_classes = [IsAuthenticated, IsSuperUser]
 
     def post(self, request):
-        if not request.user.is_superuser:
-            return Response(
-                {"message": "Only super users allowed"},
-                status=status.HTTP_403_FORBIDDEN,
-            )
 
         if "file" in request.data:
             # Parse file

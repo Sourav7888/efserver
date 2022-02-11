@@ -11,7 +11,7 @@ from core.models import Facility, Division
 from .serializers import UtilitySr
 from .paginations import UtilityPg
 from .filters import UtilityFl
-from core.permissions import CheckRequestBody
+from core.permissions import CheckRequestBody, enforce_parameters, IsSuperUser
 from rest_framework.permissions import IsAuthenticated
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
@@ -23,9 +23,9 @@ from drf_yasg import openapi
         "decorator": swagger_auto_schema(
             manual_parameters=[
                 openapi.Parameter(
-                    "division_name",
+                    "facility_name",
                     in_=openapi.IN_QUERY,
-                    description="division",
+                    description="facility_name",
                     type=openapi.TYPE_STRING,
                     required=True,
                 ),
@@ -50,6 +50,7 @@ class GetFacilityUtility(ListAPIView):
     pagination_class = UtilityPg
     permission_classes = [IsAuthenticated, CheckRequestBody]
 
+    @method_decorator(enforce_parameters(params=["timeframe", "facility_name"]))
     def list(self, request, *args, **kwargs):
         if request.GET["timeframe"].lower() == "monthly":
             return super().list(self, request, *args, **kwargs)
@@ -89,7 +90,7 @@ class GetFacilityUtility(ListAPIView):
                 openapi.Parameter(
                     "division_name",
                     in_=openapi.IN_QUERY,
-                    description="facility_name",
+                    description="division_name",
                     type=openapi.TYPE_STRING,
                     required=True,
                 ),
@@ -114,6 +115,7 @@ class GetDivisionUtility(ListAPIView):
     filterset_class = UtilityFl
     permission_classes = [IsAuthenticated, CheckRequestBody]
 
+    @method_decorator(enforce_parameters(params=["timeframe", "division_name"]))
     def list(self, request, *args, **kwargs):
         if request.GET["timeframe"].lower() == "monthly":
             return super().list(self, request, *args, **kwargs)
@@ -170,13 +172,9 @@ class BulkCreateUtility(APIView):
     """
 
     parser_classes = [MultiPartParser]
+    permission_classes = [IsAuthenticated, IsSuperUser]
 
     def post(self, request):
-        if not request.user.is_superuser:
-            return Response(
-                {"message": "Only super users allowed"},
-                status=status.HTTP_403_FORBIDDEN,
-            )
 
         if "file" in request.data:
             # Parse file

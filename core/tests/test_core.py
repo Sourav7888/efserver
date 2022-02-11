@@ -23,15 +23,31 @@ class CoreTestCase(BaseTest):
         # Testing that a user cannot access a division information unless
         # user is of the same customer
 
-        def request():
+        def get_request(
+            data={
+                "division_name": "CoreDivisionName",
+                "facility_name": "CoreFacilityName",
+            }
+        ):
 
             url = reverse("test_core_view")
             response = self.client.get(
                 url,
-                data={
-                    "division_name": "CoreDivisionName",
-                    "facility_name": "CoreFacilityName",
-                },
+                data=data,
+            )
+
+            return response
+
+        def post_request(
+            data={
+                "division_name": "CoreDivisionName",
+                "facility_name": "CoreFacilityName",
+            }
+        ):
+            url = reverse("test_core_view")
+            response = self.client.post(
+                url,
+                data=data,
             )
 
             return response
@@ -43,7 +59,26 @@ class CoreTestCase(BaseTest):
         self.assertEqual(hasattr(user, "user_info"), False)
 
         # Test that the request is denied but the user info is created regardless
-        self.assertEqual(request().status_code, status.HTTP_403_FORBIDDEN)
+        # This is due to the CheckRequestBody
+        # Test that query strings are checked
+        get_response = get_request()
+        self.assertEqual(get_response.status_code, status.HTTP_403_FORBIDDEN)
+        assert (
+            get_response.request["QUERY_STRING"]
+            == "division_name=CoreDivisionName&facility_name=CoreFacilityName"
+        )
+        # Test Post should be refused also
+        # Test that multipart and body are checked
+        post_response = post_request()
+        self.assertEqual(post_response.status_code, status.HTTP_403_FORBIDDEN)
+        # Not using query string
+        assert post_response.request["QUERY_STRING"] == ""
+
+        # Is using body / wsgi
+        assert (
+            post_response.wsgi_request.POST.get("division_name") == "CoreDivisionName"
+        )
+
         user = User.objects.get(username="CoreTestUser")
         self.assertEqual(hasattr(user, "user_info"), True)
 
@@ -55,21 +90,35 @@ class CoreTestCase(BaseTest):
         user_info.access_level = "ALL"
         user_info.save()
 
-        self.assertEqual(request().status_code, status.HTTP_200_OK)
+        self.assertEqual(get_request().status_code, status.HTTP_200_OK)
 
-        # Return user to restric and test that it fails
+        self.assertEqual(post_request().status_code, status.HTTP_200_OK)
+
+        # Return user to restrict and test that it fails
         user_info.access_level = "RESTRICTED"
         user_info.save()
-        self.assertEqual(request().status_code, status.HTTP_403_FORBIDDEN)
+        self.assertEqual(get_request().status_code, status.HTTP_403_FORBIDDEN)
+        self.assertEqual(post_request().status_code, status.HTTP_403_FORBIDDEN)
 
         # Adding the facility to the access control should now allow the request to pass
         # Through
         facility = Facility.objects.get(facility_name="CoreFacilityName")
-        facility_access_control = FacilityAccessControl.objects.create(
+        FacilityAccessControl.objects.create(
             user=user, facility=facility
         )
 
-        self.assertEqual(request().status_code, status.HTTP_200_OK)
+        self.assertEqual(get_request().status_code, status.HTTP_200_OK)
+        self.assertEqual(post_request().status_code, status.HTTP_200_OK)
+
+        # Test that it fails if parameters are missing
+        self.assertEqual(
+            get_request(data={"division_name": "CoreDivisionName"}).status_code,
+            status.HTTP_403_FORBIDDEN,
+        )
+        self.assertEqual(
+            post_request(data={"facility_name": "CoreFacilityName"}).status_code,
+            status.HTTP_403_FORBIDDEN,
+        )
 
     def test_division_list(self):
         """

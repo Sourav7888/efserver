@@ -1,6 +1,39 @@
 from .models import Division, Facility, FacilityAccessControl, UserInfo
 from rest_framework.permissions import BasePermission
 from django.http import HttpRequest
+from rest_framework.response import Response
+from rest_framework import status
+
+
+def enforce_parameters(*args, params: list[str] = None):
+    """
+    Enforce that all required parameters are present in the request
+    """
+
+    def pseudo_wrapper(*pseudo_args, **pseudo_kwargs):
+        def wrapper(*wrapper_args, **wrapper_kwargs):
+            if not params:
+                return Response(
+                    {"message": "No parameters are enforced."},
+                    status=status.HTTP_403_FORBIDDEN,
+                )
+
+            function = pseudo_args[0]
+            request = wrapper_args[0]
+            body = getattr(request, request.method, None)
+
+            for k in params:
+                if k not in body:
+                    return Response(
+                        {"message": f"{k} is a required parameter."},
+                        status=status.HTTP_403_FORBIDDEN,
+                    )
+
+            return function(*wrapper_args, **wrapper_kwargs)
+
+        return wrapper
+
+    return pseudo_wrapper
 
 
 class IsSuperUser(BasePermission):
@@ -74,11 +107,13 @@ class CheckRequestBody(BasePermission):
     core division or facility
 
     @Warning: Make sure that the variables division or facility are required in the api
-    otherwise users can ommit those and access the data
+    otherwise users can ommit those and access the data.
+    you can use the method @method_decorator(enforce_parameters(params=[...]))
 
-    This permission check the request body
+    This permission check the request body and query string in the url (see tests...)
     This only check a single instance ie: Division: exampleDivision and not Division: [Division1, ...]
     This catches whether the queried instance exist or not as well so that will be handled by a 403
+
     When using this permission the request body to check division and facility must be
     facility_name | facility and division_name | division
 
