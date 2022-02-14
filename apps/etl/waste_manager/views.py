@@ -120,7 +120,7 @@ class GetWasteTotalFromStart(APIView):
             is_recycled = True
             # @NOTE: if diversion meaning that all is not recycled but diverted hebce
             # We can use non recycled as recycled
-            # Maybe add to moldes diverted this is a quick fix
+            # Maybe add to model diverted this is a quick fix
             if "diversion" in request.GET:
                 is_recycled = not bool(strtobool(request.GET["diversion"]))
 
