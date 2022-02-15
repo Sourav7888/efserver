@@ -25,7 +25,7 @@ def enforce_parameters(*args, params: list[str] = None):
             for k in params:
                 if k not in body:
                     return Response(
-                        {"message": f"{k} is a required parameter."},
+                        {"message": f"Missing required parameters."},
                         status=status.HTTP_403_FORBIDDEN,
                     )
 

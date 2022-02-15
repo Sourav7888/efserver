@@ -1,7 +1,7 @@
 import pandas as pd
 from datetime import datetime as dt
 from typing import Union
-from datetime import timedelta, datetime as dt
+from datetime import datetime as dt
 import csv
 from typing import Any
 

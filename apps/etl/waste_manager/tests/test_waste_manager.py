@@ -122,7 +122,11 @@ class ETLTestCase(BaseTest):
 
         # Total
         url = reverse("get_waste_data_total")
-        data = {"division": "CoreDivisionName", "waste_category": "TestCategory"}
+        data = {
+            "division": "CoreDivisionName",
+            "waste_category": "TestCategory",
+            "min_date": "2020-01-01",
+        }
         response = self.client.get(url, data)
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)

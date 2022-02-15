@@ -18,6 +18,9 @@ from core.permissions import validate_facility_access
 from core.models import Facility
 from django.db.models import Sum
 from distutils.util import strtobool
+from core.permissions import enforce_parameters
+from apps.shared.processors import check_date_format
+from apps.shared.cs_exceptions import InvalidDateFormat
 
 
 class GetWasteData(ListAPIView):
@@ -58,6 +61,7 @@ class GetWasteDataYearly(ListAPIView):
     filterset_class = WasteDataFl
     pagination_class = WasteDataPg
 
+    @method_decorator(enforce_parameters(params=["division"]))
     def list(self, request, *args, **kwargs):
         # @NOTE: Overriding due to issue with group by making the annotation not working
         queryset = self.filter_queryset(self.get_queryset())
@@ -106,6 +110,13 @@ class GetWasteDataYearly(ListAPIView):
                     type=openapi.TYPE_BOOLEAN,
                     required=False,
                 ),
+                openapi.Parameter(
+                    "min_date",
+                    in_=openapi.IN_QUERY,
+                    description="min_date",
+                    type=openapi.TYPE_STRING,
+                    required=False,
+                ),
             ]
         ),
     }
@@ -113,6 +124,7 @@ class GetWasteDataYearly(ListAPIView):
 class GetWasteTotalFromStart(APIView):
     permission_classes = [IsAuthenticated, CheckRequestBody]
 
+    @method_decorator(enforce_parameters(params=["division", "waste_category"]))
     def get(self, request):
         try:
             facilities = Facility.objects.filter(division=request.GET["division"])
@@ -124,17 +136,33 @@ class GetWasteTotalFromStart(APIView):
             if "diversion" in request.GET:
                 is_recycled = not bool(strtobool(request.GET["diversion"]))
 
+            # @NOTE: Adding this for users to be able to see the total starting from a date
+            kwargs = {}
+
+            if "min_date" in request.GET:
+                try:
+                    kwargs["pickup_date__gte"] = check_date_format(
+                        request.GET["min_date"]
+                    )
+                except InvalidDateFormat:
+                    return Response(
+                        {"message": "Invalid date format"},
+                        status=status.HTTP_400_BAD_REQUEST,
+                    )
+
             data = WasteData.yearly.filter(
                 facility__in=facilities,
                 waste_category=request.GET["waste_category"],
                 is_recycled=is_recycled,
-            ).aggregate(Sum("weight"))
+                **kwargs,
+            ).aggregate(Sum("weight"))["weight__sum"]
+
         except Exception as error:
             print(error)
             return Response(
                 {"message": "Something went wrong"}, status=status.HTTP_400_BAD_REQUEST
             )
-        return Response({"total": data["weight__sum"]}, status=status.HTTP_200_OK)
+        return Response({"total": data if data else 0}, status=status.HTTP_200_OK)
 
 
 @method_decorator(
@@ -170,6 +198,7 @@ class GetWasteTotalFromStart(APIView):
 class GetWasteContributionByName(APIView):
     permission_classes = [IsAuthenticated, CheckRequestBody]
 
+    @method_decorator(enforce_parameters(params=["division", "year", "waste_category"]))
     def get(self, request):
         try:
             division = self.request.GET["division"]
@@ -236,6 +265,7 @@ class GetWasteContributionByName(APIView):
 class GetRecyclingRate(APIView):
     permission_classes = [IsAuthenticated, CheckRequestBody]
 
+    @method_decorator(enforce_parameters(params=["division", "waste_category"]))
     def get(self, request):
         try:
             facilities = Facility.objects.filter(division=request.GET["division"])
