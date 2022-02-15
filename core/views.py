@@ -111,6 +111,8 @@ class UserPermission(APIView):
         # Create the user info if it does not exist yet
         # Because usually this view is called as soon as the user log in
         # Also required for other apps authorization
+
+        # @NOTE: This needs to be redesigned as it causes a lot of queries
         user_info = get_or_create_user_info(request)
 
         # ------ PUT APP AUTHORIZATION HERE ------ #
