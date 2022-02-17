@@ -54,4 +54,3 @@ class BillAudit(models.Model):
     closure_date = models.DateField(null=True, blank=True)
     issue = models.TextField(null=True, blank=True)
     funds_recovered = models.DecimalField(max_digits=12, decimal_places=2, default=0)
-    cost_avoidance = models.DecimalField(max_digits=12, decimal_places=2, default=0)
