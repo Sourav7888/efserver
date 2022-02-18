@@ -10,4 +10,4 @@ class LedListPg(CursorPagination):
 
 
 class BillAuditPg(CursorPagination):
-    ordering = "facility"
+    ordering = "audit_date"
