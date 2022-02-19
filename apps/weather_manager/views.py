@@ -8,6 +8,11 @@ from .filters import WeatherDataFl
 from .parsers import WeatherDataPr
 from apps.shared.processors import group_and_sum
 from rest_framework import status
+from core.permissions import enforce_parameters
+from django.utils.decorators import method_decorator
+from drf_yasg.utils import swagger_auto_schema
+from drf_yasg import openapi
+from .queries import query_coord_weather_data
 
 
 class WeatherStationList(generics.ListAPIView):
@@ -63,3 +68,46 @@ class WeatherDataMonthly(generics.ListAPIView):
 
     def get_queryset(self):
         return WeatherData.objects.all().select_related("climate_id")
+
+
+@method_decorator(
+    **{
+        "name": "get",
+        "decorator": swagger_auto_schema(
+            manual_parameters=[
+                openapi.Parameter(
+                    "latitude",
+                    in_=openapi.IN_QUERY,
+                    description="latitude",
+                    type=openapi.TYPE_NUMBER,
+                    required=True,
+                ),
+                openapi.Parameter(
+                    "longitude",
+                    in_=openapi.IN_QUERY,
+                    description="longitude",
+                    type=openapi.TYPE_NUMBER,
+                    required=True,
+                ),
+            ],
+        ),
+    }
+)
+class GetWeatherDataByCoord(APIView):
+    @method_decorator(enforce_parameters(params=["latitude", "longitude"]))
+    def get(self, request):
+
+        try:
+            latitude = float(request.query_params.get("latitude"))
+            longitude = float(request.query_params.get("longitude"))
+        except ValueError:
+            return Response(
+                {"error": "latitude and longitude must be numeric"},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        data = query_coord_weather_data(latitude, longitude)
+        # Must be transformed into a string as Timestamp is not json safe
+        data["date"] = data["date"].astype(str)
+
+        return Response({"result": data.to_dict("records")}, status=status.HTTP_200_OK)
