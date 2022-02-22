@@ -24,14 +24,13 @@ jobs:
         ports:
           - 5432:5432
 
+      rabbitmq:
+        image: rabbitmq:3-management
+        ports:
+          - 5672:5672
+
     steps:
       - uses: actions/checkout@v2
-
-      - name: rabbitmq
-        uses: getong/rabbitmq-action@v1.2
-        with:
-          rabbitmq version: "3.8.2-management-alpine"
-          host port: 5672
 
       - name: Setup python3.9
         uses: actions/setup-python@v2
