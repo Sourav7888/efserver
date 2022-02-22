@@ -208,8 +208,6 @@ class GenerateHCByDivision(APIView):
                 {"message": "Invalid utility type"}, status=status.HTTP_400_BAD_REQUEST
             )
 
-        print(f"[INFO]: request.data{request.data}")
-        print(f"[INFO]: request.POST{request.POST}")
 
         # Id used for the hc
         _id = str(uuid.uuid4())
