@@ -50,11 +50,6 @@ jobs:
           echo DEVELOPMENT_AWS_SECRET_ACCESS_KEY=${{ secrets.DEVELOPMENT_AWS_SECRET_ACCESS_KEY }} >> .env
           echo DEVELOPMENT_AWS_STORAGE_BUCKET_NAME=${{ secrets.DEVELOPMENT_AWS_STORAGE_BUCKET_NAME }} >> .env
 
-      - name: run celery for tests
-        working-directory: .
-        run: |
-          celery -A server worker --beat --scheduler django --loglevel=info --concurrency=4 --max-tasks-per-child=1 --without-gossip --without-mingle -l INFO
-
       - name: Run test & Generate report
         working-directory: .
         run: |
