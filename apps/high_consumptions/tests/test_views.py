@@ -25,55 +25,54 @@ class ViewsTestCase(BaseTest):
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
-    def test_generate_hc_by_facility(self):
+    # def test_generate_hc_by_facility(self):
 
-        user = auth.get_user(self.client)
-        UserInfo.objects.create(user=user)
+    #     user = auth.get_user(self.client)
+    #     UserInfo.objects.create(user=user)
 
-        inv_auth = InvestigationAuthorization.objects.create(user_info=user.user_info)
+    #     inv_auth = InvestigationAuthorization.objects.create(user_info=user.user_info)
 
-        inv_auth.is_investigator = True
-        inv_auth.access_investigation = True
-        inv_auth.is_investigation_manager = True
+    #     inv_auth.is_investigator = True
+    #     inv_auth.access_investigation = True
+    #     inv_auth.is_investigation_manager = True
 
-        inv_auth.save()
+    #     inv_auth.save()
 
-        url = reverse("generate-hc-report-by-facility")
-        response = self.client.get(
-            url,
-            data={
-                "facility": "CoreFacilityName",
-                "utility_type": "electricity",
-                "investigation_date": "2020-01-01",
-            },
-        )
+    #     url = reverse("generate-hc-report-by-facility")
+    #     response = self.client.get(
+    #         url,
+    #         data={
+    #             "facility": "CoreFacilityName",
+    #             "utility_type": "electricity",
+    #             "investigation_date": "2020-01-01",
+    #         },
+    #     )
 
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
+    #     self.assertEqual(response.status_code, status.HTTP_200_OK)
 
-    def test_generate_hc_by_division(self):
-        user = auth.get_user(self.client)
+    # def test_generate_hc_by_division(self):
+    #     user = auth.get_user(self.client)
 
-        customer = Customer.objects.get(customer_name="CoreCustomerName")
+    #     customer = Customer.objects.get(customer_name="CoreCustomerName")
 
-        user_info = UserInfo.objects.create(user=user, customer=customer)
+    #     user_info = UserInfo.objects.create(user=user, customer=customer)
 
-        inv_auth = InvestigationAuthorization.objects.create(user_info=user_info)
+    #     inv_auth = InvestigationAuthorization.objects.create(user_info=user_info)
 
-        inv_auth.is_investigator = True
-        inv_auth.access_investigation = True
-        inv_auth.is_investigation_manager = True
+    #     inv_auth.is_investigator = True
+    #     inv_auth.access_investigation = True
+    #     inv_auth.is_investigation_manager = True
 
-        inv_auth.save()
+    #     inv_auth.save()
 
-        url = reverse("generate-hc-by-division")
-        response = self.client.post(
-            url,
-            data={
-                "division": "CoreDivisionName",
-                "utility_type": "electricity",
-                "investigation_date": "2020-01-01",
-            },
-        )
+    #     url = reverse("generate-hc-by-division")
+    #     response = self.client.post(
+    #         url,
+    #         data={
+    #             "division": "CoreDivisionName",
+    #             "utility_type": "electricity",
+    #             "investigation_date": "2020-01-01",
+    #         },
+    #     )
 
-
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
+    #     self.assertEqual(response.status_code, status.HTTP_200_OK)
