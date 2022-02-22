@@ -1,8 +1,8 @@
-from shared.parsers import parse_year_month, parse_in_memory_csv
+from ..parsers import parse_year_month, parse_in_memory_csv
 from datetime import datetime as dt
 from rest_framework.test import APITestCase
 from django.core.files.uploadedfile import SimpleUploadedFile
-from shared.parsers import parse_in_memory_csv, list_to_odr_list
+from ..parsers import parse_in_memory_csv, list_to_odr_list
 
 
 class TestParsers(APITestCase):

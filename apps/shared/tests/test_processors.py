@@ -1,4 +1,4 @@
-from shared.processors import (
+from ..processors import (
     group_and_sum,
     convert_year_month_to_dt,
     calculate_diff,
@@ -7,7 +7,7 @@ from shared.processors import (
 from pandas._testing import assert_frame_equal
 import pandas as pd
 from datetime import datetime as dt
-from shared.cs_exceptions import InvalidDateFormat
+from ..cs_exceptions import InvalidDateFormat
 from rest_framework.test import APITestCase
 
 
