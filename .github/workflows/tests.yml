@@ -59,7 +59,7 @@ jobs:
       - name: Run Celery
         working-directory: .
         run: |
-          celery -A server worker --loglevel=info --concurrency=4 --max-tasks-per-child=1 --without-gossip --without-mingle -l INFO
+          celery -A server worker --loglevel=info --concurrency=4 --max-tasks-per-child=1 --without-gossip --without-mingle --detach -l INFO
 
       - name: Run test & Generate report
         working-directory: .
