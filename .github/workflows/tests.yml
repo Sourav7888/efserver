@@ -23,18 +23,14 @@ jobs:
           --health-retries 5
         ports:
           - 5432:5432
-  
 
     steps:
-    steps:
-      
-
       - uses: actions/checkout@v2
 
-      - name: rabbitmq  
+      - name: rabbitmq
         uses: getong/rabbitmq-action@v1.2
         with:
-          rabbitmq version: '3.8.2-management-alpine'
+          rabbitmq version: "3.8.2-management-alpine"
           host port: 5672
 
       - name: Setup python3.9
