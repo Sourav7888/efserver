@@ -31,11 +31,12 @@ jobs:
 
       - uses: actions/checkout@v2
 
-      -name: rabbitmq  
+      - name: rabbitmq  
         uses: getong/rabbitmq-action@v1.2
         with:
           rabbitmq version: '3.8.2-management-alpine'
           host port: 5672
+
       - name: Setup python3.9
         uses: actions/setup-python@v2
         with:
