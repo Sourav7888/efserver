@@ -12,7 +12,7 @@ jobs:
 
     services:
       postgres:
-        image: postgres:12.10
+        image: postgres:12
         env:
           POSTGRES_USER: testuser
           POSTGRES_PASSWORD: testpwd
@@ -53,7 +53,7 @@ jobs:
       - name: Run test & Generate report
         working-directory: .
         run: |
-          coverage run ./manage.py test --noinput  
+          coverage run ./manage.py test core --noinput  
           coverage xml
 
       - name: Download artifacts
