@@ -4,6 +4,8 @@ from rest_framework.permissions import BasePermission
 from typing import Union
 from core.serializers import model_to_dict
 from typing import Union
+from core.permissions import fail_if_no_user_info
+from django.utils.decorators import method_decorator
 
 
 def get_or_create_investigation_authorization(
@@ -50,6 +52,7 @@ class HasInvestigationAccess(BasePermission):
     Check that user have access to investigation
     """
 
+    @method_decorator(fail_if_no_user_info)
     def has_permission(self, request, view):
         x = get_or_create_investigation_authorization(
             "",
@@ -68,6 +71,7 @@ class IsInvestigationManager(BasePermission):
     Check that the user is an investigator
     """
 
+    @method_decorator(fail_if_no_user_info)
     def has_permission(self, request, view):
 
         x = get_or_create_investigation_authorization(
@@ -87,6 +91,7 @@ class IsInvestigator(BasePermission):
     Check if a user is an investigator
     """
 
+    @method_decorator(fail_if_no_user_info)
     def has_permission(self, request, view):
         x = get_or_create_investigation_authorization(
             "",

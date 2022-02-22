@@ -12,6 +12,8 @@ from core.models import (
 )
 from core.tests.utils import BaseTest
 from core.etl import bulk_create_facility
+from core.permissions import fail_if_no_user_info
+from django.test import RequestFactory
 
 
 class CoreTestCase(BaseTest):
@@ -103,9 +105,7 @@ class CoreTestCase(BaseTest):
         # Adding the facility to the access control should now allow the request to pass
         # Through
         facility = Facility.objects.get(facility_name="CoreFacilityName")
-        FacilityAccessControl.objects.create(
-            user=user, facility=facility
-        )
+        FacilityAccessControl.objects.create(user=user, facility=facility)
 
         self.assertEqual(get_request().status_code, status.HTTP_200_OK)
         self.assertEqual(post_request().status_code, status.HTTP_200_OK)
@@ -251,3 +251,26 @@ class CoreTestCase(BaseTest):
         self.assertEqual(facility.address, "CoreAddress")
         self.assertEqual(facility.category_type, "Retail")
         self.assertEqual(facility.closed, False)
+
+    def test_fail_if_no_user_info(self):
+        @fail_if_no_user_info
+        def test_function(request):
+            return True
+
+        user = auth.get_user(self.client)
+        request_factory = RequestFactory()
+        request = request_factory.get("/")
+        request.user = user
+        validation = test_function(request)
+
+        assert validation == False
+        UserInfo.objects.create(user=user)
+
+        validation = test_function(request)
+        assert validation == True
+
+        # permission_check = IsAdminUserOrReadOnly()
+
+        # permission = permission_check.has_permission(request, None)
+
+        # self.assertTrue(permission)

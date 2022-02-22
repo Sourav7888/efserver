@@ -53,6 +53,8 @@ class Investigation(models.Model):
     in_approval = models.BooleanField(default=False, null=False, blank=False)
     closed = models.BooleanField(default=False, null=False, blank=False)
 
+    investigation_metadata = models.JSONField(null=True, blank=True)
+
     class Meta:
         constraints = [
             models.UniqueConstraint(

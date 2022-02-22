@@ -292,6 +292,7 @@ class ElectricityHighConsumption(HighConsumption):
         return self._dataframe
 
     def check_dataframe(self):
+
         # Similar to NaturalGasHighConsumption
         if self._dataframe.empty:
             raise EmptyDataFrame("Dataframe is empty! Check not passed.")

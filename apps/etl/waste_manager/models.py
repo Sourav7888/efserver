@@ -79,3 +79,8 @@ class WasteData(models.Model):
                 name="no_duplicate_waste_data",
             )
         ]
+
+    def __str__(self):
+        return (
+            f"{self.facility} - {self.pickup_date} - {self.waste_name} - {self.weight}"
+        )

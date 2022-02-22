@@ -12,3 +12,4 @@ class FacilityWasteDataInline(admin.TabularInline):
 
 admin.site.register(WasteProvider)
 admin.site.register(WasteCategory)
+admin.site.register(WasteData)

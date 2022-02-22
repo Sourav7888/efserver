@@ -11,6 +11,8 @@ class GetInvestigationsFl(filters.FilterSet):
         field_name="investigation_document", lookup_expr="icontains"
     )
 
+    investigation_metadata = filters.CharFilter()
+
     class Meta:
         model = Investigation
         fields = "__all__"

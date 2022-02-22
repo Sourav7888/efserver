@@ -121,13 +121,17 @@ def generate_hc_report_by_facility(
 
     log_description = ""
 
+    report = None
+
     try:
         hc.run_method()
         log_description = "Successfully generated HC report"
+        # There is no point in rendering the template if there is non data
+        report = create_hc_report(
+            facility, hc.render_template(**kwargs), log_description
+        )
     except (TargetDateNotFound, EmptyDataFrame) as e:
         log_description = str(e)
-
-    report = create_hc_report(facility, hc.render_template(**kwargs), log_description)
 
     # Create a log
     Log.objects.create(
@@ -136,3 +140,10 @@ def generate_hc_report_by_facility(
     )
 
     return report
+
+
+@shared_task
+def generate_hc_by_division(
+    _id: str, division: str, utility_type: str, investigation_date: str
+):
+    ...

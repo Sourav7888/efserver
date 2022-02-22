@@ -1,8 +1,25 @@
 from .models import Division, Facility, FacilityAccessControl, UserInfo
 from rest_framework.permissions import BasePermission
-from django.http import HttpRequest
+from django.http import HttpRequest, QueryDict
 from rest_framework.response import Response
 from rest_framework import status
+
+
+def fail_if_no_user_info(*args, **kwargs):
+    """
+    Use this in permissions to avoid checking for userinfo every time
+    """
+
+    def wrapper(*wrapper_args, **wrapper_kwargs):
+        func = args[0]
+        request = wrapper_args[0]
+
+        if not hasattr(request.user, "user_info"):
+            return False
+
+        return func(*wrapper_args, **wrapper_kwargs)
+
+    return wrapper
 
 
 def enforce_parameters(*args, params: list[str] = None):
@@ -24,10 +41,11 @@ def enforce_parameters(*args, params: list[str] = None):
 
             for k in params:
                 if k not in body:
-                    return Response(
-                        {"message": f"Missing required parameters."},
-                        status=status.HTTP_403_FORBIDDEN,
-                    )
+                    if k not in request.data:
+                        return Response(
+                            {"message": f"Missing required parameters."},
+                            status=status.HTTP_403_FORBIDDEN,
+                        )
 
             return function(*wrapper_args, **wrapper_kwargs)
 
@@ -110,7 +128,7 @@ class CheckRequestBody(BasePermission):
     otherwise users can ommit those and access the data.
     you can use the method @method_decorator(enforce_parameters(params=[...]))
 
-    This permission check the request body and query string in the url (see tests...)
+    This permission check the request body and query string in the url even request data (see tests...)
     This only check a single instance ie: Division: exampleDivision and not Division: [Division1, ...]
     This catches whether the queried instance exist or not as well so that will be handled by a 403
 
@@ -121,7 +139,16 @@ class CheckRequestBody(BasePermission):
     """
 
     def has_permission(self, request, view):
-        body = getattr(request, request.method, None)
+
+        body = getattr(request, request.method, None).dict()
+
+        # If json is the received data Test and Actual differ in types
+        if request.data:
+            if type(request.data) == dict:
+                body.update(request.data)
+            elif type(request.data) == QueryDict:
+                body.update(request.data.dict())
+
         # Check that the user has UserInfo already created if not create
         if not hasattr(request.user, "user_info"):
             get_or_create_user_info(request)
