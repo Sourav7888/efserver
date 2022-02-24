@@ -34,3 +34,8 @@ class GenerateHCByDivisionSchema(serializers.Serializer):
     utility_type = serializers.CharField(max_length=100)
     division = serializers.CharField(max_length=100)
     investigation_date = serializers.DateField()
+
+
+class DeleteGeneratedHCSchema(serializers.Serializer):
+
+    hc_id = serializers.CharField()

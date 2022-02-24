@@ -14,6 +14,11 @@ patterns = [
         name="create_investigation",
     ),
     path(
+        "create-investigation-by-hc/",
+        views.CreateInvestigationByHC.as_view(),
+        name="create_investigation_by_hc",
+    ),
+    path(
         "update/<str:investigation_id>",
         views.UpdateInvestigation.as_view(),
         name="update_investigation",

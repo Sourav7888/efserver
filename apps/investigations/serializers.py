@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from .models import Investigation
 from .tasks import send_created_investigation
+from apps.high_consumptions.models import HC
 
 
 class GetInvestigationsSr(serializers.ModelSerializer):
@@ -27,6 +28,7 @@ class GetInvestigationsSr(serializers.ModelSerializer):
 class CreateInvestigationSr(serializers.ModelSerializer):
     def create(self, validated_data):
         investigation, status = Investigation.objects.get_or_create(**validated_data)
+
         if status:
             setattr(
                 investigation,
@@ -54,6 +56,15 @@ class CreateInvestigationSr(serializers.ModelSerializer):
             "investigation_type",
             "investigation_description",
         ]
+
+
+class CreateInvestigationByHCSchema(serializers.Serializer):
+
+    hc_id = serializers.CharField()
+    facility = serializers.CharField()
+    investigation_date = serializers.CharField()
+    investigation_type = serializers.CharField()
+    investigation_description = serializers.CharField()
 
 
 class UpdateInvestigationSr(serializers.ModelSerializer):

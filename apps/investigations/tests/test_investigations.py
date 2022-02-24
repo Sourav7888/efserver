@@ -1,7 +1,7 @@
 from rest_framework import status
 from django.urls import reverse
-from django.contrib.auth.models import User
 from django.contrib import auth
+from apps.high_consumptions.models import HC, HCReportTracker
 from core.tests.utils import BaseTest
 from core.models import UserInfo, Facility
 from apps.investigations.models import Investigation, InvestigationAuthorization
@@ -115,6 +115,39 @@ class InvestigationsTestCase(BaseTest):
         )
 
         self.assertEqual(response.json()["closed"], True)
+
+        # Create investigations by HCs
+
+        facility = Facility.objects.get(facility_name="CoreFacilityName")
+
+        hc = HC.objects.create(
+            facility=facility, utility_type="HC_WT", target_date="2021-01-01"
+        )
+
+        HCReportTracker.objects.create(hc_report_id=hc.hc_id)
+
+        mock = {
+            "hc_id": hc.hc_id,
+            "facility": "CoreFacilityName",
+            "investigation_date": "2021-01-01",
+            "investigation_type": "HC_WT",
+            "investigation_description": "",
+        }
+
+        url = reverse("create_investigation_by_hc")
+        response = self.client.post(
+            url,
+            data=mock,
+        )
+
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+        self.assertEqual(
+            Investigation.objects.filter(
+                investigation_id=response.json()["id"]
+            ).exists(),
+            True,
+        )
 
     def test_get_investigations(self):
         """

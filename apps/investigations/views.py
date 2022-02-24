@@ -1,14 +1,26 @@
+import uuid
 from rest_framework.generics import CreateAPIView, UpdateAPIView, ListAPIView
+from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
+from apps.high_consumptions.models import HC, HCReportTracker
+from core.models import Facility
+
+from core.permissions import enforce_parameters
 from .permissions import IsInvestigationManager, IsInvestigator, HasInvestigationAccess
 from .serializers import (
     CreateInvestigationSr,
     UpdateInvestigationSr,
     GetInvestigationsSr,
+    CreateInvestigationByHCSchema,
 )
 from .models import Investigation
 from .filters import GetInvestigationsFl
 from .paginations import GetInvestigationsPg
+from rest_framework.response import Response
+from rest_framework import status
+from drf_yasg.utils import swagger_auto_schema
+from django.utils.decorators import method_decorator
+from django.core.files.base import ContentFile
 
 
 class CreateInvestigation(CreateAPIView):
@@ -33,3 +45,87 @@ class GetInvestigations(ListAPIView):
     queryset = Investigation.objects.all()
     filterset_class = GetInvestigationsFl
     pagination_class = GetInvestigationsPg
+
+
+@method_decorator(
+    **{
+        "name": "post",
+        "decorator": swagger_auto_schema(
+            request_body=CreateInvestigationByHCSchema,
+            responses={200: "{'id': 'string'}"},
+        ),
+    }
+)
+class CreateInvestigationByHC(APIView):
+    """
+    Create investigations based on a created hc
+    """
+
+    permission_classes = [
+        IsAuthenticated,
+        IsInvestigationManager,
+        HasInvestigationAccess,
+    ]
+
+    @method_decorator(
+        enforce_parameters(
+            params=[
+                "hc_id",
+                "facility",
+                "investigation_date",
+                "investigation_type",
+                "investigation_description",
+            ]
+        )
+    )
+    def post(self, request):
+
+        facility = Facility.objects.filter(facility_name=request.data["facility"])
+        if not facility.exists():
+            return Response(
+                {"message": "Facility does not exist"},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        facility = facility[0]
+
+        hc = HC.objects.filter(
+            hc_id=request.data["hc_id"],
+            facility=facility,
+            target_date=request.data["investigation_date"],
+            utility_type=request.data["investigation_type"],
+        )
+
+        if not hc.exists():
+            return Response(
+                {"message": "HC does not exist"}, status=status.HTTP_400_BAD_REQUEST
+            )
+
+        hc = hc[0]
+
+        inv = Investigation(
+            facility=facility,
+            investigation_date=request.data["investigation_date"],
+            investigation_type=request.data["investigation_type"],
+            investigation_description=request.data["investigation_description"],
+            investigation_creator=request.user.user_info,
+            investigation_metadata={},
+        )
+
+        inv.investigation_metadata["usage_increase"] = float(hc.usage_increase)
+        inv.investigation_metadata["cost_increase"] = float(hc.cost_increase)
+
+        if hc.hc_document:
+            inv.investigation_document.save(
+                str(uuid.uuid4()) + ".html", ContentFile(hc.hc_document.read())
+            )
+
+        inv.save()
+
+        return Response(
+            {
+                "message": "Successfully Created Investigation",
+                "id": inv.investigation_id,
+            },
+            status=status.HTTP_201_CREATED,
+        )

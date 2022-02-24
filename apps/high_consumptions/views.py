@@ -16,7 +16,12 @@ from core.models import Facility
 from .base import ElectricityHighConsumption, GasHighConsumption
 from rest_framework.generics import ListAPIView
 from .models import HC, HCReportTracker
-from .serializers import HCSr, GenerateHCByDivisionSchema, HCReportTrackerSr
+from .serializers import (
+    HCSr,
+    GenerateHCByDivisionSchema,
+    HCReportTrackerSr,
+    DeleteGeneratedHCSchema,
+)
 from .filters import HCFl, HCReportTrackerFl
 from .paginations import HCPg, HCReportTrackerPg
 from core.permissions import enforce_parameters
@@ -243,3 +248,33 @@ class GenerateHCByDivision(APIView):
         )
 
         return Response({"id": _id}, status=status.HTTP_200_OK)
+
+
+@method_decorator(
+    **{
+        "name": "post",
+        "decorator": swagger_auto_schema(
+            request_body=DeleteGeneratedHCSchema,
+            responses={200: "{'id': 'string'}"},
+        ),
+    }
+)
+class DeleteGeneratedHC(APIView):
+    """
+    Delete HCReport Tracker object
+    and all related generated HC
+
+    """
+
+    @method_decorator(
+        enforce_parameters(
+            params=[
+                "hc_id",
+            ]
+        )
+    )
+    def post(self, request):
+        HC.objects.filter(hc_id=request.data["hc_id"]).delete()
+        HCReportTracker.objects.filter(hc_report_id=request.data["hc_id"]).delete()
+
+        return Response({"message": "Successful Delete"}, status=status.HTTP_200_OK)

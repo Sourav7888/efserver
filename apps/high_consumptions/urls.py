@@ -15,6 +15,11 @@ patterns = [
         name="generate-hc-by-division",
     ),
     path(
+        "delete-generated-hc/",
+        views.DeleteGeneratedHC.as_view(),
+        name="delete_generated_hc",
+    ),
+    path(
         "get-hc-report-tracker/",
         views.GetHCReportTracker.as_view(),
         name="get-hc-report-tracker",
