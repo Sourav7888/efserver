@@ -31,6 +31,9 @@ class HC(models.Model):
 
     hc_document = models.FileField(storage=HCDocs(), null=True, blank=True)
 
+    def __str__(self):
+        return f"{self.facility} - {self.target_date} - {self.created_at}"
+
 
 class HCReportTracker(models.Model):
     """
@@ -54,3 +57,6 @@ class HCReportTracker(models.Model):
 
     is_ready = models.BooleanField(default=False, null=False, blank=False)
     created_at = models.DateTimeField(auto_now_add=True, editable=False)
+
+    def __str__(self):
+        return f"{self.creator} - {self.created_at} - {self.is_ready} - {self.hc_report_id}"

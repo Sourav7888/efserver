@@ -4,9 +4,10 @@ from apps.high_consumptions.tasks import (
     create_hc_investigation,
     create_hc_report,
     generate_hc,
+    generate_hc_by_division,
 )
 from apps.investigations.models import Investigation
-from apps.high_consumptions.models import HC
+from apps.high_consumptions.models import HC, HCReportTracker
 from apps.reports.models import Report
 import uuid
 
@@ -33,3 +34,18 @@ class BaseTestCase(BaseTest):
         _id = uuid.uuid4()
         generate_hc("electricity", "2020-01-01", _id)
         self.assertEqual(False, HC.objects.filter(hc_id=_id).exists())
+
+    def test_generate_hc_by_division(self):
+        """
+        Tested in views
+        """
+        _id = HCReportTracker.objects.create(hc_report_id=uuid.uuid4())
+        generate_hc_by_division.delay(
+            _id.hc_report_id,
+            "CoreDivisionName",
+            "electricity",
+            "2020-01-01",
+        )
+        self.assertEqual(
+            True, HCReportTracker.objects.get(hc_report_id=_id.hc_report_id).is_ready
+        )

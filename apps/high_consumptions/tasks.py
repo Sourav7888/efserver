@@ -6,12 +6,18 @@ from .cs_exeptions import TargetDateNotFound, EmptyDataFrame
 from celery import shared_task, uuid
 from .base import ElectricityHighConsumption, GasHighConsumption, HighConsumption
 from apps.reports.models import Log, Report
-from .models import HC
-
+from .models import HC, HCReportTracker
+from apps.shared.utils import upload_model_document
+import uuid
 
 HC_METHODS = {
     "electricity": ElectricityHighConsumption,
     "natural gas": GasHighConsumption,
+}
+
+HC_CODES = {
+    "electricity": "HC_EL",
+    "natural gas": "HC_NG",
 }
 
 
@@ -32,6 +38,7 @@ def create_hc_report(
     return report.report_id
 
 
+# @NOTE: Will be deprecated in favor of a generic one
 def upload_report_document(report: Report, template: bytes):
     """
     Upload the document to the report model
@@ -69,6 +76,7 @@ def create_hc_investigation(
     return investigation.investigation_id
 
 
+# @NOTE: Will be deprecated in favor of a generic one
 def upload_hc_document(investigation: Investigation, template: bytes):
     """
     Upload the document to the investigation
@@ -144,6 +152,39 @@ def generate_hc_report_by_facility(
 
 @shared_task
 def generate_hc_by_division(
-    _id: str, division: str, utility_type: str, investigation_date: str
+    _id: str,
+    division: str,
+    utility_type: str,
+    investigation_date: str,
+    include_document: bool = False,
 ):
-    ...
+    facilities = Facility.objects.filter(division=division).select_related("division")
+
+    for f in facilities:
+        hc = HC_METHODS[utility_type].create_hc_by_facility_obj(f, investigation_date)
+        try:
+            hc.run_method()
+        except (TargetDateNotFound, EmptyDataFrame):
+            continue
+
+        if hc.is_hc():
+            hc_obj = HC.objects.create(
+                facility=f,
+                target_date=investigation_date,
+                usage_increase=round(hc.context["percentage_diff"], 2),
+                cost_increase=round(hc.context["estimated_cost"], 2),
+                hc_id=_id,
+                utility_type=HC_CODES[utility_type],
+            )
+
+            if include_document:
+                upload_model_document(
+                    hc_obj,
+                    "hc_document",
+                    f"{str(uuid.uuid4())}.html",
+                    hc.render_template(facility_context=True, stats_context=True),
+                )
+
+    hc_tracker = HCReportTracker.objects.get(hc_report_id=_id)
+    hc_tracker.is_ready = True
+    hc_tracker.save()

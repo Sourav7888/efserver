@@ -1,3 +1,4 @@
+from apps.high_consumptions.models import HCReportTracker, HC
 from apps.investigations.models import InvestigationAuthorization
 from core.models import UserInfo, Customer
 from core.tests.utils import BaseTest
@@ -18,8 +19,15 @@ class ViewsTestCase(BaseTest):
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
         user = auth.get_user(self.client)
-        user.is_superuser = True
-        user.save()
+        UserInfo.objects.create(user=user)
+
+        inv_auth = InvestigationAuthorization.objects.create(user_info=user.user_info)
+
+        inv_auth.is_investigator = True
+        inv_auth.access_investigation = True
+        inv_auth.is_investigation_manager = True
+
+        inv_auth.save()
 
         url = reverse("get-generated-hc")
         response = self.client.get(url)
@@ -50,7 +58,9 @@ class ViewsTestCase(BaseTest):
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
-    def test_generate_hc_by_division(self):
+    def test_generate_hc_by_division(
+        self,
+    ):
         user = auth.get_user(self.client)
 
         customer = Customer.objects.get(customer_name="CoreCustomerName")
@@ -75,4 +85,12 @@ class ViewsTestCase(BaseTest):
             },
         )
 
+        _id = response.json()["id"]
+
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+        hc_tracker = HCReportTracker.objects.filter(hc_report_id=_id)
+
+        self.assertEqual(hc_tracker.exists(), True)
+
+        self.assertEqual(hc_tracker[0].is_ready, True)

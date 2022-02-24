@@ -16,11 +16,30 @@ from core.models import Facility
 from .base import ElectricityHighConsumption, GasHighConsumption
 from rest_framework.generics import ListAPIView
 from .models import HC, HCReportTracker
-from .serializers import HCSr, CustomSchema
-from .filters import HCFl
-from .paginations import HCPg
+from .serializers import HCSr, GenerateHCByDivisionSchema, HCReportTrackerSr
+from .filters import HCFl, HCReportTrackerFl
+from .paginations import HCPg, HCReportTrackerPg
 from core.permissions import enforce_parameters
-from rest_framework.parsers import FormParser, MultiPartParser, JSONParser
+
+
+class GetHCReportTracker(ListAPIView):
+    permission_classes = [
+        IsAuthenticated,
+        HasInvestigationAccess,
+        IsInvestigationManager,
+    ]
+    serializer_class = HCReportTrackerSr
+    queryset = HCReportTracker.objects.all()
+    filterset_class = HCReportTrackerFl
+    pagination_class = HCReportTrackerPg
+
+    def get_queryset(self):
+        return (
+            super()
+            .get_queryset()
+            .filter(creator=self.request.user.user_info)
+            .select_related("creator")
+        )
 
 
 @method_decorator(
@@ -165,7 +184,7 @@ class GetGeneratedHC(ListAPIView):
     Get Generated
     """
 
-    permission_classes = [IsAuthenticated, IsSuperUser]
+    permission_classes = [IsAuthenticated, IsInvestigationManager]
 
     serializer_class = HCSr
     filter_class = HCFl
@@ -177,8 +196,8 @@ class GetGeneratedHC(ListAPIView):
     **{
         "name": "post",
         "decorator": swagger_auto_schema(
-            request_body=CustomSchema,
-            responses={200: "string"},
+            request_body=GenerateHCByDivisionSchema,
+            responses={200: "{'id': 'string'}"},
         ),
     }
 )
@@ -208,7 +227,6 @@ class GenerateHCByDivision(APIView):
                 {"message": "Invalid utility type"}, status=status.HTTP_400_BAD_REQUEST
             )
 
-
         # Id used for the hc
         _id = str(uuid.uuid4())
 
@@ -221,6 +239,7 @@ class GenerateHCByDivision(APIView):
             request.data["division"],
             request.data["utility_type"],
             request.data["investigation_date"],
+            include_document=True,
         )
 
         return Response({"id": _id}, status=status.HTTP_200_OK)

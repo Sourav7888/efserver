@@ -2,6 +2,8 @@ from server.settings.base import *
 import os
 from dotenv import load_dotenv
 
+import sys
+
 load_dotenv()
 
 SECRET_KEY = os.getenv("DEVELOPMENT_SECRET_KEY")
@@ -69,3 +71,9 @@ EMAIL_HOST_PASSWORD = os.getenv("DEVELOPMENT_EMAIL_HOST_PASSWORD")
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:8000",
 ]
+
+
+TESTING = sys.argv[1:2] == ["test"]
+
+if TESTING:
+    CELERY_TASK_ALWAYS_EAGER = True

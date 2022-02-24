@@ -1,5 +1,5 @@
 from django_filters import rest_framework as filters
-from .models import HC
+from .models import HC, HCReportTracker
 
 
 class HCFl(filters.FilterSet):
@@ -7,4 +7,10 @@ class HCFl(filters.FilterSet):
 
     class Meta:
         model = HC
+        fields = "__all__"
+
+
+class HCReportTrackerFl(filters.FilterSet):
+    class Meta:
+        model = HCReportTracker
         fields = "__all__"

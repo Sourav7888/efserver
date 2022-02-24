@@ -14,6 +14,11 @@ patterns = [
         views.GenerateHCByDivision.as_view(),
         name="generate-hc-by-division",
     ),
+    path(
+        "get-hc-report-tracker/",
+        views.GetHCReportTracker.as_view(),
+        name="get-hc-report-tracker",
+    ),
 ]
 
 urlpatterns = [path("", include(patterns))]
