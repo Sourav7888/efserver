@@ -103,24 +103,32 @@ class CreateInvestigationByHC(APIView):
 
         hc = hc[0]
 
-        inv = Investigation(
+        inv = Investigation.objects.filter(
             facility=facility,
             investigation_date=request.data["investigation_date"],
             investigation_type=request.data["investigation_type"],
-            investigation_description=request.data["investigation_description"],
-            investigation_creator=request.user.user_info,
-            investigation_metadata={},
         )
 
-        inv.investigation_metadata["usage_increase"] = float(hc.usage_increase)
-        inv.investigation_metadata["cost_increase"] = float(hc.cost_increase)
-
-        if hc.hc_document:
-            inv.investigation_document.save(
-                str(uuid.uuid4()) + ".html", ContentFile(hc.hc_document.read())
+        # @NOTE: Avoid partial queries that will display only half of the data
+        # When creating right away
+        if not inv.exists():
+            inv = Investigation(
+                facility=facility,
+                investigation_date=request.data["investigation_date"],
+                investigation_type=request.data["investigation_type"],
             )
+            inv.investigation_creator = request.user.user_info
+            inv.investigation_metadata = {}
+            inv.investigation_description = request.data["investigation_description"]
+            inv.investigation_metadata["usage_increase"] = float(hc.usage_increase)
+            inv.investigation_metadata["cost_increase"] = float(hc.cost_increase)
 
-        inv.save()
+            if hc.hc_document:
+                inv.investigation_document.save(
+                    str(uuid.uuid4()) + ".html", ContentFile(hc.hc_document.read())
+                )
+
+            inv.save()
 
         return Response(
             {
