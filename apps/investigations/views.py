@@ -3,6 +3,7 @@ from rest_framework.generics import CreateAPIView, UpdateAPIView, ListAPIView
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
 from apps.high_consumptions.models import HC, HCReportTracker
+from apps.investigations.tasks import send_created_investigation
 from core.models import Facility
 
 from core.permissions import enforce_parameters
@@ -127,6 +128,15 @@ class CreateInvestigationByHC(APIView):
                 inv.investigation_document.save(
                     str(uuid.uuid4()) + ".html", ContentFile(hc.hc_document.read())
                 )
+
+            send_created_investigation(
+                {
+                    "facility": inv.facility,
+                    "investigation_date": inv.investigation_date,
+                    "investigation_type": inv.investigation_type,
+                    "investigation_description": inv.investigation_description,
+                }
+            )
 
             inv.save()
 
