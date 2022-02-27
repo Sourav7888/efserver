@@ -43,7 +43,7 @@ def enforce_parameters(*args, params: list[str] = None):
                 if k not in body:
                     if k not in request.data:
                         return Response(
-                            {"message": f"Missing required parameters."},
+                            {"message": f"Missing required parameters -> {k}."},
                             status=status.HTTP_403_FORBIDDEN,
                         )
 
@@ -140,7 +140,8 @@ class CheckRequestBody(BasePermission):
 
     def has_permission(self, request, view):
 
-        body = getattr(request, request.method, None).dict()
+        body = getattr(request, request.method, None)
+        body = body.dict() if body else {}
 
         # If json is the received data Test and Actual differ in types
         if request.data:
