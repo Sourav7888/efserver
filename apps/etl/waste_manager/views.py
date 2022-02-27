@@ -129,15 +129,15 @@ class GetWasteTotalFromStart(APIView):
         try:
             facilities = Facility.objects.filter(division=request.GET["division"])
 
-            is_recycled = True
-            # @NOTE: if diversion meaning that all is not recycled but diverted hebce
-            # We can use non recycled as recycled
-            # Maybe add to model diverted this is a quick fix
-            if "diversion" in request.GET:
-                is_recycled = not bool(strtobool(request.GET["diversion"]))
+            # @NOTE: Adding this for for arbitrary date and diversion filtering
+            kwargs = {"is_recycled": True}
 
-            # @NOTE: Adding this for users to be able to see the total starting from a date
-            kwargs = {}
+            # @NOTE: if diversion meaning that all is not recycled but diverted hence
+            # whether recycled is true or not we still want that value usually it is set to false
+            if "diversion" in request.GET:
+                diverted = bool(strtobool(request.GET["diversion"]))
+                if diverted:
+                    kwargs.pop("is_recycled")
 
             if "min_date" in request.GET:
                 try:
@@ -153,14 +153,13 @@ class GetWasteTotalFromStart(APIView):
             data = WasteData.yearly.filter(
                 facility__in=facilities,
                 waste_category=request.GET["waste_category"],
-                is_recycled=is_recycled,
                 **kwargs,
             ).aggregate(Sum("weight"))["weight__sum"]
 
         except Exception as error:
-            print(error)
             return Response(
-                {"message": "Something went wrong"}, status=status.HTTP_400_BAD_REQUEST
+                {"message": "Something went wrong, Please check your request."},
+                status=status.HTTP_400_BAD_REQUEST,
             )
         return Response({"total": data if data else 0}, status=status.HTTP_200_OK)
 
