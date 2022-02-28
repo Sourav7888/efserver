@@ -12,7 +12,7 @@ from core.models import (
 )
 from core.tests.utils import BaseTest
 from core.etl import bulk_create_facility
-from core.permissions import fail_if_no_user_info
+from core.permissions import IsOfSameCustomer, fail_if_no_user_info
 from django.test import RequestFactory
 
 
@@ -20,6 +20,38 @@ class CoreTestCase(BaseTest):
     """
     Test the core permission as user usually has to request facility_name or division_name
     """
+
+    def test_permissions_is_of_same_customer(self):
+
+        # Test should fail when user has the same customer has the object
+        factory = RequestFactory()
+
+        request = factory.get("/")
+        user = User.objects.get(username="CoreTestUser")
+        request.user = user
+
+        permission_check = IsOfSameCustomer()
+
+        division = Division.objects.get(division_name="CoreDivisionName")
+        permission = permission_check.has_object_permission(request, None, division)
+
+        self.assertEqual(permission, False)
+
+        # Test should pass when user has the same customer has the object
+        customer = Customer.objects.get(customer_name="CoreCustomerName")
+        user_info = UserInfo.objects.create(user=user)
+        user_info.customer = customer
+
+        user_info.save()
+
+        request = factory.get("/")
+        user = User.objects.get(username="CoreTestUser")
+        request.user = user
+
+        permission_check = IsOfSameCustomer()
+        permission = permission_check.has_object_permission(request, None, division)
+
+        self.assertEqual(permission, True)
 
     def test_permissions(self):
         # Testing that a user cannot access a division information unless
@@ -29,6 +61,7 @@ class CoreTestCase(BaseTest):
             data={
                 "division_name": "CoreDivisionName",
                 "facility_name": "CoreFacilityName",
+                "customer_name": "CoreCustomerName",
             }
         ):
 
@@ -44,6 +77,7 @@ class CoreTestCase(BaseTest):
             data={
                 "division_name": "CoreDivisionName",
                 "facility_name": "CoreFacilityName",
+                "customer_name": "CoreCustomerName",
             }
         ):
             url = reverse("test_core_view")
@@ -67,7 +101,7 @@ class CoreTestCase(BaseTest):
         self.assertEqual(get_response.status_code, status.HTTP_403_FORBIDDEN)
         assert (
             get_response.request["QUERY_STRING"]
-            == "division_name=CoreDivisionName&facility_name=CoreFacilityName"
+            == "division_name=CoreDivisionName&facility_name=CoreFacilityName&customer_name=CoreCustomerName"
         )
         # Test Post should be refused also
         # Test that multipart and body are checked
@@ -85,7 +119,7 @@ class CoreTestCase(BaseTest):
         self.assertEqual(hasattr(user, "user_info"), True)
 
         # Change the user to the same customer and give all access because of the
-        # Facility blocking
+        # Facility blocking as well as same customer restriction
         customer = Customer.objects.get(customer_name="CoreCustomerName")
         user_info = UserInfo.objects.get(user=user)
         user_info.customer = customer

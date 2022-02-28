@@ -4,7 +4,7 @@ from rest_framework import status
 from django.utils.decorators import method_decorator
 from core.permissions import CheckRequestBody, validate_facility_access
 from rest_framework.permissions import IsAuthenticated
-from .permissions import get_or_create_user_info, enforce_parameters
+from .permissions import IsOfSameCustomer, get_or_create_user_info, enforce_parameters
 from rest_framework.generics import ListAPIView
 from .serializers import DivisionSr, model_to_dict
 from .paginations import DivisionPg
@@ -42,6 +42,13 @@ from rest_framework.response import Response
                     type=openapi.TYPE_STRING,
                     required=True,
                 ),
+                openapi.Parameter(
+                    "customer_name",
+                    in_=openapi.IN_QUERY,
+                    description="customer_name",
+                    type=openapi.TYPE_STRING,
+                    required=True,
+                ),
             ],
         ),
     }
@@ -49,19 +56,19 @@ from rest_framework.response import Response
 class CoreTestView(APIView):
     """
     Dummy to test permission class # Do Not Use!
-    Mainly to check permission Check request body
-    which has to check query params on get and body on post
-    also the decorator enforce_parameters testing as drf_yasg
-    does not actually enforce the parameters to be present
     """
 
     permission_classes = [IsAuthenticated, CheckRequestBody]
 
-    @method_decorator(enforce_parameters(params=["facility_name", "division_name"]))
+    @method_decorator(
+        enforce_parameters(params=["facility_name", "division_name", "customer_name"])
+    )
     def get(self, request):
         return Response({"message": "hello world"}, status=status.HTTP_200_OK)
 
-    @method_decorator(enforce_parameters(params=["facility_name", "division_name"]))
+    @method_decorator(
+        enforce_parameters(params=["facility_name", "division_name", "customer_name"])
+    )
     def post(self, request):
         return Response({"message": "hello world"}, status=status.HTTP_200_OK)
 

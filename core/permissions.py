@@ -1,8 +1,10 @@
-from .models import Division, Facility, FacilityAccessControl, UserInfo
+from .models import Customer, Division, Facility, FacilityAccessControl, UserInfo
 from rest_framework.permissions import BasePermission
 from django.http import HttpRequest, QueryDict
+from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework import status
+from django.core.handlers.wsgi import WSGIRequest
 
 
 def fail_if_no_user_info(*args, **kwargs):
@@ -12,7 +14,23 @@ def fail_if_no_user_info(*args, **kwargs):
 
     def wrapper(*wrapper_args, **wrapper_kwargs):
         func = args[0]
-        request = wrapper_args[0]
+        request = None
+
+        # @NOTE has_permissions
+        if isinstance(wrapper_args[0], Request) or isinstance(
+            wrapper_args[0], WSGIRequest
+        ):
+            request = wrapper_args[0]
+        elif isinstance(wrapper_args[0], BasePermission):
+            # @NOTE has_object permission
+            if isinstance(wrapper_args[1], Request) or isinstance(
+                wrapper_args[1], WSGIRequest
+            ):
+                request = wrapper_args[1]
+            else:
+                raise Exception(
+                    "[ERROR]: @fail_if_no_user_info ->  Unknown request type"
+                )
 
         if not hasattr(request.user, "user_info"):
             return False
@@ -162,6 +180,25 @@ class CheckRequestBody(BasePermission):
             if not self.has_facility_permission(request, body):
                 return False
 
+            if not self.has_customer_permission(request, body):
+                return False
+
+        return True
+
+    def has_customer_permission(self, request, body) -> bool:
+        """
+        Check customer permission if in body
+        """
+        if "customer_name" in body or "customer" in body:
+            try:
+                var = "customer_name" if "customer_name" in body else "customer"
+                _customer = Customer.objects.get(customer_name=body[var])
+            except Customer.DoesNotExist:
+                return False
+
+            if request.user.user_info.customer != _customer:
+                return False
+
         return True
 
     def has_division_permission(self, request, body) -> bool:
@@ -204,5 +241,22 @@ class CheckRequestBody(BasePermission):
 
             except (Facility.DoesNotExist, FacilityAccessControl.DoesNotExist):
                 return False
+
+        return True
+
+
+class IsOfSameCustomer(BasePermission):
+    """
+    Model must have a field that contains customer has field name
+    """
+
+    @fail_if_no_user_info
+    def has_object_permission(self, request, view, obj):
+
+        if not hasattr(obj, "customer"):
+            return False
+
+        if not request.user.user_info.customer == obj.customer:
+            return False
 
         return True
