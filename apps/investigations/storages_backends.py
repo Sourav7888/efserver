@@ -8,4 +8,4 @@ class InvestigationDocs(S3Boto3Storage):
     file_overwrite = False
     custom_domain = False
     querystring_auth = True
-    aws_querystring_exipre = 18000
+    aws_querystring_expire = 18000
