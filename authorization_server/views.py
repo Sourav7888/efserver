@@ -15,10 +15,6 @@ class GetUserInfo(RetrieveAPIView):
     queryset = User.objects.all()
     serializer_class = UserSr
 
-    def get_queryset(self):
-        print(self.request.META)
-        return super().get_queryset()
-
 
 # @TODO: Add a pre-authorized handler to make it possible for
 # New users to come through without prior existence
