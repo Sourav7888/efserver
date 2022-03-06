@@ -1,5 +1,14 @@
 from django.urls import path, include
+from . import views
 
-patterns = []
+patterns = [
+    path(
+        "user/<str:user_id>",
+        views.GetUserInfo.as_view(),
+        name="authorization_server_get_user_info",
+    )
+]
 
-urlpatterns = []
+urlpatterns = [
+    path("", include(patterns)),
+]

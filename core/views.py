@@ -4,7 +4,7 @@ from rest_framework import status
 from django.utils.decorators import method_decorator
 from core.permissions import CheckRequestBody, validate_facility_access
 from rest_framework.permissions import IsAuthenticated
-from .permissions import IsOfSameCustomer, get_or_create_user_info, enforce_parameters
+from .permissions import get_or_create_user_info, enforce_parameters
 from rest_framework.generics import ListAPIView
 from .serializers import DivisionSr, model_to_dict
 from .paginations import DivisionPg
