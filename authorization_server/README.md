@@ -1,4 +1,4 @@
-# Authorization Server Microservice (Temporary)
+# Authorization Server (Temporary)
 
-This is supposed to be a microservice for other systems; but for cost and time savings
-this is a temporary solution.
+This is a temporary authorization server for other microservices to use for now for cost and time saving.
+But will transition to a real one in the future.

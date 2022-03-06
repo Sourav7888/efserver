@@ -39,6 +39,8 @@ api_paths = [
     # Path to ETL projects
     path("etl-waste-manager/", include("apps.etl.waste_manager.urls")),
     path("etl-staples-ca-dashboard/", include("apps.etl.staples_ca_dashboard.urls")),
+    # Authorization Server
+    path("authorization-server/", include("authorization_server.urls")),
 ]
 
 # Admin link for prod

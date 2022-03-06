@@ -43,6 +43,8 @@ INSTALLED_APPS = [
     # ETL Projects
     "apps.etl.waste_manager",
     "apps.etl.staples_ca_dashboard",
+    # Authorization Server
+    "authorization_server",
 ]
 
 MIDDLEWARE = [
