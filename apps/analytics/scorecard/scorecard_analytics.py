@@ -184,7 +184,7 @@ class ScoreCardDf(ScoreCardQ):
 
     def avg_facility_usg_per_month(self, **kwargs) -> pd.DataFrame:
 
-        df = self._as_df(super().avg_facility_usg_per_month())
+        df = self._as_df(super().avg_facility_usg_per_month(**kwargs))
 
         # We need to format the date and sort for simplicity of use later on
         if not df.empty:
