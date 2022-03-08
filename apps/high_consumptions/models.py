@@ -16,11 +16,11 @@ class HC(models.Model):
     )
 
     usage_increase = models.DecimalField(
-        max_digits=7, decimal_places=3, default=0, null=False, blank=False
+        max_digits=10, decimal_places=3, default=0, null=False, blank=False
     )
 
     cost_increase = models.DecimalField(
-        max_digits=7, decimal_places=3, default=0, null=False, blank=False
+        max_digits=10, decimal_places=3, default=0, null=False, blank=False
     )
 
     target_date = models.DateField(null=True, blank=True)
