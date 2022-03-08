@@ -45,7 +45,9 @@ class CalculateTotalEnergyReduction(APIView):
         return pd.DataFrame(
             list(
                 UtilityBill.yearly.filter(
-                    facility__in=facilities, utility_type=utility_type
+                    facility__in=facilities,
+                    utility_type=utility_type,
+                    billing_date__lte="2022-01-01",
                 )
             )
         )
