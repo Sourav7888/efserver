@@ -47,7 +47,7 @@ class CalculateTotalEnergyReduction(APIView):
                 UtilityBill.yearly.filter(
                     facility__in=facilities,
                     utility_type=utility_type,
-                    billing_date__lt="2021-01-01",
+                    billing_date__lt="2022-01-01",
                 )
             )
         )
