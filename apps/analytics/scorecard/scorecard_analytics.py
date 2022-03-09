@@ -58,7 +58,7 @@ class ScoreCardQ(ScoreCard):
         """
         return Facility.objects.filter(division=self._division)
 
-    def avg_facility_usg_per_month(self):
+    def avg_facility_usg_per_month(self, **kwargs):
         """
         Average Consumption per facility
         Include the emmission
@@ -66,10 +66,10 @@ class ScoreCardQ(ScoreCard):
         data = {}
         queries = dict(
             electricity=query_avg_division_usage_per_month_per_facility(
-                facilities=self._facilities, utility_type="Electricity"
+                facilities=self._facilities, utility_type="Electricity", **kwargs
             ),
             natural_gas=query_avg_division_usage_per_month_per_facility(
-                facilities=self._facilities, utility_type="NaturalGas"
+                facilities=self._facilities, utility_type="NaturalGas", **kwargs
             ),
         )
         for k in queries:
@@ -182,9 +182,9 @@ class ScoreCardDf(ScoreCardQ):
 
         return df if not self.json_safe else self._as_json(df)
 
-    def avg_facility_usg_per_month(self) -> pd.DataFrame:
+    def avg_facility_usg_per_month(self, **kwargs) -> pd.DataFrame:
 
-        df = self._as_df(super().avg_facility_usg_per_month())
+        df = self._as_df(super().avg_facility_usg_per_month(**kwargs))
 
         # We need to format the date and sort for simplicity of use later on
         if not df.empty:

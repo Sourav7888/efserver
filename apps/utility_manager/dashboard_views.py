@@ -47,7 +47,7 @@ class CalculateTotalEnergyReduction(APIView):
                 UtilityBill.yearly.filter(
                     facility__in=facilities,
                     utility_type=utility_type,
-                    billing_date__lte="2022-01-01",
+                    billing_date__lt="2022-01-01",
                 )
             )
         )
@@ -107,6 +107,8 @@ class CalculateDivisionGhgAvgPf(APIView):
                 return Response({"Invalid request"}, status=status.HTTP_400_BAD_REQUEST)
 
         scorecard = ScoreCardDf(request.GET["division_name"])
-        data = self.calculate_sum_ghg(scorecard.avg_facility_usg_per_month())
+        data = self.calculate_sum_ghg(
+            scorecard.avg_facility_usg_per_month(billing_date__lt="2022-01-01")
+        )
 
         return Response({"result": data.to_dict("records")}, status=status.HTTP_200_OK)
