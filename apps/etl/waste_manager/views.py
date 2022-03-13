@@ -303,17 +303,26 @@ class GetRecyclingRate(APIView):
                     type=openapi.TYPE_STRING,
                     required=True,
                 ),
+                openapi.Parameter(
+                    "min_year",
+                    in_=openapi.IN_QUERY,
+                    description="starting year of calculation",
+                    type=openapi.TYPE_INTEGER,
+                    required=True,
+                ),
             ]
         ),
     }
 )
 class GetTotalAllCategory(APIView):
-    @method_decorator(enforce_parameters(params=["unit"]))
+    @method_decorator(enforce_parameters(params=["unit", "min_year"]))
     def get(self, request):
         if request.GET["unit"] not in ["mt", "kg"]:
             return Response(
                 {"message": "Invalid unit"}, status=status.HTTP_400_BAD_REQUEST
             )
+
+        unit = request.GET["unit"]
 
         facilities = Facility.objects.filter(
             division__customer=request.user.user_info.customer
@@ -322,6 +331,7 @@ class GetTotalAllCategory(APIView):
             Q(is_recycled=True) | Q(is_diverted=True),
             facility__in=facilities,
             unit="mt",
+            pickup_date__year__gte=request.GET["min_year"],
         )
 
         total = data.aggregate(Sum("weight"))["weight__sum"]
@@ -329,10 +339,10 @@ class GetTotalAllCategory(APIView):
         if not total:
             total = 0
 
-        if request.GET["unit"] == "kg":
+        if unit == "kg":
             total = total * 1000
 
-        return Response({"total": total}, status=status.HTTP_200_OK)
+        return Response({"total": total, "unit": unit}, status=status.HTTP_200_OK)
 
 
 @method_decorator(
