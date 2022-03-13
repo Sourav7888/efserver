@@ -76,6 +76,42 @@ schema = {
                 },
             }
         },
+        "/v1/etl/sustainability/waste/total-metric-category/": {
+            "get": {
+                "tags": ["Waste Manager"],
+                "summary": "Get the total recycled/diverted waste for metric categories, meaning that all recycled or diverted waste with a unit of metric tons will be returned and categories such as writing instruments which are collected by unit are not included. by passing unit as kg, the total will be converted to that unit  - This is a public endpoint and will not require authentication.",
+                "description": "",
+                "operationId": "getTotalMetricWasteCategory",
+                "consumes": ["application/json"],
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "unit",
+                        "in": "query",
+                        "description": "The desired metric unit: ",
+                        "required": "true",
+                        "type": "string",
+                        "format": "string",
+                        "enum": [
+                            "mt",
+                            "kg",
+                        ],
+                    },
+                    {
+                        "name": "min_year",
+                        "in": "query",
+                        "description": "Minimum year to start the total calculation from. Format: YYYY",
+                        "type": "integer",
+                    },
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {"$ref": "#/definitions/getTotalMetricWasteCategory"},
+                    }
+                },
+            }
+        },
     },
     "securityDefinitions": {
         "api_key": {"type": "apiKey", "name": "Authorization", "in": "header"},
@@ -85,6 +121,13 @@ schema = {
             "type": "object",
             "properties": {
                 "total": {"type": "number", "format": "float"},
+            },
+        },
+        "getTotalMetricWasteCategory": {
+            "type": "object",
+            "properties": {
+                "total": {"type": "number", "format": "float"},
+                "unit": {"type": "string", "format": "string"},
             },
         },
     },
