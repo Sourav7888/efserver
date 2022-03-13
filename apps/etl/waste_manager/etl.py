@@ -12,12 +12,14 @@ def bulk_create_waste_data(data: list[Any]) -> None:
 
     try:
         query = """
-                INSERT INTO waste_manager_wastedata (pickup_date, facility, waste_name, weight, is_recycled, waste_category, provided_by) 
-                VALUES (%s,%s,%s,%s,%s,%s,%s)
+                INSERT INTO waste_manager_wastedata (pickup_date, facility, waste_name, weight, is_recycled, waste_category, provided_by, is_diverted, unit) 
+                VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s)
                 ON CONFLICT ON CONSTRAINT no_duplicate_waste_data
                 DO UPDATE SET
                 weight=EXCLUDED.weight,
-                is_recycled=EXCLUDED.is_recycled
+                is_recycled=EXCLUDED.is_recycled,
+                is_diverted=EXCLUDED.is_diverted,
+                unit=EXCLUDED.unit
                 """
 
         with connection.cursor() as cursor:

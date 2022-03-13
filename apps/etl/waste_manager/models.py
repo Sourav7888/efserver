@@ -44,6 +44,8 @@ class WasteData(models.Model):
     waste_name = models.CharField(max_length=255)
     weight = models.DecimalField(max_digits=15, decimal_places=6, default=0.0)
     is_recycled = models.BooleanField(default=False, null=False, blank=False)
+    is_diverted = models.BooleanField(default=False, null=False, blank=False)
+    unit = models.CharField(max_length=10, null=True, blank=True)
     waste_category = models.ForeignKey(
         WasteCategory,
         on_delete=models.CASCADE,
@@ -75,6 +77,7 @@ class WasteData(models.Model):
                     "waste_name",
                     "waste_category",
                     "is_recycled",
+                    "is_diverted",
                 ],
                 name="no_duplicate_waste_data",
             )

@@ -25,6 +25,8 @@ class ETLTestCase(BaseTest):
                 "true",
                 "TestCategory",
                 "TestWasteProvider",
+                "false",
+                "mt",
             ],
             [
                 "2020-04-01",
@@ -34,6 +36,8 @@ class ETLTestCase(BaseTest):
                 "true",
                 "TestCategory",
                 "TestWasteProvider",
+                "false",
+                "mt",
             ],
             [
                 "2020-04-03",
@@ -43,6 +47,8 @@ class ETLTestCase(BaseTest):
                 "true",
                 "TestCategory",
                 "TestWasteProvider",
+                "false",
+                "mt",
             ],
             [
                 "2020-01-01",
@@ -52,6 +58,8 @@ class ETLTestCase(BaseTest):
                 "false",
                 "TestCategory",
                 "TestWasteProvider",
+                "false",
+                "mt",
             ],
         ]
         # Test Create
@@ -74,6 +82,8 @@ class ETLTestCase(BaseTest):
                 "true",
                 "TestCategory",
                 "TestWasteProvider",
+                "false",
+                "mt",
             ],
         ]
 
@@ -144,6 +154,15 @@ class ETLTestCase(BaseTest):
             "division": "CoreDivisionName",
             "waste_category": "TestCategory",
             "year": 2020,
+        }
+        response = self.client.get(url, data)
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+        # Contribution by name
+        url = reverse("get_waste_data_total_all_category")
+        data = {
+            "unit": "kg",
         }
         response = self.client.get(url, data)
 
