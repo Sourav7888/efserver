@@ -21,6 +21,7 @@ from distutils.util import strtobool
 from core.permissions import enforce_parameters
 from apps.shared.processors import check_date_format
 from apps.shared.cs_exceptions import InvalidDateFormat
+from django.db.models import Q
 
 
 class GetWasteData(ListAPIView):
@@ -292,13 +293,57 @@ class GetRecyclingRate(APIView):
 
 @method_decorator(
     **{
+        "name": "get",
+        "decorator": swagger_auto_schema(
+            manual_parameters=[
+                openapi.Parameter(
+                    "unit",
+                    in_=openapi.IN_QUERY,
+                    description="mt or kg",
+                    type=openapi.TYPE_STRING,
+                    required=True,
+                ),
+            ]
+        ),
+    }
+)
+class GetTotalAllCategory(APIView):
+    @method_decorator(enforce_parameters(params=["unit"]))
+    def get(self, request):
+        if request.GET["unit"] not in ["mt", "kg"]:
+            return Response(
+                {"message": "Invalid unit"}, status=status.HTTP_400_BAD_REQUEST
+            )
+
+        facilities = Facility.objects.filter(
+            division__customer=request.user.user_info.customer
+        )
+        data = WasteData.yearly.filter(
+            Q(is_recycled=True) | Q(is_diverted=True),
+            facility__in=facilities,
+            unit="mt",
+        )
+
+        total = data.aggregate(Sum("weight"))["weight__sum"]
+
+        if not total:
+            total = 0
+
+        if request.GET["unit"] == "kg":
+            total = total * 1000
+
+        return Response({"total": total}, status=status.HTTP_200_OK)
+
+
+@method_decorator(
+    **{
         "name": "post",
         "decorator": swagger_auto_schema(
             manual_parameters=[
                 openapi.Parameter(
                     "file",
                     in_=openapi.IN_FORM,
-                    description="(pickup_date, facility, waste_name, weight, is_recycled, waste_category, provided_by) ",
+                    description="(pickup_date, facility, waste_name, weight, is_recycled, waste_category, provided_by, is_diverted, unit)",
                     type=openapi.TYPE_FILE,
                     required=True,
                 )

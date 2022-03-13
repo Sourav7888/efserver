@@ -7,6 +7,11 @@ patterns = [
     path("yearly/", views.GetWasteDataYearly.as_view(), name="get_waste_data_yearly"),
     path("total/", views.GetWasteTotalFromStart.as_view(), name="get_waste_data_total"),
     path(
+        "total-all-category/",
+        views.GetTotalAllCategory.as_view(),
+        name="get_waste_data_total_all_category",
+    ),
+    path(
         "recycling-rate/",
         views.GetRecyclingRate.as_view(),
         name="get_waste_recycling_rate",

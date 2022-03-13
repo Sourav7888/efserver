@@ -26,6 +26,8 @@ class WasteYearlyManager(models.Manager):
             super()
             .get_queryset()
             .annotate(year=TruncYear("pickup_date"))
+            # @NOTE: is diverted should be added here but for safety it wont be updated
+            # Since is_recycled should never be true if is diverted is true
             .values("year", "is_recycled")
             .annotate(
                 weight=Sum("weight"),
