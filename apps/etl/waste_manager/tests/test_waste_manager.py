@@ -163,6 +163,7 @@ class ETLTestCase(BaseTest):
         url = reverse("get_waste_data_total_all_category")
         data = {
             "unit": "kg",
+            "min_year": 2020,
         }
         response = self.client.get(url, data)
 
