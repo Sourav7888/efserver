@@ -55,7 +55,7 @@ def enforce_parameters(*args, params: list[str] = None):
 
             function = pseudo_args[0]
             request = wrapper_args[0]
-            body = getattr(request, request.method, None)
+            body = getattr(request, request.method, {}) | request.data  # Handles body and query params
 
             for k in params:
                 if k not in body:

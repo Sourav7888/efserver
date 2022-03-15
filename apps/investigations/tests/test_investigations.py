@@ -111,10 +111,25 @@ class InvestigationsTestCase(BaseTest):
         )
         response = self.client.put(
             url,
-            data={"closed": True},
+            data={"require_bas_fix": True},
         )
 
-        self.assertEqual(response.json()["closed"], True)
+        self.assertEqual(response.json()["require_bas_fix"], True)
+
+        # Test BAS Fix
+        # Test that on bas fixed the user becomes the investigation tech and also it works
+        url = reverse(
+            "update_investigation", args=(investigation.first().investigation_id,)
+        )
+        response = self.client.put(
+            url,
+            data={"investigation_bas_fix": "fixed"},
+        )
+
+        self.assertEqual(response.json()["investigation_bas_fix"], "fixed")
+        self.assertEqual(
+            investigation.first().investigation_tech.user.username, str(user)
+        )
 
         # Create investigations by HCs
 
@@ -149,7 +164,23 @@ class InvestigationsTestCase(BaseTest):
             True,
         )
 
-    def test_get_investigations(self):
+        # Test gets
+
+        url = reverse("get_investigations")
+        response = self.client.get(
+            url,
+        )
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+        url = reverse("get_assigned_investigations")
+        response = self.client.get(
+            url,
+        )
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_get_investigations_status(self):
         """
         Test that the investigations are not empty
         """

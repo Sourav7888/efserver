@@ -2,7 +2,7 @@ import uuid
 from rest_framework.generics import CreateAPIView, UpdateAPIView, ListAPIView
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
-from apps.high_consumptions.models import HC, HCReportTracker
+from apps.high_consumptions.models import HC
 from apps.investigations.tasks import send_created_investigation
 from core.models import Facility
 
@@ -22,6 +22,7 @@ from rest_framework import status
 from drf_yasg.utils import swagger_auto_schema
 from django.utils.decorators import method_decorator
 from django.core.files.base import ContentFile
+from django.db.models import Q
 
 
 class CreateInvestigation(CreateAPIView):
@@ -40,10 +41,33 @@ class UpdateInvestigation(UpdateAPIView):
     queryset = Investigation.objects.all()
 
 
+class GetAssignedInvestigations(ListAPIView):
+    permission_classes = [IsAuthenticated, HasInvestigationAccess]
+    serializer_class = GetInvestigationsSr
+    pagination_class = GetInvestigationsPg
+
+    def get_queryset(self):
+        return Investigation.objects.filter(
+            Q(
+                investigation_investigator=self.request.user.user_info,
+                require_bas_fix=False,
+            )
+            | Q(investigation_tech=self.request.user.user_info, require_bas_fix=True),
+            closed=False,
+            in_approval=False,
+        )
+
+
 class GetInvestigations(ListAPIView):
     permission_classes = [IsAuthenticated, HasInvestigationAccess]
     serializer_class = GetInvestigationsSr
-    queryset = Investigation.objects.all()
+    queryset = (
+        Investigation.objects.all()
+        .select_related("investigation_investigator")
+        .select_related("investigation_creator")
+        .select_related("investigation_tech")
+        .select_related("facility")
+    )
     filterset_class = GetInvestigationsFl
     pagination_class = GetInvestigationsPg
 

@@ -9,6 +9,11 @@ patterns = [
         name="get_investigations",
     ),
     path(
+        "get-assigned-investigations/",
+        views.GetAssignedInvestigations.as_view(),
+        name="get_assigned_investigations",
+    ),
+    path(
         "create/",
         views.CreateInvestigation.as_view(),
         name="create_investigation",
