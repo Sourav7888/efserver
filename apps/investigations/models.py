@@ -40,6 +40,15 @@ class Investigation(models.Model):
         to_field="user_unique_id",
         related_name="investigation_creator",
     )
+    investigation_tech = models.ForeignKey(
+        UserInfo,
+        on_delete=models.DO_NOTHING,
+        db_column="investigation_tech",
+        null=True,
+        blank=True,
+        to_field="user_unique_id",
+        related_name="investigation_tech",
+    )
     investigation_date = models.DateField(null=False, blank=False)
     investigation_type = models.CharField(
         max_length=6, choices=HIGH_CONSUMPTION_OPTIONS
@@ -49,7 +58,8 @@ class Investigation(models.Model):
         storage=InvestigationDocs(), null=True, blank=True
     )
     investigation_result = models.TextField(null=True, blank=True)
-
+    investigation_bas_fix = models.TextField(null=True, blank=True)
+    require_bas_fix = models.BooleanField(default=False, null=False, blank=False)
     in_approval = models.BooleanField(default=False, null=False, blank=False)
     closed = models.BooleanField(default=False, null=False, blank=False)
 
@@ -73,7 +83,7 @@ class Investigation(models.Model):
         """
 
         try:
-            val += f" | Investigator: {self.investigation_investigator.user_name}"
+            val += f" | Investigator: {self.investigation_investigator.user_name} | Investigator: {self.investigation_tech.user_name}"
         except (AttributeError, UserInfo.DoesNotExist):
             pass
 

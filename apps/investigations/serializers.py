@@ -1,12 +1,18 @@
 from rest_framework import serializers
 from .models import Investigation
 from .tasks import send_created_investigation
-from apps.high_consumptions.models import HC
 
 
 class GetInvestigationsSr(serializers.ModelSerializer):
     investigation_investigator_name = serializers.SerializerMethodField()
     investigation_creator_name = serializers.SerializerMethodField()
+    investigation_tech_name = serializers.SerializerMethodField()
+
+    def get_investigation_tech_name(self, obj):
+        try:
+            return obj.investigation_tech.user_name
+        except:
+            return None
 
     def get_investigation_creator_name(self, obj):
         try:
@@ -39,7 +45,8 @@ class CreateInvestigationSr(serializers.ModelSerializer):
             investigation.save()
 
             # @TODO: Refractor to be async
-            send_created_investigation(validated_data)
+            # Don't warn for now
+            # send_created_investigation(validated_data)
 
             return investigation
 
@@ -77,13 +84,21 @@ class UpdateInvestigationSr(serializers.ModelSerializer):
         investigator = instance.investigation_investigator_id
         user = request.user.user_info
 
-        if investigator is None:
-            instance.investigation_investigator_id = user
-            instance.save()
-            return True
+        if instance.require_bas_fix:
+            if instance.investigation_tech == user:
+                return True
+            elif instance.investigation_tech is None:
+                instance.investigation_tech = user
+                instance.save()
+                return True
+        else:
+            if investigator is None:
+                instance.investigation_investigator_id = user
+                instance.save()
+                return True
 
-        elif investigator == user.user_unique_id:
-            return True
+            elif investigator == user.user_unique_id:
+                return True
 
         return False
 
@@ -115,5 +130,7 @@ class UpdateInvestigationSr(serializers.ModelSerializer):
         fields = [
             "investigation_result",
             "in_approval",
+            "require_bas_fix",
+            "investigation_bas_fix",
             "closed",
         ]
