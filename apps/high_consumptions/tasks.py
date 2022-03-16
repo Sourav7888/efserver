@@ -171,7 +171,7 @@ def generate_hc_by_division(
             hc_obj = HC.objects.create(
                 facility=f,
                 target_date=investigation_date,
-                usage_increase=round(hc.context["percentage_diff"], 2),
+                usage_increase=round(hc.context["usage_vs_prediction"], 2),
                 cost_increase=round(hc.context["estimated_cost"], 2),
                 hc_id=_id,
                 utility_type=HC_CODES[utility_type],
