@@ -11,6 +11,10 @@ class HCFl(filters.FilterSet):
 
 
 class HCReportTrackerFl(filters.FilterSet):
+    report_metadata = filters.CharFilter(
+        field_name="report_metadata", lookup_expr="icontains"
+    )
+
     class Meta:
         model = HCReportTracker
         fields = "__all__"
