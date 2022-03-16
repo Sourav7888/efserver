@@ -55,6 +55,7 @@ class HCReportTracker(models.Model):
         related_name="hc_report_tracker_creator",
     )
 
+    report_metadata = models.JSONField(null=True, blank=True)
     is_ready = models.BooleanField(default=False, null=False, blank=False)
     created_at = models.DateTimeField(auto_now_add=True, editable=False)
 
