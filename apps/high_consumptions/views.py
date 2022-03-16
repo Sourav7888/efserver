@@ -237,7 +237,15 @@ class GenerateHCByDivision(APIView):
 
         # Create a report so that when the process is finished we can call is ready on
         # The report models
-        HCReportTracker.objects.create(hc_report_id=_id, creator=request.user.user_info)
+        HCReportTracker.objects.create(
+            hc_report_id=_id,
+            creator=request.user.user_info,
+            report_metadata={
+                "investigation_date": request.data["investigation_date"],
+                "utility_type": request.data["utility_type"],
+                "division": request.data["division"],
+            },
+        )
 
         generate_hc_by_division.delay(
             _id,
