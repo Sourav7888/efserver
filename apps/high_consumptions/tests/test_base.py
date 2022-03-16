@@ -15,6 +15,7 @@ def dummy_data(*args) -> pd.DataFrame:
     """
     df = pd.read_csv("apps/high_consumptions/fixtures/EnergyWeather.csv")
     df["date"] = df["date"].apply(lambda x: dt.strptime(str(x), "%Y-%m-%d"))
+    df.drop(columns=["billing_days"], inplace=True)
     return df
 
 
@@ -24,6 +25,7 @@ def dummy_context(*args, **kwargs) -> pd.DataFrame:
     """
     df = pd.read_csv("apps/high_consumptions/fixtures/DummyStats.csv")
     df["date"] = df["date"].apply(lambda x: dt.strptime(str(x), "%Y-%m-%d"))
+    df.drop(columns=["billing_days"], inplace=True)
     return df
 
 

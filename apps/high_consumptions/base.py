@@ -211,6 +211,7 @@ class GasHighConsumption(HighConsumption):
             self.get_data()
 
         self.check_dataframe()
+        self._dataframe.dropna(inplace=True)
 
         target = self._dataframe[self._dataframe["date"] == self._investigation_date]
         usage = self._dataframe["usage"].to_numpy().reshape(-1, 1)
