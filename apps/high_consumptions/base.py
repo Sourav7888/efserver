@@ -410,6 +410,7 @@ class ElectricityHighConsumption(HighConsumption):
             "estimated_cost": estimated_cost,
             "percentage_diff": percentage_diff,
             "usage_area": usage_area,
+            "usage_vs_prediction": round(target.usage.item() - average, 2),
         }
 
         if not self._context.get("render", None):
