@@ -147,6 +147,7 @@ class InvestigationsTestCase(BaseTest):
             "investigation_date": "2021-01-01",
             "investigation_type": "HC_WT",
             "investigation_description": "",
+            "warn": False,
         }
 
         url = reverse("create_investigation_by_hc")

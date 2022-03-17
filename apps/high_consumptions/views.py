@@ -271,7 +271,6 @@ class DeleteGeneratedHC(APIView):
     """
     Delete HCReport Tracker object
     and all related generated HC
-
     """
 
     @method_decorator(

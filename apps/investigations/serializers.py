@@ -72,6 +72,7 @@ class CreateInvestigationByHCSchema(serializers.Serializer):
     investigation_date = serializers.CharField()
     investigation_type = serializers.CharField()
     investigation_description = serializers.CharField()
+    warn = serializers.BooleanField(default=False)
 
 
 class UpdateInvestigationSr(serializers.ModelSerializer):
