@@ -170,7 +170,9 @@ class CreateInvestigationByHC(APIView):
         return Response(
             {
                 "message": "Successfully Created Investigation",
-                "id": inv.investigation_id,
+                "id": inv.investigation_id
+                if not inv.exists()
+                else inv.first().investigation_id,
             },
             status=status.HTTP_201_CREATED,
         )
