@@ -1,3 +1,4 @@
+from distutils.util import strtobool
 import uuid
 from rest_framework.generics import CreateAPIView, UpdateAPIView, ListAPIView
 from rest_framework.views import APIView
@@ -100,6 +101,7 @@ class CreateInvestigationByHC(APIView):
                 "investigation_date",
                 "investigation_type",
                 "investigation_description",
+                "warn",
             ]
         )
     )
@@ -153,14 +155,15 @@ class CreateInvestigationByHC(APIView):
                     str(uuid.uuid4()) + ".html", ContentFile(hc.hc_document.read())
                 )
 
-            send_created_investigation(
-                {
-                    "facility": inv.facility,
-                    "investigation_date": inv.investigation_date,
-                    "investigation_type": inv.investigation_type,
-                    "investigation_description": inv.investigation_description,
-                }
-            )
+            if request.data["warn"]:
+                send_created_investigation(
+                    {
+                        "facility": inv.facility,
+                        "investigation_date": inv.investigation_date,
+                        "investigation_type": inv.investigation_type,
+                        "investigation_description": inv.investigation_description,
+                    }
+                )
 
             inv.save()
 
