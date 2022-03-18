@@ -217,10 +217,16 @@ class GasHighConsumption(HighConsumption):
         usage = self._dataframe["usage"].to_numpy().reshape(-1, 1)
         hdd = self._dataframe["hdd"].to_numpy().reshape(-1, 1)
 
+        if target.empty:
+            raise TargetDateNotFound(
+                "Investigation date not in dataframe -> @run_method"
+            )
+
         # Get linear model
         model = get_linear_regression_model(
             hdd, usage, include_test=True, include_og=True
         )
+
         # Predict what should the current usage be
         prediction = round(model["model"].predict([target.hdd]).item(), 2)
 
