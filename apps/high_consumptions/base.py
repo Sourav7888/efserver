@@ -211,6 +211,9 @@ class GasHighConsumption(HighConsumption):
             self.get_data()
 
         self.check_dataframe()
+        # @NOTE QUICK FIX
+        self._dataframe.drop(columns=["billing_days", "unit"], inplace=True)
+
         self._dataframe.dropna(inplace=True)
 
         target = self._dataframe[self._dataframe["date"] == self._investigation_date]
