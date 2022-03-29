@@ -2,6 +2,15 @@ import pandas as pd
 from datetime import datetime as dt
 from typing import Union
 from .cs_exceptions import InvalidDateFormat
+import re
+
+
+def check_email_format(email: str) -> bool:
+    regex = "^[a-z0-9]+[\._]?[a-z0-9]+[@]\w+[.]\w{2,3}$"
+    if re.search(regex, email):
+        return True
+    else:
+        return False
 
 
 def group_and_sum(

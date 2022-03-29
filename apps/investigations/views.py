@@ -1,16 +1,21 @@
-from distutils.util import strtobool
 import uuid
 from rest_framework.generics import CreateAPIView, UpdateAPIView, ListAPIView
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
 from apps.high_consumptions.models import HC
-from apps.investigations.tasks import send_created_investigation
+from apps.investigations.tasks import (
+    send_created_investigation,
+    send_hc_investigation_report,
+)
+from apps.shared.cs_exceptions import InvalidDateFormat
+from apps.shared.processors import check_date_format, check_email_format
 from core.models import Facility
 
-from core.permissions import enforce_parameters
+from core.permissions import CheckRequestBody, enforce_parameters
 from .permissions import IsInvestigationManager, IsInvestigator, HasInvestigationAccess
 from .serializers import (
     CreateInvestigationSr,
+    SendHCInvestigationReportSchema,
     UpdateInvestigationSr,
     GetInvestigationsSr,
     CreateInvestigationByHCSchema,
@@ -182,3 +187,53 @@ class CreateInvestigationByHC(APIView):
             },
             status=status.HTTP_201_CREATED,
         )
+
+
+@method_decorator(
+    **{
+        "name": "post",
+        "decorator": swagger_auto_schema(
+            request_body=SendHCInvestigationReportSchema,
+            responses={200: "{'message': 'string'}"},
+        ),
+    }
+)
+class SendHCInvestigationReport(APIView):
+    permission_classes = [
+        IsAuthenticated,
+        IsInvestigationManager,
+        HasInvestigationAccess,
+    ]
+
+    @method_decorator(
+        enforce_parameters(
+            params=[
+                "customer",
+                "investigation_date",
+                "recipients",
+            ]
+        )
+    )
+    def post(self, request):
+        try:
+            check_date_format(request.data["investigation_date"])
+        except InvalidDateFormat:
+            return Response(
+                {"message": "Invalid date format"}, status=status.HTTP_400_BAD_REQUEST
+            )
+
+        recipients = request.data["recipients"].split(",")
+
+        valid_recipients = all([check_email_format(k) for k in recipients])
+
+        if not valid_recipients:
+            return Response(
+                {"message": "Invalid email format detected"},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        context = dict(request.data)
+        context["recipients"] = recipients
+
+        send_hc_investigation_report.delay(context)
+        return Response({"message": "sent"}, status=status.HTTP_200_OK)

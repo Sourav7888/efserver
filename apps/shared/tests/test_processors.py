@@ -3,6 +3,7 @@ from ..processors import (
     convert_year_month_to_dt,
     calculate_diff,
     check_date_format,
+    check_email_format,
 )
 from pandas._testing import assert_frame_equal
 import pandas as pd
@@ -89,3 +90,7 @@ class TestProcessors(APITestCase):
         self.assertRaises(InvalidDateFormat, check_date_format, "sajlkdsa")
 
         assert check_date_format("2020-01-01") == "2020-01-01"
+
+    def test_check_email_format(self):
+        self.assertEqual(check_email_format("asdsadsa"), False)
+        self.assertEqual(check_email_format("asds.x@vak.ca"), True)

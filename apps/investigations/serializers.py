@@ -75,6 +75,12 @@ class CreateInvestigationByHCSchema(serializers.Serializer):
     warn = serializers.BooleanField(default=False)
 
 
+class SendHCInvestigationReportSchema(serializers.Serializer):
+    customer = serializers.CharField()
+    investigation_date = serializers.CharField()
+    recipients = serializers.CharField()
+
+
 class UpdateInvestigationSr(serializers.ModelSerializer):
     def check_context(self, instance, context):
         """

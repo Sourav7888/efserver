@@ -28,6 +28,11 @@ patterns = [
         views.UpdateInvestigation.as_view(),
         name="update_investigation",
     ),
+    path(
+        "report/send-hc-investigation-report/",
+        views.SendHCInvestigationReport.as_view(),
+        name="send_hc_investigation_report",
+    ),
 ]
 
 urlpatterns = [path("", include(patterns))]
