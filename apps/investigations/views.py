@@ -222,7 +222,7 @@ class SendHCInvestigationReport(APIView):
                 {"message": "Invalid date format"}, status=status.HTTP_400_BAD_REQUEST
             )
 
-        recipients = request.data["recipients"].split(",")
+        recipients = [k.replace(" ", "") for k in request.data["recipients"].split(",")]
 
         valid_recipients = all([check_email_format(k) for k in recipients])
 
