@@ -3,9 +3,12 @@ from django.urls import reverse
 from django.contrib import auth
 from apps.high_consumptions.models import HC, HCReportTracker
 from core.tests.utils import BaseTest
-from core.models import UserInfo, Facility
+from core.models import Customer, Division, UserInfo, Facility
 from apps.investigations.models import Investigation, InvestigationAuthorization
-from apps.investigations.tasks import get_investigations_status
+from apps.investigations.tasks import (
+    get_investigations_status,
+    query_hc_investigation_report,
+)
 from apps.investigations.permissions import get_or_create_investigation_authorization
 
 
@@ -203,3 +206,56 @@ class InvestigationsTestCase(BaseTest):
                 "on_going_investigations": 0,
             },
         )
+
+
+class TestSendHCInvestigationReport(BaseTest):
+    def test_query_hc_investigation_report(self):
+
+        context = {
+            "customer": "CoreCustomerName",
+            "investigation_date": "2020-01-01",
+            "recipients": [],
+        }
+
+        query = query_hc_investigation_report(context)
+
+        # @NOTE THIS REQUIRE MORE TEST
+
+        self.assertEqual(
+            query,
+            {
+                "customer": "CoreCustomerName",
+                "total": 0,
+                "on_going": 0,
+                "in_monitoring": 0,
+                "cost": "$0",
+                "investigation_date": "January, 2020",
+            },
+        )
+
+    def test_view_send_hc_investigation_report(self):
+        url = reverse("send_hc_investigation_report")
+        # Giving the user the permission should allow
+        user = auth.get_user(self.client)
+
+        user_info = UserInfo.objects.create(user=user)
+        get_or_create_investigation_authorization(
+            user.user_info.user_unique_id, as_dict=True
+        )
+        inv_auth = InvestigationAuthorization.objects.get(user_info=user_info)
+        inv_auth.is_investigation_manager = True
+        inv_auth.access_investigation = True
+        inv_auth.is_investigator = True
+        inv_auth.save()
+
+        response = self.client.post(
+            url,
+            data={
+                "customer": "CoreCustomerName",
+                "investigation_date": "2020-01-01",
+                "recipients": "test@gmail.com",
+            },
+        )
+
+        # Test that the user require permission
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
