@@ -57,3 +57,7 @@ Configure environment variables, you will need the following:
     WEATHER_DATABASE_USER =
 
 Deploy to heroku using either github integration or heroku CLI.
+
+Configure Dyno Formation to have 1 worker and 1 web;
+
+Configure add-ons to include CloudAMQP - The environment variable for the URL is CLOUDAMQP_URL and is set automatically.
