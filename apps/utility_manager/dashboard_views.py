@@ -108,7 +108,7 @@ class CalculateDivisionGhgAvgPf(APIView):
 
         scorecard = ScoreCardDf(request.GET["division_name"])
         data = self.calculate_sum_ghg(
-            scorecard.avg_facility_usg_per_month(billing_date__lt="2022-01-01")
+            scorecard.avg_facility_usg_per_month(billing_date__lt="2022-10-01")
         )
 
         return Response({"result": data.to_dict("records")}, status=status.HTTP_200_OK)
