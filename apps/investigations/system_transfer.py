@@ -36,5 +36,7 @@ def create_hc_investigation_enerfrog_portal(
             headers={"Authorization": f"Token {TOKEN}"},
         )
 
+        print(f"INTEGRATION RESPONSE: {req.status_code} - {req.text}")
+
     except Exception as e:
         print(e)
