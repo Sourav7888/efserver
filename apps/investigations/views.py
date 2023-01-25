@@ -175,23 +175,26 @@ class CreateInvestigationByHC(APIView):
 
             inv.save()
 
-            # INTEGRATE WITH ENERFROG PORTAL
-            print("+++ ENERFROG PORTAL INTERGRATION +++")
-            _location = lambda x: int(
-                x.replace("SBD", "").replace("-WH", "").replace("SP", "")
-            )
-            create_hc_investigation_enerfrog_portal(
-                company="staples_ca",
-                location_id=_location(inv.facility.facility_name),
-                hc_date=request.data["investigation_date"],
-                hc_type=request.data["investigation_type"],
-                hc_description=request.data["investigation_description"],
-                hc_document=doc_id,
-                metadata={
-                    "usage_increase": float(hc.usage_increase),
-                    "cost_increase": float(hc.cost_increase),
-                },
-            )
+            try:
+                # INTEGRATE WITH ENERFROG PORTAL
+                print("+++ ENERFROG PORTAL INTERGRATION +++")
+                _location = lambda x: int(
+                    x.replace("SBD", "").replace("-WH", "").replace("SP", "")
+                )
+                create_hc_investigation_enerfrog_portal(
+                    company="staples_ca",
+                    location_id=_location(inv.facility.facility_name),
+                    hc_date=request.data["investigation_date"],
+                    hc_type=request.data["investigation_type"],
+                    hc_description=request.data["investigation_description"],
+                    hc_document=doc_id,
+                    metadata={
+                        "usage_increase": float(hc.usage_increase),
+                        "cost_increase": float(hc.cost_increase),
+                    },
+                )
+            except:
+                pass
 
             return Response(
                 {
