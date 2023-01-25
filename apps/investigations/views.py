@@ -29,6 +29,7 @@ from drf_yasg.utils import swagger_auto_schema
 from django.utils.decorators import method_decorator
 from django.core.files.base import ContentFile
 from django.db.models import Q
+from .system_transfer import create_hc_investigation_enerfrog_portal
 
 
 class CreateInvestigation(CreateAPIView):
@@ -155,9 +156,11 @@ class CreateInvestigationByHC(APIView):
             inv.investigation_metadata["usage_increase"] = float(hc.usage_increase)
             inv.investigation_metadata["cost_increase"] = float(hc.cost_increase)
 
+            doc_id = str(uuid.uuid4()) + ".html"
+
             if hc.hc_document:
                 inv.investigation_document.save(
-                    str(uuid.uuid4()) + ".html", ContentFile(hc.hc_document.read())
+                    doc_id, ContentFile(hc.hc_document.read())
                 )
 
             if request.data["warn"]:
@@ -171,6 +174,24 @@ class CreateInvestigationByHC(APIView):
                 )
 
             inv.save()
+
+            # INTEGRATE WITH ENERFROG PORTAL
+            print("+++ ENERFROG PORTAL INTERGRATION +++")
+            _location = lambda x: int(
+                x.replace("SBD", "").replace("-WH", "").replace("SP", "")
+            )
+            create_hc_investigation_enerfrog_portal(
+                company="staples_ca",
+                location_id=_location(inv.facility.facility_name),
+                hc_date=request.data["investigation_date"],
+                hc_type=request.data["investigation_type"],
+                hc_description=request.data["investigation_description"],
+                hc_document=doc_id,
+                metadata={
+                    "usage_increase": float(hc.usage_increase),
+                    "cost_increase": float(hc.cost_increase),
+                },
+            )
 
             return Response(
                 {
