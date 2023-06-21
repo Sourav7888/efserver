@@ -22,6 +22,7 @@ from core.permissions import enforce_parameters
 from apps.shared.processors import check_date_format
 from apps.shared.cs_exceptions import InvalidDateFormat
 from django.db.models import Q
+from core.models import Facility, Customer
 
 
 class GetWasteData(ListAPIView):
@@ -57,7 +58,8 @@ class GetWasteData(ListAPIView):
     }
 )
 class GetWasteDataYearly(ListAPIView):
-    permission_classes = [IsAuthenticated, CheckRequestBody]
+    # @CHANGES permission_classes = [IsAuthenticated, CheckRequestBody]
+    permission_classes = []
     serializer_class = WasteDataSr
     filterset_class = WasteDataFl
     pagination_class = WasteDataPg
@@ -77,9 +79,13 @@ class GetWasteDataYearly(ListAPIView):
 
         # @TODO: This is not good this needs to not depend on validate_facility_access
         # Rather filter by the division since all dashboard users need all the available data aggregated
-        facilities = validate_facility_access(self.request).filter(
-            division=self.request.GET["division"]
-        )
+        # facilities = validate_facility_access(self.request).filter(
+        #     division=self.request.GET["division"]
+        # )
+
+        facilities = Facility.objects.filter(
+            division__customer=Customer.objects.get(customer_name="Staples CA")
+        ).select_related("division")
         data = WasteData.yearly.filter(facility__in=facilities)
 
         return data
@@ -123,7 +129,8 @@ class GetWasteDataYearly(ListAPIView):
     }
 )
 class GetWasteTotalFromStart(APIView):
-    permission_classes = [IsAuthenticated, CheckRequestBody]
+    # @CHANGES: permission_classes = [IsAuthenticated, CheckRequestBody]
+    permission_classes = []
 
     @method_decorator(enforce_parameters(params=["division", "waste_category"]))
     def get(self, request):
@@ -196,7 +203,8 @@ class GetWasteTotalFromStart(APIView):
     }
 )
 class GetWasteContributionByName(APIView):
-    permission_classes = [IsAuthenticated, CheckRequestBody]
+    # @CHANGES permission_classes = [IsAuthenticated, CheckRequestBody]
+    permission_classes = []
 
     @method_decorator(enforce_parameters(params=["division", "year", "waste_category"]))
     def get(self, request):
@@ -263,7 +271,8 @@ class GetWasteContributionByName(APIView):
     }
 )
 class GetRecyclingRate(APIView):
-    permission_classes = [IsAuthenticated, CheckRequestBody]
+    # @CHANGES permission_classes = [IsAuthenticated, CheckRequestBody]
+    permission_classes = []
 
     @method_decorator(enforce_parameters(params=["division", "waste_category"]))
     def get(self, request):

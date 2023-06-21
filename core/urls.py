@@ -5,7 +5,17 @@ urlpatterns = [
     path("test_core_view/", views.CoreTestView.as_view(), name="test_core_view"),
     path("user/", views.UserPermission.as_view(), name="get_user_permission"),
     path("divisions/", views.DivisionList.as_view(), name="get_division_list"),
+    path(
+        "staples-public-division/",
+        views.StaplesPublicDivisionList.as_view(),
+        name="get_staples_public_division_list",
+    ),
     path("facilities/", views.FacilityList.as_view(), name="get_facility_list"),
+    path(
+        "staples-public-facilities/",
+        views.StaplesPublicFacilityList.as_view(),
+        name="get_staples_public_facility_list",
+    ),
     path(
         "bulk-create-facility/",
         views.BulkCreateFacility.as_view(),

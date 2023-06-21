@@ -150,6 +150,83 @@ class GetDivisionUtility(ListAPIView):
 
 @method_decorator(
     **{
+        "name": "get",
+        "decorator": swagger_auto_schema(
+            manual_parameters=[
+                openapi.Parameter(
+                    "division_name",
+                    in_=openapi.IN_QUERY,
+                    description="division_name",
+                    type=openapi.TYPE_STRING,
+                    required=True,
+                ),
+                openapi.Parameter(
+                    "timeframe",
+                    in_=openapi.IN_QUERY,
+                    description="yearly | monthly",
+                    type=openapi.TYPE_STRING,
+                    required=True,
+                ),
+            ],
+        ),
+    }
+)
+class GetPublicDivisionUtility(ListAPIView):
+    """
+    Get all utilities for a Division
+    """
+
+    serializer_class = UtilitySr
+    pagination_class = UtilityPg
+    filterset_class = UtilityFl
+    permission_classes = []
+
+    @method_decorator(enforce_parameters(params=["timeframe", "division_name"]))
+    def list(self, request, *args, **kwargs):
+        if request.GET["timeframe"].lower() == "monthly":
+            return super().list(self, request, *args, **kwargs)
+
+        # Overriding for yearly due to an issue where group by is required yet if not
+        # Grouped by start date will fail regardless of the pagination
+        # To fix in the future
+        elif request.GET["timeframe"].lower() == "yearly":
+            queryset = self.filter_queryset(self.get_queryset())
+
+            results = []
+            if not queryset:
+                Response({"Invalid timeframe"}, status=status.HTTP_400_BAD_REQUEST)
+
+            # Removing the cost cost here
+            for x in queryset:
+                results.append(
+                    {
+                        "display_date": x["year"].year,
+                        "utility_type": x["utility_type"],
+                        "year": x["year"],
+                        "usage": x["usage"],
+                    }
+                )
+
+            return Response({"results": results}, status=status.HTTP_200_OK)
+
+        else:
+            return Response({"Invalid timeframe"}, status=status.HTTP_400_BAD_REQUEST)
+
+    def get_queryset(self):
+        if "division_name" not in self.request.GET:
+            return UtilityBill.objects.none()
+        division = Division.objects.get(division_name=self.request.GET["division_name"])
+        facilities = Facility.objects.filter(division=division)
+        if self.request.GET["timeframe"].lower() == "yearly":
+            return UtilityBill.yearly.filter(facility__in=facilities)
+        elif self.request.GET["timeframe"].lower() == "monthly":
+            return UtilityBill.monthly.filter(facility__in=facilities)
+        else:
+            return UtilityBill.objects.none()
+
+
+@method_decorator(
+    **{
         "name": "post",
         "decorator": swagger_auto_schema(
             manual_parameters=[
