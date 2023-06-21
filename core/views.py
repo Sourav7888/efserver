@@ -8,7 +8,7 @@ from .permissions import get_or_create_user_info, enforce_parameters
 from rest_framework.generics import ListAPIView
 from .serializers import DivisionSr, model_to_dict
 from .paginations import DivisionPg
-from .models import Division
+from .models import Division, Facility, Customer
 from .serializers import FacilitySr
 from .paginations import FacilityPg
 from .models import PreAuthorizedUser, UserInfo
@@ -177,6 +177,46 @@ class FacilityList(ListAPIView):
 
     def get_queryset(self):
         facilities = validate_facility_access(self.request)
+        return facilities
+
+
+# @CHANGES
+class StaplesPublicDivisionList(ListAPIView):
+    """
+    Returns a list of all available divisions if not filtered by division_name
+    """
+
+    serializer_class = DivisionSr
+    filterset_fields = ["division_name"]
+    pagination_class = DivisionPg
+    permission_classes = []
+
+    def get_queryset(self):
+        customer = Customer.objects.get(customer_name="Staples CA")
+        divisions = Division.objects.filter(customer=customer)
+
+        return divisions
+
+
+# @CHANGES
+class StaplesPublicFacilityList(ListAPIView):
+    """
+    Returns a list of all facilities
+    If user access is set to RESTRICTED
+    The view will check the access control straight away
+    even if a not authorized site is attributed to that list it will never show up
+    on the api response as it is filtered by customer base
+    """
+
+    serializer_class = FacilitySr
+    filterset_fields = "__all__"
+    pagination_class = FacilityPg
+    permission_classes = []
+
+    def get_queryset(self):
+        facilities = Facility.objects.filter(
+            division__customer=Customer.objects.get(customer_name="Staples CA")
+        ).select_related("division")
         return facilities
 
 

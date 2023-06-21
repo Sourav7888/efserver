@@ -36,7 +36,9 @@ from apps.analytics.scorecard.scorecard_analytics import ScoreCardDf
     }
 )
 class CalculateTotalEnergyReduction(APIView):
-    permission_classes = [IsAuthenticated, CheckRequestBody]
+    # @CHANGES permission_classes = [IsAuthenticated, CheckRequestBody]
+    # Remove authentication
+    permission_classes = []
 
     def get_data(self, request) -> pd.DataFrame:
         facilities = Facility.objects.filter(division=request.GET["division_name"])
@@ -94,7 +96,9 @@ class CalculateDivisionGhgAvgPf(APIView):
     Returns the average ghg emission for a division per facility per month
     """
 
-    permission_classes = [IsAuthenticated, CheckRequestBody]
+    # @CHANGES permission_classes = [IsAuthenticated, CheckRequestBody]
+    # Remove authentication
+    permission_classes = []
 
     def calculate_sum_ghg(self, df: pd.DataFrame) -> pd.DataFrame:
         total = df.groupby(["date"])["ghg (MT)"].sum().reset_index()

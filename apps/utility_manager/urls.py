@@ -14,6 +14,11 @@ patterns = [
         name="get_division_utility",
     ),
     path(
+        "public-division-utility/",
+        views.GetPublicDivisionUtility.as_view(),
+        name="get_public_division_utility",
+    ),
+    path(
         "facility-utility/",
         views.GetFacilityUtility.as_view(),
         name="get_facility_utility",
