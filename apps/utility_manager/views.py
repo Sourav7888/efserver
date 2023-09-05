@@ -184,7 +184,25 @@ class GetPublicDivisionUtility(ListAPIView):
     @method_decorator(enforce_parameters(params=["timeframe", "division_name"]))
     def list(self, request, *args, **kwargs):
         if request.GET["timeframe"].lower() == "monthly":
-            return super().list(self, request, *args, **kwargs)
+            queryset = self.filter_queryset(self.get_queryset())
+
+            results = []
+            if not queryset:
+                Response({"Invalid timeframe"}, status=status.HTTP_400_BAD_REQUEST)
+
+            # Removing the cost cost here
+            for x in queryset:
+                results.append(
+                    {
+                        "display_date": f"{x['billing_date__month']}-{x['billing_date__year']}",
+                        "utility_type": x["utility_type"],
+                        "usage": x["usage"],
+                        "month": x["billing_date__month"],
+                        "year": x["billing_date__year"],
+                    }
+                )
+
+            return Response({"results": results}, status=status.HTTP_200_OK)
 
         # Overriding for yearly due to an issue where group by is required yet if not
         # Grouped by start date will fail regardless of the pagination
