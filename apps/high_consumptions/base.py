@@ -391,16 +391,18 @@ class ElectricityHighConsumption(HighConsumption):
         # Calculate average
         average = calculate_col_avg(avg_stats, "usage")
         
-        if not average:
-            return
-        
         # Calculate unit cost
         average_unit_cost = calculate_col_avg(self._dataframe, "unit_cost")
         # Calculate diff
         diff = target["usage"].item() - average
+        
+        #@QUICK FIX FEB 2024
+        if average <= 0:
+            percentage_diff = 0
 
-        # Percentage difference
-        percentage_diff = round(diff * 100 / average, 2)
+        else:
+            # Percentage difference
+            percentage_diff = round(diff * 100 / average, 2)
 
         # Calculate estimated hc cost
         estimated_cost = round(diff * average_unit_cost, 2)
