@@ -390,6 +390,10 @@ class ElectricityHighConsumption(HighConsumption):
 
         # Calculate average
         average = calculate_col_avg(avg_stats, "usage")
+        
+        if not average:
+            return
+        
         # Calculate unit cost
         average_unit_cost = calculate_col_avg(self._dataframe, "unit_cost")
         # Calculate diff
