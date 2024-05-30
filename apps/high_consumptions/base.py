@@ -151,7 +151,7 @@ class GasHighConsumption(HighConsumption):
             "facility_name": self._facility.facility_name,
             "address": self._facility.address,
             "area": self._facility.area,
-            "category_tyoe": self._facility.category_type,
+            "category_type": self._facility.category_type,
             "latitude": self._facility.latitude,
             "longitude": self._facility.longitude,
         }
