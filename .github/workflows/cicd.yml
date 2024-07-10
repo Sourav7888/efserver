@@ -3,7 +3,7 @@ name: Build and Push to ECR
 on:
   push:
     branches:
-      - main  # Trigger on pushes to the main branch, adjust as needed
+      - production  # Trigger on pushes to the main branch, adjust as needed
 
 jobs:
   build-and-push:
